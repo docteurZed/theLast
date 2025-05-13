@@ -22,7 +22,7 @@ Application Laravel développée pour un événement de promotion universitaire.
 
 1. Cloner le dépôt :
 ```bash
-git clone [https://github.com/docteurZed/theLast.git](https://github.com/docteurZed/theLast.git)
+git clone https://github.com/docteurZed/theLast.git
 cd theLast
 ```
 
