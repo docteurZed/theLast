@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Setting;
 use App\Models\User;
+use App\Notifications\UserActivationNotification;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
@@ -109,6 +110,11 @@ class UserService
         $user->is_active = !$user->is_active;
         $user->save();
 
+        if($user->is_active && !$user->is_welcomed_message_sent) {
+            $user->notify(new UserActivationNotification($user));
+            $user->is_welcomed_message_sent = true;
+        }
+
         return $user;
     }
 
@@ -136,8 +142,12 @@ class UserService
         } else {
             $user->payment_status = 'pending';
         }
-
         $user->save();
+
+        if($user->is_active && !$user->is_welcomed_message_sent) {
+            $user->notify(new UserActivationNotification($user));
+            $user->is_welcomed_message_sent = true;
+        }
 
         return $user;
     }

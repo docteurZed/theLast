@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\{
     GuestController,
     GuestMessageController,
     IncomeController,
+    InvitationController,
     OrganizerController,
     PaymentController,
     SettingController,
@@ -37,6 +38,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/contact/message', [ContactController::class, 'show'])->name('contact.message');
 Route::get('/confirmation', [ConfirmationController::class, 'index'])->name('confirmation');
 Route::get('/confirmation/message', [ConfirmationController::class, 'show'])->name('confirmation.message');
+Route::get('/invitation/{id}-{token}', [InvitationController::class, 'show'])->name('invitation');
 
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/confirmation/store', [ConfirmationController::class, 'store'])->name('confirmation.store');
@@ -208,6 +210,18 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [ExpenseController::class, 'store'])->name('store');
             Route::put('/{id}/update', [ExpenseController::class, 'update'])->name('update');
             Route::delete('/{id}/destroy', [ExpenseController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('invitation')->name('invitation.')->group(function () {
+
+            Route::get('/', [InvitationController::class, 'index'])->name('index');
+            Route::get('/template', [InvitationController::class, 'template'])->name('template');
+            Route::get('/{id}/show', [InvitationController::class, 'show'])->name('show');
+            Route::post('/store', [InvitationController::class, 'store'])->name('store');
+            Route::post('/send', [InvitationController::class, 'send'])->name('send');
+            Route::post('/{id}/send-detail', [InvitationController::class, 'sendDetail'])->name('sendDetail');
+            Route::delete('/destroy', [InvitationController::class, 'destroy'])->name('destroy');
 
         });
 

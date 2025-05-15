@@ -24,6 +24,7 @@ class User extends Authenticatable
         'phone',
         'role',
         'is_active',
+        'is_welcomed_message_sent',
         'profile_photo',
         'bio',
         'payment_status',
@@ -84,5 +85,10 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->belongsToMany(Task::class, 'task_users');
+    }
+
+    public function invitations ()
+    {
+        return $this->hasMany(Invitation::class);
     }
 }

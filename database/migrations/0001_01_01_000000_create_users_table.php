@@ -20,6 +20,7 @@ return new class extends Migration
 
             $table->enum('role', ['admin', 'organizer', 'guest'])->default('guest');
             $table->boolean('is_active')->default(false);
+            $table->boolean('is_welcomed_message_sent')->default(false);
 
             $table->string('profile_photo')->nullable();
             $table->string('bio')->nullable();

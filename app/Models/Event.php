@@ -25,4 +25,9 @@ class Event extends Model
     {
         return $this->hasMany(EventProgram::class);
     }
+
+    public function invitations ()
+    {
+        return $this->hasMany(Invitation::class);
+    }
 }
