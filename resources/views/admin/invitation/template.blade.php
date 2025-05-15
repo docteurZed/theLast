@@ -38,7 +38,6 @@
             }
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="bg-black min-h-screen flex items-center justify-center">
     <div id="invitation" class="relative w-full max-w-[794px] aspect-[1/1.414] overflow-hidden m-0 p-0">
@@ -101,6 +100,7 @@
           Télécharger
         </button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         // Generate decorative QR code pattern
         const qrGrid = document.getElementById('qrGrid');

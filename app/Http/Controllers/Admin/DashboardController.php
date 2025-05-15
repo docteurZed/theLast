@@ -7,11 +7,16 @@ use App\Models\Payment;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index ()
     {
+        if (Auth::user()->role == 'guest') {
+            abort(403);
+        }
+
         return view('admin.dashboard.index', [
             'totalParticipants' => User::count(),
             'totalIncomes' => Transaction::where('type', 'income')->sum('amount'),

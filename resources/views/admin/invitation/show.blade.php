@@ -96,6 +96,7 @@
             Télécharger
         </button>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         // Generate decorative QR code pattern
         const qrGrid = document.getElementById('qrGrid');

@@ -78,12 +78,19 @@ class InvitationController extends Controller
 
         $invitations = Invitation::where('event_id', $request->event_id)->get();
 
-        if($invitations->isNotEmpty()) {
+        if($invitations->isEmpty()) {
             return back()->with('warning', 'Aucune invitation générées pour cet événement.');
         }
 
         foreach ($invitations as $invitation) {
-            $invitation->user->notify(new InvitationNotification($invitation));
+
+            if(!$invitation->is_sent) {
+                $invitation->user->notify(new InvitationNotification($invitation));
+
+                $invitation->is_sent = true;
+                $invitation->save();
+            }
+
         }
 
         return back()->with('success', 'Invitations envoyées avec succès.');
@@ -97,9 +104,17 @@ class InvitationController extends Controller
 
         $invitation = Invitation::findOrFail($id);
 
-        $invitation->user->notify(new InvitationNotification($invitation));
+        if(!$invitation->is_sent) {
+            $invitation->user->notify(new InvitationNotification($invitation));
 
-        return back()->with('success', 'Invitation envoyées avec succès.');
+            $invitation->is_sent = true;
+            $invitation->save();
+
+            return back()->with('success', 'Invitation envoyée avec succès.');
+        } else {
+            return back()->with('warning', 'Invitation déjà envoyée.');
+        }
+
     }
 
     public function destroy(int $id)

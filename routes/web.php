@@ -30,6 +30,9 @@ use App\Http\Controllers\Guest\{
     ContactController,
     HomeController
 };
+use App\Http\Controllers\Participant\{
+    DashboardController as ParticipantDashboardController
+};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -44,6 +47,12 @@ Route::post('/contact/store', [ContactController::class, 'store'])->name('contac
 Route::post('/confirmation/store', [ConfirmationController::class, 'store'])->name('confirmation.store');
 
 Route::middleware('auth')->group(function () {
+
+    Route::prefix('participant')->name('participant.')->group(function () {
+
+        Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
+
+    });
 
     Route::prefix('admin')->name('admin.')->group(function () {
 

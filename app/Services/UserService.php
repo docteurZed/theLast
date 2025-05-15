@@ -32,7 +32,7 @@ class UserService
 
     public function create(Request $data, string $role = 'guest', bool $is_active = false)
     {
-        return User::create([
+        $user = User::create([
             'name'          => $data->name,
             'first_name'    => $data->first_name,
             'phone'         => $data->phone,
@@ -41,6 +41,14 @@ class UserService
             'role'          => $role,
             'is_active'     => $is_active,
         ]);
+
+        if($user->is_active && !$user->is_welcomed_message_sent) {
+            $user->notify(new UserActivationNotification($user));
+            $user->is_welcomed_message_sent = true;
+            $user->save();
+        }
+
+        return $user;
     }
 
     public function update(int $id, Request $data)
@@ -64,6 +72,12 @@ class UserService
             'phone'      => $data->phone ?? $user->phone,
             'bio'        => $data->bio ?? $user->bio,
         ]);
+
+        if($user->is_active && !$user->is_welcomed_message_sent) {
+            $user->notify(new UserActivationNotification($user));
+            $user->is_welcomed_message_sent = true;
+            $user->save();
+        }
 
         return $user;
     }
@@ -113,6 +127,7 @@ class UserService
         if($user->is_active && !$user->is_welcomed_message_sent) {
             $user->notify(new UserActivationNotification($user));
             $user->is_welcomed_message_sent = true;
+            $user->save();
         }
 
         return $user;
@@ -147,6 +162,7 @@ class UserService
         if($user->is_active && !$user->is_welcomed_message_sent) {
             $user->notify(new UserActivationNotification($user));
             $user->is_welcomed_message_sent = true;
+            $user->save();
         }
 
         return $user;

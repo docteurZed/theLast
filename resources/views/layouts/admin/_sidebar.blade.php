@@ -190,6 +190,15 @@
                 </li>
                 <!-- End::slide -->
 
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="{{ route('admin.invitation.index') }}" class="side-menu__item {{ request()->routeIs('admin.invitation.*') ? 'active' : '' }}">
+                        <i class="bx bx-user-voice side-menu__icon"></i>
+                        <span class="side-menu__label">Invitations</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
                 <!-- Start::slide__category -->
                 <li class="slide__category"><span class="category-name">Courriers</span></li>
                 <!-- End::slide__category -->
