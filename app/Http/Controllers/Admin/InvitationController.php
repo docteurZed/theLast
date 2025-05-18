@@ -36,10 +36,6 @@ class InvitationController extends Controller
 
     public function show ($id)
     {
-        if (Auth::user()->role == 'guest') {
-            abort(403);
-        }
-
         return view('admin.invitation.show', [
             'invitation' => $this->service->show($id),
         ]);

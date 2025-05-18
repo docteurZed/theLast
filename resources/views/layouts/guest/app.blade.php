@@ -11,12 +11,12 @@
             <nav id="navbar" class="w-full fixed top-0 z-20 transition-colors duration-300">
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-5 md:px-16">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-                        <span class="self-center text-4xl font-bold whitespace-nowrap text-white">
+                        <span class="self-center text-3xl sm:text-4xl font-bold whitespace-nowrap text-white">
                             the<span class="bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-500 bg-clip-text text-transparent">Last</span>
                         </span>
                     </a>
                     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                        <a href="{{ route('login') }}" type="button" class="text-white focus:ring-2 focus:outline-none focus:ring-yellow-500 font-semibold rounded-lg text-sm px-5 py-3 text-center bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 hover:opacity-90 transition">
+                        <a href="{{ route('participant.dashboard') }}" type="button" class="text-white focus:ring-2 focus:outline-none focus:ring-yellow-500 font-semibold rounded-lg text-sm px-5 py-3 text-center bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 hover:opacity-90 transition">
                             Connexion
                         </a>
                         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">

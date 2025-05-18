@@ -27,7 +27,7 @@
                                     </div>
                                     <div class="mx-2">
                                         <a href="" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#send-invitation">
-                                            <i class="ri-send-line me-1 fw-semibold align-middle"></i>
+                                            <i class="ri-send-plane-line me-1 fw-semibold align-middle"></i>
                                             <span class="fw-bold">Envoyer toutes les invitation</span>
                                         </a>
                                     </div>
@@ -72,7 +72,7 @@
                                         <td>
                                             <div class="hstack gap-2 fs-15">
                                                 <a href="{{ route('admin.invitation.sendDetail', ['id' => $invitation->id]) }}" class="btn btn-icon btn-wave waves-effect waves-light btn-sm btn-info-light">
-                                                    <i class="ri-send-line"></i>
+                                                    <i class="ri-send-plane-line"></i>
                                                 </a>
                                                 <a href="{{ route('admin.invitation.show', ['id' => $invitation->id]) }}" class="btn btn-icon btn-wave waves-effect waves-light btn-sm btn-info-light">
                                                     <i class="ri-eye-line"></i>

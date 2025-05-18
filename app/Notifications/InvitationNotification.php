@@ -43,7 +43,7 @@ class InvitationNotification extends Notification
             ->line("Vous êtes cordialement invité(e) à **{$this->invitation->event->name}**, un événement inoubliable pour célébrer la fin de notre parcours.")
             ->line("Votre **invitation numérique personnalisée** est désormais disponible. Elle contient un QR code unique, indispensable pour accéder aux lieux des événements.")
             ->line("Ce code est également requis à l’entrée si vous ne présentez pas le QR code : **{$this->invitation->user->personal_code}**.")
-            ->action('Voir mon invitation', url(route('invitation', ['id' => $this->invitation->id, 'token' => $this->invitation->code])))
+            ->action('Voir mon invitation', url(route('invitation', ['code' => $this->invitation->user->personal_code, 'token' => $this->invitation->code])))
             ->line("Merci de conserver ce lien précieusement. Il est personnel et ne doit pas être partagé.")
             ->salutation('Au plaisir de vous y retrouver,')
             ->line("— L’équipe d’organisation de **" . config('app.name') . "**");

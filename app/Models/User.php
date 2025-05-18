@@ -91,4 +91,46 @@ class User extends Authenticatable
     {
         return $this->hasMany(Invitation::class);
     }
+
+    public function sentMessages()
+    {
+        return $this->hasMany(ParticipantMessage::class, 'sender_id');
+    }
+
+    public function receivedMessages()
+    {
+        return $this->hasMany(ParticipantMessage::class, 'receiver_id');
+    }
+
+    // Utilisateur qui envoie le like
+    public function likesGiven()
+    {
+        return $this->hasMany(Like::class, 'liker_id');
+    }
+
+    // Utilisateur qui reçoit le like
+    public function likesReceived()
+    {
+        return $this->hasMany(Like::class, 'liked_id');
+    }
+
+    public function hasLiked(User $user)
+    {
+        return $this->likesGiven()->where('liked_id', $user->id)->exists();
+    }
+
+    public function votesCast()
+    {
+        return $this->hasMany(Vote::class, 'voter_id');
+    }
+
+    public function votesReceived()
+    {
+        return $this->hasMany(Vote::class, 'candidat_id');
+    }
+
+    public function hasVotedInCategory($categoryId)
+    {
+        return $this->votesCast()->where('vote_category_id', $categoryId)->exists();
+    }
 }

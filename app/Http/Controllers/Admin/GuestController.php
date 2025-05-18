@@ -78,13 +78,6 @@ class GuestController extends Controller
         return back()->with('success', 'Participant supprimé avec succès.');
     }
 
-    public function updateProfilePhoto($id, UserRequest $request)
-    {
-        $this->userService->updateProfilePhoto($id, $request->profile_photo);
-
-        return back()->with('success', 'Photo de profil mise à jour.');
-    }
-
     public function toggleIsActive($id)
     {
         try {

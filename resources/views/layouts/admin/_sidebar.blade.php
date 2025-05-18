@@ -3,7 +3,7 @@
 
     <!-- Start::main-sidebar-header -->
     <div class="main-sidebar-header">
-        <a href="{{ route('home') }}" class="header-logo">
+        <a href="{{ route('participant.dashboard') }}" class="header-logo">
             <img src="../assets/images/brand-logos/desktop-logo.png" alt="logo" class="desktop-logo">
             <img src="../assets/images/brand-logos/toggle-logo.png" alt="logo" class="toggle-logo">
             <img src="../assets/images/brand-logos/desktop-dark.png" alt="logo" class="desktop-dark">
@@ -87,7 +87,7 @@
 
                 <!-- Start::slide -->
                 <li class="slide has-sub">
-                    <a href="javascript:void(0);" class="side-menu__item {{ request()->routeIs('admin.page.home.*') || request()->routeIs('admin.page.about.*') || request()->routeIs('admin.page.contact.*') ? 'active' : '' }}">
+                    <a href="javascript:void(0);" class="side-menu__item {{ request()->routeIs('admin.page.*') ? 'active' : '' }}">
                         <i class="bx bx-code side-menu__icon"></i>
                         <span class="side-menu__label">Pages</span>
                         <i class="fe fe-chevron-right side-menu__angle"></i>
@@ -106,6 +106,15 @@
                             <a href="{{ route('admin.page.contact.index') }}" class="side-menu__item {{ request()->routeIs('admin.page.contact.*') ? 'active' : '' }}">Contact</a>
                         </li>
                     </ul>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="{{ route('admin.slide.index') }}" class="side-menu__item {{ request()->routeIs('admin.slide.*') ? 'active' : '' }}">
+                        <i class="bx bx-images side-menu__icon"></i>
+                        <span class="side-menu__label">Slides</span>
+                    </a>
                 </li>
                 <!-- End::slide -->
                 @endif
@@ -193,8 +202,30 @@
                 <!-- Start::slide -->
                 <li class="slide">
                     <a href="{{ route('admin.invitation.index') }}" class="side-menu__item {{ request()->routeIs('admin.invitation.*') ? 'active' : '' }}">
-                        <i class="bx bx-user-voice side-menu__icon"></i>
+                        <i class="bx bx-party side-menu__icon"></i>
                         <span class="side-menu__label">Invitations</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide__category -->
+                <li class="slide__category"><span class="category-name">Interactions</span></li>
+                <!-- End::slide__category -->
+
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="{{ route('admin.vote.category.index') }}" class="side-menu__item {{ request()->routeIs('admin.vote.category.*') ? 'active' : '' }}">
+                        <i class="bx bx-tag-alt side-menu__icon"></i>
+                        <span class="side-menu__label">Vote</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="{{ route('admin.interaction.index') }}" class="side-menu__item {{ request()->routeIs('admin.interaction.*') ? 'active' : '' }}">
+                        <i class="bx bx-slider-alt side-menu__icon"></i>
+                        <span class="side-menu__label">Interactions</span>
                     </a>
                 </li>
                 <!-- End::slide -->

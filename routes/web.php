@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\{
     GuestController,
     GuestMessageController,
     IncomeController,
+    InteractionController,
     InvitationController,
     OrganizerController,
     PaymentController,
     SettingController,
+    SlideController,
     SpecialGuestController,
     SponsorController,
     TaskController,
@@ -31,8 +33,16 @@ use App\Http\Controllers\Guest\{
     HomeController
 };
 use App\Http\Controllers\Participant\{
-    DashboardController as ParticipantDashboardController
+    DashboardController as ParticipantDashboardController,
+    GaleryController,
+    LikeController,
+    NotificationController,
+    ParticipantMessageController,
+    PostController,
+    ProfileController,
+    VoteController
 };
+use App\Http\Controllers\VoteCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -41,7 +51,7 @@ Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/contact/message', [ContactController::class, 'show'])->name('contact.message');
 Route::get('/confirmation', [ConfirmationController::class, 'index'])->name('confirmation');
 Route::get('/confirmation/message', [ConfirmationController::class, 'show'])->name('confirmation.message');
-Route::get('/invitation/{id}-{token}', [InvitationController::class, 'show'])->name('invitation');
+Route::get('/invitation/{code}-{token}', [InvitationController::class, 'show'])->name('invitation');
 
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/confirmation/store', [ConfirmationController::class, 'store'])->name('confirmation.store');
@@ -51,6 +61,52 @@ Route::middleware('auth')->group(function () {
     Route::prefix('participant')->name('participant.')->group(function () {
 
         Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
+
+        Route::prefix('profile')->name('profile.')->group(function () {
+
+            Route::get('/', [ProfileController::class, 'index'])->name('index');
+            Route::put('/{id}/update', [ProfileController::class, 'update'])->name('update');
+
+        });
+
+        Route::prefix('post')->name('post.')->group(function () {
+
+            Route::get('/', [PostController::class, 'index'])->name('index');
+
+        });
+
+        Route::prefix('galery')->name('galery.')->group(function () {
+
+            Route::get('/', [GaleryController::class, 'index'])->name('index');
+
+        });
+
+        Route::prefix('vote')->name('vote.')->group(function () {
+
+            Route::get('/', [VoteController::class, 'index'])->name('index');
+            Route::post('/store', [VoteController::class, 'store'])->name('store');
+            Route::post('/multiplestore', [VoteController::class, 'multipleStore'])->name('multipleStore');
+
+        });
+
+        Route::prefix('notification')->name('notification.')->group(function () {
+
+            Route::get('/', [NotificationController::class, 'index'])->name('index');
+
+        });
+
+        Route::prefix('message')->name('message.')->group(function () {
+
+            Route::post('/store', [ParticipantMessageController::class, 'store'])->name('store');
+            Route::post('/{id}/updateStatut', [ParticipantMessageController::class, 'updateStatut'])->name('updateStatut');
+
+        });
+
+        Route::prefix('like')->name('like.')->group(function () {
+
+            Route::post('{id}/send', [LikeController::class, 'like'])->name('send');
+
+        });
 
     });
 
@@ -62,7 +118,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/', [AdminController::class, 'index'])->name('index');
             Route::post('/store', [AdminController::class, 'store'])->name('store');
-            Route::post('/{id}/update-profile-photo', [AdminController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
             Route::post('/{id}/toggle-is-ctive', [AdminController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [AdminController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [AdminController::class, 'update'])->name('update');
@@ -74,7 +129,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/', [OrganizerController::class, 'index'])->name('index');
             Route::post('/store', [OrganizerController::class, 'store'])->name('store');
-            Route::post('/{id}/update-profile-photo', [OrganizerController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
             Route::post('/{id}/toggle-is-ctive', [OrganizerController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [OrganizerController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [OrganizerController::class, 'update'])->name('update');
@@ -86,7 +140,6 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/', [GuestController::class, 'index'])->name('index');
             Route::post('/store', [GuestController::class, 'store'])->name('store');
-            Route::post('/{id}/update-profile-photo', [GuestController::class, 'updateProfilePhoto'])->name('updateProfilePhoto');
             Route::post('/{id}/toggle-is-ctive', [GuestController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [GuestController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [GuestController::class, 'update'])->name('update');
@@ -231,6 +284,30 @@ Route::middleware('auth')->group(function () {
             Route::post('/send', [InvitationController::class, 'send'])->name('send');
             Route::post('/{id}/send-detail', [InvitationController::class, 'sendDetail'])->name('sendDetail');
             Route::delete('/destroy', [InvitationController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('vote')->name('vote.category.')->group(function () {
+
+            Route::get('/', [VoteCategoryController::class, 'index'])->name('index');
+            Route::post('/store', [VoteCategoryController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [VoteCategoryController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [VoteCategoryController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('slide')->name('slide.')->group(function () {
+
+            Route::get('/', [SlideController::class, 'index'])->name('index');
+            Route::post('/store', [SlideController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [SlideController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [SlideController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('interaction')->name('interaction.')->group(function () {
+
+            Route::get('/', [InteractionController::class, 'index'])->name('index');
 
         });
 

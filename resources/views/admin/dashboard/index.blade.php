@@ -63,7 +63,7 @@
             <div class="card-body">
                 <div class="d-flex align-items-top mb-2">
                     <div class="flex-fill">
-                        <p class="mb-0 op-7">Premium Recruiters</p>
+                        <p class="mb-0 op-7">Messages non lus</p>
                     </div>
                     <div class="ms-2">
                         <span class="avatar avatar-md bg-warning shadow-sm fs-18">
@@ -71,8 +71,7 @@
                         </span>
                     </div>
                 </div>
-                <span class="fs-5 fw-semibold">9,231</span>
-                <span class="fs-12 op-7 ms-1"><i class="ti ti-trending-up me-1 d-inline-block"></i>0.5%</span>
+                <span class="fs-5 fw-semibold">{{ $unreadMessages }}</span>
             </div>
         </div>
     </div>
