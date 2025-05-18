@@ -4,7 +4,7 @@
 
 @section('form')
 
-<form method="POST" action="{{ route('confirmation.store') }}">
+<form method="POST" action="{{ route('confirmation.store') }}" enctype="multipart/form-data">
     @csrf
     <div class="font-semibold">
         <div class="mb-6">
