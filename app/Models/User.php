@@ -133,4 +133,18 @@ class User extends Authenticatable
     {
         return $this->votesCast()->where('vote_category_id', $categoryId)->exists();
     }
+
+    public function publications()
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    public function publication_likes()
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    public function publication_comments() {
+        return $this->hasMany(PublicationComment::class);
+    }
 }

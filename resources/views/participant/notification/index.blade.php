@@ -22,7 +22,7 @@
             <div class="text-sm font-bold text-white mb-2">{{ ucfirst($msg->sender->first_name) }} {{ ucfirst($msg->sender->name) }}</div>
             @endif
             <div class="text-sm font-semibold">{{ Str::limit($msg->content, 50) }}</div>
-            <span class="text-xs font-medium text-yellow-600">{{ $msg->created_at }}</span>
+            <span class="text-xs font-medium text-yellow-600">{{ $msg->created_at->diffForHumans() }}</span>
         </div>
     </div>
 

@@ -40,6 +40,7 @@ use App\Http\Controllers\Participant\{
     ParticipantMessageController,
     PostController,
     ProfileController,
+    PublicationController,
     VoteController
 };
 use App\Http\Controllers\VoteCategoryController;
@@ -105,6 +106,19 @@ Route::middleware('auth')->group(function () {
         Route::prefix('like')->name('like.')->group(function () {
 
             Route::post('{id}/send', [LikeController::class, 'like'])->name('send');
+
+        });
+
+        Route::prefix('publication')->name('publication.')->group(function () {
+
+            Route::get('/', [PublicationController::class, 'index'])->name('index');
+            Route::post('/', [PublicationController::class, 'store'])->name('store');
+            Route::delete('/{id}/destroy', [PublicationController::class, 'destroy'])->name('destroy');
+
+            // AJAX
+            Route::post('/{id}/like', [PublicationController::class, 'toggleLike'])->name('like');
+            Route::post('/comment', [PublicationController::class, 'addComment'])->name('comment');
+            Route::delete('/comment/{id}/destroy', [PublicationController::class, 'destroyComment'])->name('destroyComment');
 
         });
 
