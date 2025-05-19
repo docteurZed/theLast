@@ -343,7 +343,7 @@
                         <div class="col-xl-12">
                             <label for="primary_color_hex" class="form-label">Code hexadécimal <span class="text-danger">*</span></label>
                             <input type="color" name="primary_color_hex" class="form-control form-control-color" id="primary_color_hex"
-                                value="{{ old('primary_color_hex') }}" required>
+                                value="{{ old('primary_color_hex', '#ffffff') }}" required>
                         </div>
                         <div class="col-xl-12">
                             <label for="secondary_color_name" class="form-label">Couleur secondaire</label>

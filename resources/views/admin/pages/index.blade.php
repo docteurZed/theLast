@@ -29,8 +29,8 @@
                                             <input type="text" class="form-control" id="name" name="name" placeholder="Le nom" value="{{ old('name', $section->name) }}" readonly>
                                         </div>
                                         <div class="col-xl-12 mb-3">
-                                            <label for="title" class="form-label">Numéro de téléphone <span class="text-danger">*</span></label>
-                                            <input type="tel" class="form-control" id="title" name="title" placeholder="Le numéro de téléphone" value="{{ old('title', $section->title) }}" required>
+                                            <label for="title" class="form-label">Titre de la section <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="title" name="title" placeholder="Le numéro de téléphone" value="{{ old('title', $section->title) }}" required>
                                         </div>
                                         <div class="col-xl-12 mb-3">
                                             <label for="description" class="form-label">Description</label>

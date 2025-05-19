@@ -25,7 +25,9 @@ class VoteController extends Controller
         $user = Auth::user();
 
         $categories = VoteCategory::all();
-        $users = User::where('id', '!=', $user->id)->get();
+        $users = User::where('id', '!=', $user->id)
+                                ->where('is_active', true)
+                                ->get();
 
         // Top 5 par catégorie
         $candidatesGroupedByCategory = Vote::with('candidate')

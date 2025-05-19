@@ -7,7 +7,7 @@
     </head>
     <body class="bg-gray-900">
 
-        <header class="w-full bg-center bg-no-repeat bg-[url('https://flowbite.s3.amazonaws.com/docs/jumbotron/conference.jpg')] bg-gray-900 bg-blend-multiply">
+        <header class="w-full bg-center bg-no-repeat bg-cover bg-[url('{{ asset('images/bg-1.jpg') }}')] bg-gray-900/80 bg-blend-multiply">
             <nav id="navbar" class="w-full fixed top-0 z-20 transition-colors duration-300">
                 <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-5 md:px-16">
                     <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">

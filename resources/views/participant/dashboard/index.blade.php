@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="mb-20">
+<div class="max-w-4xl mx-auto sm:p-6 space-y-6 text-gray-400 mb-16">
     @php
         $user = Auth::user();
         $hour = now()->hour;
@@ -13,8 +13,8 @@
 
     @if($user)
         <div class="mb-6 flex items-center space-x-3 text-white">
-            <span class="text-3xl animate-pulse">{{ $icon }}</span>
-            <h2 class="text-3xl font-extrabold tracking-wide">
+            <span class="text-2xl sm:text-3xl animate-pulse">{{ $icon }}</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-wide">
                 {{ $greeting }}
                 <span class="text-yellow-600">
                     {{ ucfirst($user->first_name) }} {{ ucfirst($user->name) }}
@@ -22,8 +22,6 @@
             </h2>
         </div>
     @endif
-
-
 
     @if ($slides->isNotEmpty())
     <div id="default-carousel" class="relative w-full" data-carousel="slide">

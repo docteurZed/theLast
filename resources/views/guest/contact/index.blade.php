@@ -16,7 +16,7 @@
         <div class="md:grid grid-cols-3 gap-4 md:gap-8">
 
             <div class="col-span-1 my-3 flex flex-col items-center gap-4 w-full md:px-4">
-                <div class="flex flex-col items-center text-center border border-gray-600 px-2 py-3 rounded-lg bg-gray-950 w-full">
+                <div class="flex flex-col items-center text-center border border-gray-700 px-2 py-3 rounded-lg bg-gray-800 w-full">
                     <svg class="w-10 h-10 text-yellow-600 mb-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M6 2a1 1 0 000 2h1v1a1 1 0 102 0V4h2v1a1 1 0 102 0V4h1a1 1 0 100-2H6zM3 7a2 2 0 012-2h10a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V7zm2 0v9h10V7H5z"/>
                     </svg>
@@ -24,7 +24,7 @@
                     <p class="font-semibold text-gray-400">{{ $setting->phone ?? env('APP_PHONE_NUMBER') }}</p>
                 </div>
                 <!-- Heure -->
-                <div class="flex flex-col items-center text-center border border-gray-600 px-2 py-3 rounded-lg bg-gray-950 w-full">
+                <div class="flex flex-col items-center text-center border border-gray-700 px-2 py-3 rounded-lg bg-gray-800 w-full">
                     <svg class="w-10 h-10 text-yellow-600 mb-3" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 2a8 8 0 100 16 8 8 0 000-16zm1 8V6a1 1 0 10-2 0v5a1 1 0 00.293.707l2.5 2.5a1 1 0 001.414-1.414L11 10z"/>
                     </svg>

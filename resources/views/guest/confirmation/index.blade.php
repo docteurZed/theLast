@@ -1,5 +1,5 @@
 @extends('layouts.auth.app', [
-    'text' => 'Entrez vos informations nécessaires pour vous confirmer votre participation.'
+    'text' => 'Entrez vos informations nécessaires pour la confirmation de votre participation à notre événement.'
 ])
 
 @section('form')
@@ -80,7 +80,7 @@
         </div>
 
         <button type="submit" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
-            Inscription
+            Confirmer
         </button>
     </div>
 </form>

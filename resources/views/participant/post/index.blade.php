@@ -1,7 +1,7 @@
 @extends('layouts.participant.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto sm:px-4 sm:py-4 space-y-10 text-gray-400 mb-16">
+<div class="max-w-4xl mx-auto sm:p-6 space-y-6 text-gray-400 mb-16">
 
     @if (Session::has('success'))
     <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-green-400 rounded-xl" role="alert">

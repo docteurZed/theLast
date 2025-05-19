@@ -11,9 +11,8 @@
             <h2 class="mb-5 text-4xl tracking-tight font-extrabold text-white">{{ $sections['about']->title }}</h2>
             <p class="mb-3 font-medium">{{ $sections['about']->description }}</p>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1">
-            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
+        <div class="gap-4 mt-8 flex justify-center">
+            <img class="w-full rounded-lg" src="{{ asset('images/about.jpg') }}" alt="office content 1">
         </div>
     </div>
 </section>
@@ -105,14 +104,14 @@
                             @foreach ($event->programs as $program)
                             <li>
                                 <div class="p-3 md:p-5 grid grid-cols-4 {{ !$loop->last ? 'border-b border-gray-700 border-dashed' : '' }}">
-                                    <div class="border-r border-gray-700 border-dashed text-yellow-600">
+                                    <div class="border-r border-gray-700 border-dashed text-yellow-600 px-2">
                                         {{ \Carbon\Carbon::parse($program->starts_at)->translatedFormat('H\hi') }}
                                         {{ $program->ends_at ? ' - ' . \Carbon\Carbon::parse($program->ends_at)->translatedFormat('H\hi') : '' }}
                                     </div>
-                                    <div class="col-span-2 border-r border-gray-700 border-dashed">
+                                    <div class="col-span-2 border-r border-gray-700 border-dashed px-2">
                                         {{ ucfirst($program->title) }}
                                     </div>
-                                    <div>
+                                    <div class="px-2">
                                         {{ ucfirst($program->speaker) }}
                                     </div>
                                 </div>
@@ -152,6 +151,12 @@
                         <h4 class="text-white font-bold text-xl">{{ $event->name }}</h4>
                         <hr class="border border-dashed border-gray-200 my-3">
                         <p class="text-gray-200 font-semibold">{{ $event->dress_code }}</p>
+                        <div class="mt-3 flex justify-center gap-3 items-center">
+                            <span class="rounded-full border border-white w-8 h-8" style="background: {{ $event->primary_color_hex }}"></span>
+                            @if ($event->secondary_color_hex)
+                            <span class="rounded-full border border-white w-8 h-8" style="background: {{ $event->secondary_color_hex }}"></span>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -167,7 +172,7 @@
 </section>
 @endif
 
-<section id="parallax-section" class="w-full bg-center bg-cover bg-[url('{{ asset('images/bg.jpg') }}')] bg-gray-900 bg-blend-multiply">
+<section id="parallax-section" class="w-full bg-center bg-cover bg-[url('{{ asset('images/bg.jpg') }}')] bg-gray-900/80 bg-blend-multiply">
     <!-- Content -->
     <div class="fade-section relative z-10 px-6 py-24 md:py-32 text-center text-white max-w-3xl mx-auto">
         <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['cta']->name }}</p>
@@ -189,7 +194,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
             @foreach ($guests as $guest)
             <div class="bg-gray-900 rounded-xl p-6 shadow hover:shadow-lg transition">
-                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ asset('storage/public/' . basename($guest->image)) }}" alt="Invité">
+                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ? asset('storage/public/' . basename($guest->image)) : asset('images/user.png') }}" alt="Invité">
                 <h3 class="text-xl font-bold text-white">{{ ucfirst($guest->name) }}. {{ ucfirst($guest->name) }}</h3>
                 <p class="text-sm text-yellow-600 font-semibold mb-2">{{ ucfirst($guest->role) }} • {{ ucfirst($guest->domain) }}</p>
                 <p class="text-gray-400 text-sm">{{ ucfirst($guest->description) }}</p>
@@ -208,7 +213,7 @@
             <h2 class="text-4xl font-extrabold text-white mb-6">{{ $sections['sponsor']->title }}</h2>
             <p class="text-lg text-gray-400 mb-12">{{ $sections['sponsor']->description }}</p>
 
-            <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center">
+            <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">
                 @foreach ($sponsors as $sponsor)
                 <img class="max-h-12 w-full object-contain" src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="sponsor" loading="lazy">
                 @endforeach

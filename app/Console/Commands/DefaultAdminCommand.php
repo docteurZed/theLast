@@ -59,7 +59,7 @@ class DefaultAdminCommand extends Command
 
         $pages = [
             'home' => [
-                'hero' => 'Hero',
+                'hero' => 'theLast',
                 'about' => 'A propos',
                 'cta' => 'Confirmation',
                 'guest' => 'Invité',

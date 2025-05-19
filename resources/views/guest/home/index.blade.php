@@ -18,14 +18,13 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <img class="w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-2.png" alt="office content 1">
-            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
+        <div class="gap-4 mt-8 flex justify-center">
+            <img class="w-full rounded-lg" src="{{ asset('images/about.jpg') }}" alt="office content 1">
         </div>
     </div>
 </section>
 
-<section id="parallax-section" class="w-full bg-center bg-cover bg-[url('{{ asset('images/bg.jpg') }}')] bg-blend-multiply bg-gray-900">
+<section id="parallax-section" class="w-full bg-center bg-cover bg-[url('{{ asset('images/bg.jpg') }}')] bg-blend-multiply bg-gray-900/80">
 
     <!-- Content -->
     <div class="fade-section relative z-10 px-6 py-24 md:py-32 text-center text-white max-w-3xl mx-auto">
@@ -48,7 +47,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
             @foreach ($guests as $guest)
             <div class="card rounded-xl p-6 shadow hover:shadow-lg transition">
-                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ asset('storage/public/' . basename($guest->image)) }}" alt="Invité 1">
+                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ? asset('storage/public/' . basename($guest->image)) : asset('images/user.png') }}" alt="Invité 1">
                 <h3 class="text-xl font-bold text-white">{{ ucfirst($guest->title) }}. {{ ucfirst($guest->name) }}</h3>
                 <p class="text-sm text-yellow-600 font-semibold mb-2">{{ ucfirst($guest->role) }} • {{ ucfirst($guest->domain) }}</p>
                 <p class="text-gray-400 text-sm">{{ ucfirst($guest->description) }}</p>
@@ -132,7 +131,7 @@
                             "{{ $testimony->testimony }}"
                         </p>
                         <div class="flex items-center justify-center space-x-4">
-                        <img src="{{ asset('storage/public/' . basename($testimony->image)) }}" class="w-12 h-12 rounded-full" alt="Etudiante 1">
+                        <img src="{{ $testimony->image ? asset('storage/public/' . basename($testimony->image)) : asset('images/user.png') }}" class="w-12 h-12 rounded-full" alt="Etudiante 1">
                         <span class="font-semibold text-white">{{ ucfirst($testimony->name) }}</span>
                         </div>
                     </div>
@@ -151,7 +150,7 @@
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['sponsor']->name }}</p>
             <h2 class="mb-5 lg:mb-8 text-4xl tracking-tight font-extrabold text-white">{{ $sections['sponsor']->title }}</h2>
             <p class="mt-3 mb-5 lg:mb-8 text-gray-400">{{ $sections['sponsor']->description }}</p>
-            <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center">
+            <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">
                 @foreach ($sponsors as $sponsor)
                 <img class="max-h-12 w-full object-contain" src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="sponsor" loading="lazy">
                 @endforeach
