@@ -8,7 +8,7 @@
     <div class="fade-section gap-16 items-center py-8 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['about']->name }}</p>
-            <h2 class="mb-5 text-4xl tracking-tight font-extrabold text-white">{{ $sections['about']->title }}</h2>
+            <h2 class="mb-5 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{{ $sections['about']->title }}</h2>
             <p class="mb-3 font-medium">{{ $sections['about']->description }}</p>
         </div>
         <div class="gap-4 mt-8 flex justify-center">
@@ -23,7 +23,7 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <p class="mb-2 font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['info']->name }}</p>
-            <h2 class="text-4xl font-extrabold text-white">{{ $sections['info']->title }}</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white">{{ $sections['info']->title }}</h2>
             <p class="mt-3 text-gray-400">{{ $sections['info']->description }}</p>
         </div>
 
@@ -133,7 +133,7 @@
             <p class="mb-2 font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">
                 {{ $sections['dress']->name }}
             </p>
-            <h2 class="mb-5 text-4xl tracking-tight font-extrabold text-white">
+            <h2 class="mb-5 text-3xl md:text-4xl tracking-tight font-extrabold text-white">
                 {{ $sections['dress']->title }}
             </h2>
             <p class="mb-6 font-medium">
@@ -188,7 +188,7 @@
 <section class="{{ $guests->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 py-16 bg-gray-950">
     <div class="fade-section max-w-screen-xl mx-auto text-center">
         <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['guest']->name }}</p>
-        <h2 class="text-4xl font-extrabold text-white mb-6">{{ $sections['guest']->title }}</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">{{ $sections['guest']->title }}</h2>
         <p class="text-lg text-gray-400 mb-12">{{ $sections['guest']->description }}</p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
@@ -210,7 +210,7 @@
     <div class="fade-section fade-right gap-16 items-center py-8 mx-auto max-w-screen-xl lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['sponsor']->name }}</p>
-            <h2 class="text-4xl font-extrabold text-white mb-6">{{ $sections['sponsor']->title }}</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">{{ $sections['sponsor']->title }}</h2>
             <p class="text-lg text-gray-400 mb-12">{{ $sections['sponsor']->description }}</p>
 
             <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">

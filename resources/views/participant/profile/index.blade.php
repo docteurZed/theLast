@@ -23,7 +23,7 @@
     @endif
 
     <!-- Profile section -->
-    <div class="sm:px-4 py-5 mb-8">
+    <div class="mb-8">
         <h2 class="text-2xl font-bold text-yellow-700 mb-5">Informations personnelles</h2>
 
         <form action="{{ route('participant.profile.update', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
@@ -108,7 +108,7 @@
     </div>
 
     <!-- Security section -->
-    <div class="sm:px-4 mb-12 py-5">
+    <div class="">
         <h2 class="text-2xl font-bold text-yellow-700 mb-5">Sécurité</h2>
 
         <form action="{{ route('password.update') }}" method="post">
@@ -153,7 +153,7 @@
             </div>
         </form>
     </div>
-  </div>
+</div>
 
 
 @endsection

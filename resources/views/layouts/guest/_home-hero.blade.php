@@ -6,7 +6,7 @@
             <p class="mb-8 lg:mb-12 text-lg font-normal text-gray-300 lg:text-xl">{{ $sections['hero']->description }}</p>
 
             <!-- Décompte stylisé avec cercles -->
-            <div class="grid grid-cols-4 space-x-4 text-yellow-600 font-bold text-2xl sm:text-3xl md:text-4xl">
+            <div class="grid grid-cols-4 space-x-4 text-yellow-600 font-bold text-xl sm:text-2xl md:text-4xl">
 
                 <!-- Bloc unité -->
                 <div class="relative w-20 h-20 md:w-24 md:h-24 flex items-center justify-center">

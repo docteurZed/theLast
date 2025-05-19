@@ -66,7 +66,7 @@
     <!-- Liste des publications -->
     @forelse($publications as $post)
     <div x-data="{ showAllComments: false }"
-        class="bg-white dark:bg-gray-800 rounded-lg shadow space-y-4 mb-5">
+        class="bg-gray-800 rounded-lg shadow space-y-4 mb-5">
 
         <!-- En-tête -->
         <div class="flex items-center gap-4 p-5 border-b border-gray-700">

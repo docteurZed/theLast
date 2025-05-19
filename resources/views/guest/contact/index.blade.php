@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="mb-12 text-center">
             <p class="mb-2 font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['contact']->name }}</p>
-            <h2 class="text-4xl font-extrabold text-white">{{ $sections['contact']->title }}</h2>
+            <h2 class="text-3xl md:text-4xl font-extrabold text-white">{{ $sections['contact']->title }}</h2>
             <p class="mt-3 text-gray-400">{{ $sections['contact']->description }}</p>
         </div>
 

@@ -8,7 +8,7 @@
     <div class="fade-section gap-16 items-center py-8 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['about']->name }}</p>
-            <h2 class="mb-5 text-4xl tracking-tight font-extrabold text-white">{{ $sections['about']->title }}</h2>
+            <h2 class="mb-5 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{{ $sections['about']->title }}</h2>
             <p class="mb-3 font-medium">{{ $sections['about']->description }}</p>
             <div class="font-medium">
                 <div class="mt-6">
@@ -41,7 +41,7 @@
 <section class="{{ $guests->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 py-16 bg-gray-950">
     <div class="fade-section max-w-screen-xl mx-auto text-center">
         <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['guest']->name }}</p>
-        <h2 class="text-4xl font-extrabold text-white mb-6">{{ $sections['guest']->title }}</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">{{ $sections['guest']->title }}</h2>
         <p class="text-lg text-gray-400 mb-12">{{ $sections['guest']->description }}</p>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
@@ -62,52 +62,44 @@
     <div class="fade-section gap-16 items-center py-8 mx-auto max-w-screen-xl lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['galerie']->name }}</p>
-            <h2 class="mb-5 lg:mb-8 text-4xl tracking-tight font-extrabold text-white">{{ $sections['galerie']->title }}</h2>
+            <h2 class="mb-5 lg:mb-8 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{{ $sections['galerie']->title }}</h2>
             <p class="text-lg text-gray-400 mb-12">{{ $sections['galerie']->description }}</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-1.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-2.jpg" alt="">
-                    </div>
+            <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-01.jpg') }}" alt="">
                 </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-3.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-4.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-5.jpg" alt="">
-                    </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-02.jpg') }}" alt="">
                 </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-6.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-7.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-8.jpg" alt="">
-                    </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-03.jpg') }}" alt="">
                 </div>
-                <div class="grid gap-4">
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-9.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-10.jpg" alt="">
-                    </div>
-                    <div>
-                        <img class="h-auto max-w-full rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/masonry/image-11.jpg" alt="">
-                    </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-04.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-05.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-06.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-07.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-08.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-09.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-10.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-11.jpg') }}" alt="">
+                </div>
+                <div>
+                    <img class="h-auto max-w-full rounded-lg" src="{{ asset('images/img-12.jpg') }}" alt="">
                 </div>
             </div>
         </div>
@@ -119,7 +111,7 @@
     <div class="fade-section gap-16 items-center py-8 mx-auto max-w-screen-xl lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['testimony']->name }}</p>
-            <h2 class="mb-5 text-4xl tracking-tight font-extrabold text-white">{{ $sections['testimony']->title }}</h2>
+            <h2 class="mb-5 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{{ $sections['testimony']->title }}</h2>
             <p class="mt-3 mb-5 lg:mb-8 text-gray-400">{{ $sections['testimony']->description }}</p>
             <!-- Swiper Container -->
             <div class="swiper mySwiper max-w-3xl mx-auto">
@@ -148,7 +140,7 @@
     <div class="fade-section fade-right gap-16 items-center py-8 mx-auto max-w-screen-xl lg:py-16">
         <div class="font-light sm:text-lg text-gray-400">
             <p class="mb-2 font-semibold fs-12 bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['sponsor']->name }}</p>
-            <h2 class="mb-5 lg:mb-8 text-4xl tracking-tight font-extrabold text-white">{{ $sections['sponsor']->title }}</h2>
+            <h2 class="mb-5 lg:mb-8 text-3xl md:text-4xl tracking-tight font-extrabold text-white">{{ $sections['sponsor']->title }}</h2>
             <p class="mt-3 mb-5 lg:mb-8 text-gray-400">{{ $sections['sponsor']->description }}</p>
             <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">
                 @foreach ($sponsors as $sponsor)
