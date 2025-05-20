@@ -44,7 +44,7 @@ class UserActivationNotification extends Notification
             ->line("Votre compte a été activé avec succès.")
             ->line("Vous pouvez dès maintenant vous connecter à l’aide des informations suivantes :")
             ->line("**Adresse e-mail :** {$this->user->email}")
-            ->line("**Mot de passe :**" . strtolower($this->user->personal_code))
+            ->line("**Mot de passe :** " . strtolower($this->user->personal_code))
             ->line("Une fois connecté(e), pensez à modifier votre mot de passe depuis votre espace personnel.")
             ->action('Accéder à la plateforme', url(route('login')))
             ->line("N’hésitez pas à nous contacter si vous avez la moindre question.")
