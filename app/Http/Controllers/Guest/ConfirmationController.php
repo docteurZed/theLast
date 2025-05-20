@@ -21,7 +21,7 @@ class ConfirmationController extends Controller
     public function index ()
     {
         $now = Carbon::now();
-        $deadline = Carbon::create(2025, 5, 20, 13, 0, 0);
+        $deadline = Carbon::create(2025, 5, 21, 12, 0, 0);
 
         if ($now->gt($deadline)) {
             abort(403);
