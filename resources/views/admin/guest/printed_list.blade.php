@@ -31,6 +31,7 @@
                                         <th>Nom</th>
                                         <th>Prénom.s</th>
                                         <th>Numéro de téléphone</th>
+                                        <th>Email</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,10 +47,13 @@
                                         <td>
                                             {{ $admin->phone }}
                                         </td>
+                                        <td>
+                                            {{ $admin->email }}
+                                        </td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="4">
+                                        <td colspan="5">
                                             <div class="flex justify-content-center">
                                                 <p class="text-center">
                                                     Aucun participant enrégistré
