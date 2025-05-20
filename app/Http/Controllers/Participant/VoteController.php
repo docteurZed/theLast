@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Vote;
 use App\Models\VoteCategory;
+use App\Notifications\UserActivityNotification;
 use App\Services\VoteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,6 +28,7 @@ class VoteController extends Controller
         $categories = VoteCategory::all();
         $users = User::where('id', '!=', $user->id)
                                 ->where('is_active', true)
+                                ->where('role', '!=', 'admin')
                                 ->get();
 
         // Top 5 par catégorie
@@ -67,10 +69,18 @@ class VoteController extends Controller
             'vote_category_id' => 'required|exists:vote_categories,id',
         ]);
 
-        $this->voteService->vote(
+        $vote = $this->voteService->vote(
             (int) $validated['candidat_id'],
             (int) $validated['vote_category_id']
         );
+
+        $vote->candidate->notify(new UserActivityNotification(
+            type: 'vote',
+            message: "Un collègue a voté pour vous dans une catégorie.",
+            url: url(route('participant.vote.index')),
+            emailSubject: 'Quelqu’un a voté pour vous.',
+            emailIntro: "Un collègue vient de voter pour vous."
+        ));
 
         return back()->with('success', 'Vote enrégistré');
     }
@@ -88,10 +98,20 @@ class VoteController extends Controller
         ]);
 
         foreach ($validated['categories'] as $categoryId) {
-            $this->voteService->vote(
+            $vote = $this->voteService->vote(
                 (int) $validated['candidat_id'],
                 (int) $categoryId
             );
+
+            $user = User::findOrFail($validated['candidat_id']);
+
+            $user->notify(new UserActivityNotification(
+                type: 'vote',
+                message: "Un collègue a voté pour vous dans une catégorie.",
+                url: url(route('participant.vote.index')),
+                emailSubject: 'Quelqu’un a voté pour vous.',
+                emailIntro: "Un collègue vient de voter pour vous."
+            ));
         }
 
         return back()->with('success', 'Votes enregistrés avec succès');

@@ -15,6 +15,7 @@ class GaleryController extends Controller
         return view('participant.galery.index', [
             'users' => User::where('id', '!=', Auth::user()->id)
                                 ->where('is_active', true)
+                                ->where('role', '!=', 'admin')
                                 ->get(),
             'categories' => VoteCategory::all(),
         ]);

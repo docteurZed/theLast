@@ -112,7 +112,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('publication')->name('publication.')->group(function () {
 
             Route::get('/', [PublicationController::class, 'index'])->name('index');
-            Route::post('/', [PublicationController::class, 'store'])->name('store');
+            Route::post('/store', [PublicationController::class, 'store'])->name('store');
             Route::delete('/{id}/destroy', [PublicationController::class, 'destroy'])->name('destroy');
 
             // AJAX
@@ -135,7 +135,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/toggle-is-ctive', [AdminController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [AdminController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [AdminController::class, 'update'])->name('update');
-            Route::delete('/{id}/destroy', [AdminController::class, 'destroy'])->name('destroy');
+            Route::delete('/{id}/destroy', [AdminController::class, 'destroy'])->name('destroy')->middleware('password.confirm');
 
         });
 
@@ -146,7 +146,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/toggle-is-ctive', [OrganizerController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [OrganizerController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [OrganizerController::class, 'update'])->name('update');
-            Route::delete('/{id}/destroy', [OrganizerController::class, 'destroy'])->name('destroy');
+            Route::delete('/{id}/destroy', [OrganizerController::class, 'destroy'])->name('destroy')->middleware('password.confirm');
 
         });
 
@@ -158,7 +158,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/{id}/toggle-is-ctive', [GuestController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [GuestController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
             Route::put('/{id}/update', [GuestController::class, 'update'])->name('update');
-            Route::delete('/{id}/destroy', [GuestController::class, 'destroy'])->name('destroy');
+            Route::delete('/{id}/destroy', [GuestController::class, 'destroy'])->name('destroy')->middleware('password.confirm');
 
         });
 

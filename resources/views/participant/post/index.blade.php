@@ -52,8 +52,9 @@
 
         <div class="flex items-center justify-between">
             <label class="cursor-pointer text-sm font-semibold">
-                <input type="file" name="image" class="hidden" accept="image/*">
+                <input type="file" name="image" class="hidden" accept="image/*" id="imageInput">
                 📎 Ajouter une image
+                <span id="fileName" class="text-xs block sm:inline text-gray-400 ml-2"></span>
             </label>
 
             <button type="submit"
@@ -76,7 +77,7 @@
             <img src="{{ asset('images/user.png') }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
             @endif
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white">{{ $post->user->name }}</p>
+                <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}</p>
                 <span class="text-sm text-yellow-700">{{ $post->created_at->diffForHumans() }}</span>
             </div>
         </div>
@@ -175,6 +176,17 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
+    document.getElementById('imageInput').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        const fileNameSpan = document.getElementById('fileName');
+
+        if (file) {
+            fileNameSpan.textContent = file.name;
+        } else {
+            fileNameSpan.textContent = '';
+        }
+    });
+
     // Gestion du like
     document.querySelectorAll('.like-button').forEach(button => {
         button.addEventListener('click', function (e) {
@@ -239,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.value = '';
 
                 // Met à jour le compteur de commentaires
-                const countSpan = commentSection.closest('.bg-white').querySelector('.comment-count');
+                const countSpan = commentSection.closest('.bg-gray-800').querySelector('.comment-count');
                 if (countSpan) {
                     const currentCount = parseInt(countSpan.textContent);
                     countSpan.textContent = currentCount + 1;

@@ -76,7 +76,6 @@ class UserService
             'phone'      => $data->phone ?? $user->phone,
             'bio'        => $data->bio ?? $user->bio,
             'role' => $data->role ?? $user->role,
-            'password' => Hash::make(strtolower($user->personal_code)),
         ]);
 
         if($user->role != 'guest' && !$user->is_active) {

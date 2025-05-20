@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PublicationRequest;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCommentRequest;
+use App\Models\Publication;
 use App\Models\PublicationComment;
+use App\Notifications\UserActivityNotification;
 use App\Services\PublicationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +39,16 @@ class PublicationController extends Controller
     public function toggleLike(int $id)
     {
         $result = $this->service->toggleLike($id);
+        $publication = Publication::findOrFail($id);
+        $user = Auth::user();
+
+        $publication->user->notify(new UserActivityNotification(
+            type: 'like',
+            message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre publication.",
+            url: url(route('participant.publication.index')),
+            emailSubject: 'Quelqu’un a aimé votre publication.',
+            emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre publication."
+        ));
 
         return response()->json([
             'liked' => $result['liked'],
@@ -55,7 +67,16 @@ class PublicationController extends Controller
             'content.required' => 'Le contenu du commentaire est obligatoire.',
         ]);
 
-        $this->service->addComment($request);
+        $comment = $this->service->addComment($request);
+        $user = Auth::user();
+
+        $comment->publication->user->notify(new UserActivityNotification(
+            type: 'comment',
+            message: ucfirst($user->first_name) . ucfirst($user->name) . " a commenté votre publication.",
+            url: url(route('participant.publication.index')),
+            emailSubject: 'Nouveau commentaire',
+            emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
+        ));
 
         return back()->with('success', 'Commentaire ajouté.');
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Participant;
 
 use App\Http\Controllers\Controller;
+use App\Notifications\UserActivityNotification;
 use App\Services\ParticipantMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,16 @@ class ParticipantMessageController extends Controller
             abort(403);
         }
 
-        $this->service->store($request);
+        $message = $this->service->store($request);
+
+        $message->sender->notify(new UserActivityNotification(
+            type: 'message',
+            message: "Un de vos collègue vous a envoyé un message privé.",
+            url: url(route('participant.notification.index')),
+            emailSubject: 'Nouveau message reçu',
+            emailIntro: "Vous avez reçu un message d'un de vos collègue."
+        ));
+
 
         return back()->with('success', 'Message envoyé avec succès.');
     }

@@ -61,14 +61,26 @@
                 Photo
             </label>
             <div class="flex items-center justify-center w-full mb-6">
-                <label for="profile_photo" class="flex flex-col items-center justify-center w-full h-32 border-1 rounded-lg cursor-pointer bg-gray-700 border-gray-600 hover:bg-gray-600">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                        <svg class="w-5 h-5 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                <label for="profile_photo" class="flex flex-col items-center justify-center w-full h-32 border rounded-lg cursor-pointer bg-gray-700 border-gray-600 hover:bg-gray-600">
+                    <div class="flex flex-col items-center justify-center pt-5 pb-6" id="preview-default">
+                        <svg class="w-5 h-5 mb-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5
+                                5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0
+                                0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                         </svg>
-                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Cliquer pour téléverser</p>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                            <span class="font-semibold">Cliquer pour téléverser</span>
+                        </p>
                         <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG ou JPEG</p>
                     </div>
+
+                    <!-- Affichage du nom de fichier sélectionné -->
+                    <p id="file-name" class="text-xs text-yellow-600 mt-2 hidden"></p>
+
+                    <!-- Miniature de l'image sélectionnée -->
+                    <img id="image-preview" class="mt-2 w-16 h-16 object-cover rounded-lg hidden" alt="Prévisualisation">
+
                     <input name="profile_photo" id="profile_photo" type="file" class="hidden" accept=".jpg,.png,.jpeg" />
                 </label>
             </div>
@@ -84,6 +96,35 @@
         </button>
     </div>
 </form>
+
+<script>
+    const input = document.getElementById('profile_photo');
+    const previewImage = document.getElementById('image-preview');
+    const fileNameDisplay = document.getElementById('file-name');
+    const defaultPreview = document.getElementById('preview-default');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            fileNameDisplay.textContent = file.name;
+            fileNameDisplay.classList.remove('hidden');
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.setAttribute('src', e.target.result);
+                previewImage.classList.remove('hidden');
+                defaultPreview.classList.add('hidden'); // cacher l'icône et le texte par défaut
+            };
+            reader.readAsDataURL(file);
+        } else {
+            fileNameDisplay.textContent = '';
+            fileNameDisplay.classList.add('hidden');
+            previewImage.classList.add('hidden');
+            defaultPreview.classList.remove('hidden');
+        }
+    });
+</script>
 
 @endsection
 

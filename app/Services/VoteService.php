@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class VoteService
 {
-    public function vote(int $candidatId, int $categoryId): array
+    public function vote(int $candidatId, int $categoryId)
     {
         $userId = Auth::user()->id;
 
@@ -27,15 +27,10 @@ class VoteService
         }
 
         // Crée un nouveau vote
-        Vote::create([
+        return Vote::create([
             'voter_id' => $userId,
             'candidat_id' => $candidatId,
             'vote_category_id' => $categoryId,
         ]);
-
-        return [
-            'success' => true,
-            'message' => 'Ton vote a été enregistré.',
-        ];
     }
 }
