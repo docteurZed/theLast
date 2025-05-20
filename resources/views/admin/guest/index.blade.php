@@ -264,8 +264,8 @@
                                                             <label for="role" class="form-label">Rôle <span class="text-danger">*</span></label>
                                                             <select class="form-control" name="role" id="role" required>
                                                                 <option value="">Choisir un rôle</option>
-                                                                <option value="guest" {{ old('role') == 'guest' ? 'selected' : '' }}>Participant</option>
-                                                                <option value="organizer" {{ old('role') == 'organizer' ? 'selected' : '' }}>Organisateur</option>
+                                                                <option value="guest" {{ old('role', $admin->role) == 'guest' ? 'selected' : '' }}>Participant</option>
+                                                                <option value="organizer" {{ old('role', $admin->role) == 'organizer' ? 'selected' : '' }}>Organisateur</option>
                                                             </select>
                                                         </div>
                                                         @endif
