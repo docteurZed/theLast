@@ -64,7 +64,7 @@
                                                     </span>
                                                     @break
                                                 @default
-                                                    <span class="text-success">
+                                                    <span class="text-danger">
                                                         Non payé
                                                     </span>
                                             @endswitch
