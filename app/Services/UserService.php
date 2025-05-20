@@ -76,11 +76,14 @@ class UserService
             'phone'      => $data->phone ?? $user->phone,
             'bio'        => $data->bio ?? $user->bio,
             'role' => $data->role ?? $user->role,
-        ]);
-
-        $user->update([
             'password' => Hash::make(strtolower($user->personal_code)),
         ]);
+
+        if($user->role != 'guest' && !$user->is_active) {
+            $user->update([
+                'is_active' => true,
+            ]);
+        }
 
         if($user->is_active && !$user->is_welcomed_message_sent) {
             $user->notify(new UserActivationNotification($user));
