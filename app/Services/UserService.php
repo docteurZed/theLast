@@ -42,6 +42,10 @@ class UserService
             'is_active'     => $is_active,
         ]);
 
+        $user->update([
+            'password' => Hash::make(strtolower($user->personal_code)),
+        ]);
+
         if($user->is_active && !$user->is_welcomed_message_sent) {
             $user->notify(new UserActivationNotification($user));
             $user->is_welcomed_message_sent = true;

@@ -36,7 +36,7 @@
                         </span>
                     </p>
                     <p class="mb-4 text-4xl text-lg font-semibold text-white">
-                        Votre confirmation a bien été envoyé. Vous recevrez bientôt une réponse de la part du comité d'organisation.
+                        Votre confirmation a bien été envoyée. Vous recevrez bientôt une réponse de la part du comité d'organisation.
                     </p>
                     <a href="{{ route('home') }}" class="inline-flex text-white bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 hover:opacity-90 transition focus:ring-2 focus:outline-none focus:ring-yellow-500 font-semibold rounded-lg text-sm px-5 py-2.5 text-center my-4">
                         Revenir à l'accueil
