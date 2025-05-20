@@ -71,11 +71,11 @@
                 </li>
                 <!-- End::slide -->
 
+                @if (Auth::user()->role == 'admin')
                 <!-- Start::slide__category -->
                 <li class="slide__category"><span class="category-name">Paramètres</span></li>
                 <!-- End::slide__category -->
 
-                @if (Auth::user()->role == 'admin')
                 <!-- Start::slide -->
                 <li class="slide">
                     <a href="{{ route('admin.setting.index') }}" class="side-menu__item {{ request()->routeIs('admin.setting.*') ? 'active' : '' }}">
