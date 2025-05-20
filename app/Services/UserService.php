@@ -75,6 +75,11 @@ class UserService
             'first_name' => $data->first_name ?? $user->first_name,
             'phone'      => $data->phone ?? $user->phone,
             'bio'        => $data->bio ?? $user->bio,
+            'role' => $data->role ?? $user->role,
+        ]);
+
+        $user->update([
+            'password' => Hash::make(strtolower($user->personal_code)),
         ]);
 
         if($user->is_active && !$user->is_welcomed_message_sent) {
