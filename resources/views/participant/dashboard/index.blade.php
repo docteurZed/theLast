@@ -30,6 +30,7 @@
             @foreach ($slides as $slide)
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <img src="{{ asset('storage/public/' . basename($slide->image)) }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                {{$slide->image}}
             </div>
             @endforeach
         </div>
