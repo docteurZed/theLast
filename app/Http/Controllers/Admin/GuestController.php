@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\Setting;
+use App\Models\User;
 use App\Services\PaymentService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
@@ -32,6 +33,19 @@ class GuestController extends Controller
         $guests = $this->userService->showAll('guest');
 
         return view('admin.guest.index', [
+            'guests' => $guests
+        ]);
+    }
+
+    public function printedList()
+    {
+        if (Auth::user()->role != 'admin') {
+            abort(403);
+        }
+
+        $guests = User::where('role', '!=', 'admin')->orderBy('name')->get();
+
+        return view('admin.guest.printed_list', [
             'guests' => $guests
         ]);
     }

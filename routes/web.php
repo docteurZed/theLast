@@ -153,6 +153,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('guest')->name('guest.')->group(function () {
 
             Route::get('/', [GuestController::class, 'index'])->name('index');
+            Route::get('/printed-list', [GuestController::class, 'printedList'])->name('printedList');
             Route::post('/store', [GuestController::class, 'store'])->name('store');
             Route::post('/{id}/toggle-is-ctive', [GuestController::class, 'toggleIsActive'])->name('toggleIsActive');
             Route::put('/{id}/update-payment-status', [GuestController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');

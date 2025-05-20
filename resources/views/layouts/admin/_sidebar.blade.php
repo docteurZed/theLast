@@ -48,15 +48,21 @@
                         <span class="side-menu__label">Admins</span>
                     </a>
                 </li>
-                <!-- End::slide -->
-                @endif
 
-                @if (Auth::user()->role == 'admin')
                 <!-- Start::slide -->
                 <li class="slide">
                     <a href="{{ route('admin.organizer.index') }}" class="side-menu__item {{ request()->routeIs('admin.organizer.*') ? 'active' : '' }}">
                         <i class="bx bx-user-voice side-menu__icon"></i>
                         <span class="side-menu__label">Organisateurs</span>
+                    </a>
+                </li>
+                <!-- End::slide -->
+
+                <!-- Start::slide -->
+                <li class="slide">
+                    <a href="{{ route('admin.guest.printedList') }}" class="side-menu__item">
+                        <i class="bx bx-user-voice side-menu__icon"></i>
+                        <span class="side-menu__label">Liste à imprimer</span>
                     </a>
                 </li>
                 <!-- End::slide -->
