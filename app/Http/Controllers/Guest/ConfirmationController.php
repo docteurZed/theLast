@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Guest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Services\UserService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -19,6 +20,13 @@ class ConfirmationController extends Controller
 
     public function index ()
     {
+        $now = Carbon::now();
+        $deadline = Carbon::create(2025, 5, 20, 13, 0, 0);
+
+        if ($now->gt($deadline)) {
+            abort(403);
+        }
+
         return view('guest.confirmation.index');
     }
 
