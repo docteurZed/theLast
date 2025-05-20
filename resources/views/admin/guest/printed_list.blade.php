@@ -30,9 +30,7 @@
                                         <th>#</th>
                                         <th>Nom</th>
                                         <th>Prénom.s</th>
-                                        <th>Email</th>
                                         <th>Numéro de téléphone</th>
-                                        <th>Statut de payement</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,33 +44,12 @@
                                             {{ ucfirst($admin->first_name) }}
                                         </td>
                                         <td>
-                                            {{ $admin->email }}
-                                        </td>
-                                        <td>
                                             {{ $admin->phone }}
-                                        </td>
-                                        <td>
-                                            @switch($admin->payment_status)
-                                                @case('paid')
-                                                    <span class="text-success">
-                                                        Payé
-                                                    </span>
-                                                    @break
-                                                @case('pending')
-                                                    <span class="text-warning">
-                                                        En cours
-                                                    </span>
-                                                    @break
-                                                @default
-                                                    <span class="text-danger">
-                                                        Non payé
-                                                    </span>
-                                            @endswitch
                                         </td>
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="6">
+                                        <td colspan="4">
                                             <div class="flex justify-content-center">
                                                 <p class="text-center">
                                                     Aucun participant enrégistré
