@@ -259,6 +259,16 @@
                                                             <label for="bio" class="form-label">Bio</label>
                                                             <textarea class="form-control" id="bio" name="bio" placeholder="La biographie">{{ old('bio', $admin->bio) }}</textarea>
                                                         </div>
+                                                        @if (Auth::user()->role == 'admin')
+                                                        <div class="col-xl-12 mb-3">
+                                                            <label for="role" class="form-label">Rôle <span class="text-danger">*</span></label>
+                                                            <select class="form-control" name="role" id="role" required>
+                                                                <option value="">Choisir un rôle</option>
+                                                                <option value="guest" {{ old('role') == 'guest' ? 'selected' : '' }}>Participant</option>
+                                                                <option value="organizer" {{ old('role') == 'organizer' ? 'selected' : '' }}>Organisateur</option>
+                                                            </select>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">

@@ -19,7 +19,7 @@ class DashboardController extends Controller
         }
 
         return view('admin.dashboard.index', [
-            'totalParticipants' => User::count(),
+            'totalParticipants' => User::where('role', '!=', 'admin')->count(),
             'totalIncomes' => Transaction::where('type', 'income')->sum('amount'),
             'totalExpenses' => Transaction::where('type', 'expense')->sum('amount'),
             'unreadMessages' => GuestMessage::where('has_read', false)->count(),
