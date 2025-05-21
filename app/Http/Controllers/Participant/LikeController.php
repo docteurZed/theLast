@@ -39,7 +39,7 @@ class LikeController extends Controller
             if($user->id != $like->liked->id) {
                 $like->liked->notify(new UserActivityNotification(
                     type: 'like',
-                    message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre profil.",
+                    message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a aimé votre profil.",
                     url: url(route('participant.galery.index')),
                     emailSubject: 'Quelqu’un a aimé votre profil.',
                     emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre profil."

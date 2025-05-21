@@ -77,8 +77,11 @@
             <img src="{{ asset('images/user.png') }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
             @endif
             <div>
-                <p class="font-semibold text-white">
-                    {{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}
+                <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}
+                    @if ($post->user->role == "admin")
+                        <span class="text-gray-400 mx-2">•</span>
+                        <span class="text-yellow-600 italic text-sm">Admin</span>
+                    @endif
                 </p>
                 <span class="text-sm text-yellow-700">{{ $post->created_at->diffForHumans() }}</span>
             </div>
@@ -98,11 +101,11 @@
             <div class="flex items-center gap-4 text-sm">
                 <button data-id="{{ $post->id }}"
                     class="like-button hover:text-yellow-600 cursor-pointer {{ $post->isLikedBy(auth()->user()) ? 'text-yellow-600' : 'text-gray-400' }}">
-                    👍 J'aime (<span class="like-count">{{ $post->publication_likes->count() }}</span>)
+                    👍<span class="hidden sm:inline"> J'aime</span> (<span class="like-count">{{ $post->publication_likes->count() }}</span>)
                 </button>
                 <button @click="showAllComments = !showAllComments"
                     class="text-gray-500 hover:text-yellow-500 transition duration-150">
-                    💬 <span class="comment-count">{{ $post->publication_comments->count() }}</span> commentaires
+                    💬 <span class="comment-count">{{ $post->publication_comments->count() }}</span><span class="hidden sm:inline"> commentaires</span>
                 </button>
             </div>
             @if(auth()->id() === $post->user_id)
@@ -110,14 +113,14 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="text-red-500 hover:text-red-700 text-sm font-semibold">🗑 Supprimer</button>
+                    class="text-red-500 hover:text-red-700 text-sm font-semibold">🗑<span class="hidden sm:inline"> Supprimer</span></button>
             </form>
             @endif
             @if ($post->image)
             <a href="{{ asset('storage/public/' . basename($post->image)) }}"
                 download
                 class="text-sm font-semibold text-white hover:bg-gray-400 transition">
-                 ⬇ Télécharger l'image
+                ⬇<span class="hidden sm:inline"> Télécharger l'image</span>
              </a>
             @endif
         </div>
@@ -206,6 +209,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     this.classList.toggle('text-yellow-600');
                     this.classList.toggle('text-gray-400');
+
+                    const countSpan = this.querySelector('.like-count');
+                    if (countSpan) {
+                        countSpan.textContent = response.data.likes_count;
+                    }
                 })
                 .catch(error => {
                     console.error(error);
@@ -252,8 +260,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 commentList.appendChild(newComment);
-                input.value = ''
+                input.value = '';
 
+                // Met à jour le compteur de commentaires
+                const countSpan = commentSection.closest('.bg-gray-800').querySelector('.comment-count');
+                if (countSpan) {
+                    const currentCount = parseInt(countSpan.textContent);
+                    countSpan.textContent = currentCount + 1;
+                }
             })
             .catch(error => {
                 console.error(error);

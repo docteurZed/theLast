@@ -45,7 +45,7 @@ class PublicationController extends Controller
         if($user->id != $publication->user->user->id) {
             $publication->user->notify(new UserActivityNotification(
                 type: 'like',
-                message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre publication.",
+                message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a aimé votre publication.",
                 url: url(route('participant.publication.index')),
                 emailSubject: 'Quelqu’un a aimé votre publication.',
                 emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre publication."
@@ -75,7 +75,7 @@ class PublicationController extends Controller
         if($user->id != $comment->publication->user->id) {
             $comment->publication->user->notify(new UserActivityNotification(
                 type: 'comment',
-                message: ucfirst($user->first_name) . ucfirst($user->name) . " a commenté votre publication.",
+                message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a commenté votre publication.",
                 url: url(route('participant.publication.index')),
                 emailSubject: 'Nouveau commentaire',
                 emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
