@@ -42,7 +42,7 @@ class PublicationController extends Controller
         $publication = Publication::findOrFail($id);
         $user = Auth::user();
 
-        if($user->id != $publication->user->user->id) {
+        if($user->id != $publication->user->id) {
             $publication->user->notify(new UserActivityNotification(
                 type: 'like',
                 message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a aimé votre publication.",

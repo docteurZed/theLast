@@ -210,10 +210,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     this.classList.toggle('text-yellow-600');
                     this.classList.toggle('text-gray-400');
 
-                    const countSpan = this.querySelector('.like-count');
-                    if (countSpan) {
-                        countSpan.textContent = response.data.likes_count;
-                    }
+                    // const countSpan = this.querySelector('.like-count');
+                    // if (countSpan) {
+                    //     countSpan.textContent = response.data.likes_count;
+                    // }
                 })
                 .catch(error => {
                     console.error(error);
@@ -263,11 +263,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.value = '';
 
                 // Met à jour le compteur de commentaires
-                const countSpan = commentSection.closest('.bg-gray-800').querySelector('.comment-count');
-                if (countSpan) {
-                    const currentCount = parseInt(countSpan.textContent);
-                    countSpan.textContent = currentCount + 1;
-                }
+                // const countSpan = commentSection.closest('.bg-gray-800').querySelector('.comment-count');
+                // if (countSpan) {
+                //     const currentCount = parseInt(countSpan.textContent);
+                //     countSpan.textContent = currentCount + 1;
+                // }
             })
             .catch(error => {
                 console.error(error);
