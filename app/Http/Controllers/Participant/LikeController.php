@@ -36,13 +36,15 @@ class LikeController extends Controller
 
             $user = Auth::user();
 
-            $like->liked->notify(new UserActivityNotification(
-                type: 'like',
-                message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre profil.",
-                url: url(route('participant.galery.index')),
-                emailSubject: 'Quelqu’un a aimé votre profil.',
-                emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre profil."
-            ));
+            if($user->id != $like->liked->id) {
+                $like->liked->notify(new UserActivityNotification(
+                    type: 'like',
+                    message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre profil.",
+                    url: url(route('participant.galery.index')),
+                    emailSubject: 'Quelqu’un a aimé votre profil.',
+                    emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre profil."
+                ));
+            }
 
             return response()->json(['success' => true, 'message' => 'Like envoyé avec succès.']);
 

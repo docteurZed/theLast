@@ -77,7 +77,9 @@
             <img src="{{ asset('images/user.png') }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
             @endif
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}</p>
+                <p class="font-semibold text-white">
+                    {{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}
+                </p>
                 <span class="text-sm text-yellow-700">{{ $post->created_at->diffForHumans() }}</span>
             </div>
         </div>
@@ -110,6 +112,13 @@
                 <button type="submit"
                     class="text-red-500 hover:text-red-700 text-sm font-semibold">🗑 Supprimer</button>
             </form>
+            @endif
+            @if ($post->image)
+            <a href="{{ asset('storage/public/' . basename($post->image)) }}"
+                download
+                class="text-sm font-semibold text-white hover:bg-gray-400 transition">
+                 ⬇ Télécharger l'image
+             </a>
             @endif
         </div>
 
@@ -197,11 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => {
                     this.classList.toggle('text-yellow-600');
                     this.classList.toggle('text-gray-400');
-
-                    const countSpan = this.querySelector('.like-count');
-                    if (countSpan) {
-                        countSpan.textContent = response.data.likes_count;
-                    }
                 })
                 .catch(error => {
                     console.error(error);
@@ -248,14 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 commentList.appendChild(newComment);
-                input.value = '';
+                input.value = ''
 
-                // Met à jour le compteur de commentaires
-                const countSpan = commentSection.closest('.bg-gray-800').querySelector('.comment-count');
-                if (countSpan) {
-                    const currentCount = parseInt(countSpan.textContent);
-                    countSpan.textContent = currentCount + 1;
-                }
             })
             .catch(error => {
                 console.error(error);

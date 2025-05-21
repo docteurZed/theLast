@@ -42,13 +42,15 @@ class PublicationController extends Controller
         $publication = Publication::findOrFail($id);
         $user = Auth::user();
 
-        $publication->user->notify(new UserActivityNotification(
-            type: 'like',
-            message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre publication.",
-            url: url(route('participant.publication.index')),
-            emailSubject: 'Quelqu’un a aimé votre publication.',
-            emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre publication."
-        ));
+        if($user->id != $publication->user->user->id) {
+            $publication->user->notify(new UserActivityNotification(
+                type: 'like',
+                message: ucfirst($user->first_name) . ucfirst($user->name) . " a aimé votre publication.",
+                url: url(route('participant.publication.index')),
+                emailSubject: 'Quelqu’un a aimé votre publication.',
+                emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre publication."
+            ));
+        }
 
         return response()->json([
             'liked' => $result['liked'],
@@ -70,13 +72,15 @@ class PublicationController extends Controller
         $comment = $this->service->addComment($request);
         $user = Auth::user();
 
-        $comment->publication->user->notify(new UserActivityNotification(
-            type: 'comment',
-            message: ucfirst($user->first_name) . ucfirst($user->name) . " a commenté votre publication.",
-            url: url(route('participant.publication.index')),
-            emailSubject: 'Nouveau commentaire',
-            emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
-        ));
+        if($user->id != $comment->publication->user->id) {
+            $comment->publication->user->notify(new UserActivityNotification(
+                type: 'comment',
+                message: ucfirst($user->first_name) . ucfirst($user->name) . " a commenté votre publication.",
+                url: url(route('participant.publication.index')),
+                emailSubject: 'Nouveau commentaire',
+                emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
+            ));
+        }
 
         return back()->with('success', 'Commentaire ajouté.');
     }

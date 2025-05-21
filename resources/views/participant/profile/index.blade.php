@@ -29,7 +29,7 @@
         <form action="{{ route('participant.profile.update', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <div class="flex items-center gap-6 mb-6">
+            <div class="flex items-center gap-2 sm:gap-6 mb-6">
                 @if (isset(Auth::user()->profile_photo))
                 <img src="{{ asset('storage/public/' . basename(Auth::user()->profile_photo)) }}" alt="Photo de profil" class="w-20 h-20 rounded-full object-cover">
                 @else
@@ -37,7 +37,7 @@
                 @endif
 
                 <div>
-                    <label class="block mb-1 text-sm font-semibold">Changer la photo</label>
+                    <label class="block mb-1 text-sm font-semibold">Changer<span class="hidden sm:inline"> la photo</span></label>
                     <input type="file" name="profile_photo" class="text-sm file:bg-yellow-600 file:text-white file:rounded-md file:px-3 file:py-1.5 file:border-none hover:file:bg-yellow-700" accept=".png,.jpg,.jpeg">
                     @if ($errors->has('profile_photo'))
                     <p class="mt-2 text-sm text-red-600">
