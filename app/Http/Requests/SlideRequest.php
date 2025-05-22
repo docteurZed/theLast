@@ -23,7 +23,7 @@ class SlideRequest extends FormRequest
     {
         return [
             'name' => 'nullable|string|max:255',
-            'image' => 'required|image|mimes:png,jpg,jpeg',
+            'image' => 'required|image',
         ];
     }
 

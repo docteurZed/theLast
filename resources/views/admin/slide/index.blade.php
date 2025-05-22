@@ -76,7 +76,7 @@
                                                         <div class="col-xl-12 mb-3">
                                                             <label for="name" class="form-label">Image</label>
                                                             <div class="mt-3">
-                                                                <img src="{{ asset('storage/public/' . basename($slide->image)) }}" alt="slide" width="150">
+                                                                <img src="{{ $slide->image }}" alt="slide" width="150">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -109,7 +109,7 @@
                                                             <input type="file" class="form-control" id="image" name="image" value="{{ old('image', $slide->image) }}" required accept=".png,.jpg,.jpeg">
                                                         </div>
                                                         <div class="mt-3">
-                                                            <img src="{{ asset('storage/public/' . basename($slide->image)) }}" alt="slide" width="150">
+                                                            <img src="{{ $slide->image }}" alt="slide" width="150">
                                                         </div>
                                                     </div>
                                                 </div>

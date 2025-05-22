@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Models\Slide;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use App\Services\CloudinaryService;
 
 class SlideService
 {
@@ -38,10 +37,11 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
+            // Supprimer ancienne image si existante
             if ($slide->image) {
                 $this->cloudinary->deleteFromUrl($slide->image);
             }
-
+            // Upload nouvelle image
             $payload['image'] = $this->cloudinary->upload($data->file('image'), 'slides');
         }
 

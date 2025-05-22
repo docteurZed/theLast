@@ -36,7 +36,7 @@
     </div>
     @endif
 
-    {{-- @if (Auth::user()->notifications->isNotEmpty())
+    @if (Auth::user()->notifications->isNotEmpty())
         @foreach (Auth::user()->notifications as $msg)
             @php
                 $type = $msg->data['type'] ?? 'default';
@@ -61,7 +61,7 @@
 
             <div id="section-{{ $msg->id }}"
                 class="flex items-center bg-gray-800 mb-4 rounded-xl shadow-xl p-5 cursor-pointer border-l-4 {{ $styles }}">
-                <div class="relative inline-block shrink-0">
+                <div class="relative inline-block shrink-0 flex items-center justify-center">
                     <span class="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full">
                         <svg class="w-4 h-4 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
                             <path d="{{ $icons }}" />
@@ -79,7 +79,7 @@
                 </div>
             </div>
         @endforeach
-    @endif --}}
+    @endif
 
 </div>
 
