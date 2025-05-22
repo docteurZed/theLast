@@ -5,10 +5,17 @@ namespace App\Services;
 use App\Models\Slide;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Services\CloudinaryService;
 
 class SlideService
 {
+    protected CloudinaryService $cloudinary;
+
+    public function __construct(CloudinaryService $cloudinary)
+    {
+        $this->cloudinary = $cloudinary;
+    }
+
     public function list(): Collection
     {
         return Slide::all();
@@ -19,7 +26,7 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $payload['image'] = $data->file('image')->store('public');
+            $payload['image'] = $this->cloudinary->upload($data->file('image'), 'slides');
         }
 
         return Slide::create($payload);
@@ -31,11 +38,11 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $oldPath = $slide->image;
-            $payload['image'] = $data->file('image')->store('public');
-            if ($oldPath && Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
+            if ($slide->image) {
+                $this->cloudinary->deleteFromUrl($slide->image);
             }
+
+            $payload['image'] = $this->cloudinary->upload($data->file('image'), 'slides');
         }
 
         $slide->update($payload);
@@ -46,10 +53,11 @@ class SlideService
     public function delete(int $id): void
     {
         $slide = Slide::findOrFail($id);
-        $oldPath = $slide->image;
-        if ($oldPath && Storage::exists($oldPath)) {
-            Storage::delete($oldPath);
+
+        if ($slide->image) {
+            $this->cloudinary->deleteFromUrl($slide->image);
         }
+
         $slide->delete();
     }
 }
