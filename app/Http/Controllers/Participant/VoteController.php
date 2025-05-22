@@ -29,6 +29,7 @@ class VoteController extends Controller
         $users = User::where('id', '!=', $user->id)
                                 ->where('is_active', true)
                                 ->where('role', '!=', 'admin')
+                                ->orderBy('name')
                                 ->get();
 
         // Top 5 par catégorie

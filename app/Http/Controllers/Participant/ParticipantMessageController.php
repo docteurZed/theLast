@@ -20,7 +20,7 @@ class ParticipantMessageController extends Controller
 
         $message = $this->service->store($request);
 
-        $message->sender->notify(new UserActivityNotification(
+        $message->receiver->notify(new UserActivityNotification(
             type: 'message',
             message: "Un de vos collègue vous a envoyé un message privé.",
             url: url(route('participant.notification.index')),

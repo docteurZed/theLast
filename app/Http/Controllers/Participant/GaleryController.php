@@ -16,6 +16,7 @@ class GaleryController extends Controller
             'users' => User::where('id', '!=', Auth::user()->id)
                                 ->where('is_active', true)
                                 ->where('role', '!=', 'admin')
+                                ->orderBy('name')
                                 ->get(),
             'categories' => VoteCategory::all(),
         ]);

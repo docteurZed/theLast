@@ -43,8 +43,14 @@
         </div>
     </div>
 
-    {{-- @if (Auth::user()->notifications->isNotEmpty())
-        @foreach (Auth::user()->notifications as $msg)
+    @php
+        $notifications = Auth::user()->notifications->filter(function ($notification) {
+            return $notification->created_at > \Carbon\Carbon::create(2025, 5, 22, 15, 0, 0);
+        })->sortByDesc('created_at');
+    @endphp
+
+    @if ($notifications->isNotEmpty())
+        @foreach ($notifications as $msg)
             @php
                 $type = $msg->data['type'] ?? 'default';
 
@@ -66,27 +72,29 @@
                 };
             @endphp
 
-            <div id="section-{{ $msg->id }}"
-                class="flex items-center bg-gray-800 mb-4 rounded-xl shadow-xl p-5 cursor-pointer border-l-4 {{ $styles }}">
-                <div class="relative inline-block shrink-0">
-                    <span class="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full">
-                        <svg class="w-4 h-4 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="{{ $icons }}" />
-                        </svg>
-                    </span>
-                </div>
-
-                <div class="ms-3 text-sm">
-                    <div class="text-sm font-semibold text-white">
-                        {{ $msg->data['message'] }}
+            <a href="{{ $msg->data['url'] }}" class="block w-full cursor-pointer">
+                <div id="section-{{ $msg->id }}"
+                    class="flex items-center bg-gray-800 mb-4 rounded-xl shadow-xl p-5 cursor-pointer border-l-4 {{ $styles }}">
+                    <div class="relative inline-block shrink-0">
+                        <span class="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full">
+                            <svg class="w-4 h-4 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="{{ $icons }}" />
+                            </svg>
+                        </span>
                     </div>
-                    <span class="text-xs font-medium text-yellow-500 mt-2 block">
-                        {{ $msg->created_at->diffForHumans() }}
-                    </span>
+
+                    <div class="ms-3 text-sm">
+                        <div class="text-sm font-semibold text-white">
+                            {{ $msg->data['message'] }}
+                        </div>
+                        <span class="text-xs font-medium text-yellow-500 mt-2 block">
+                            {{ $msg->created_at->diffForHumans() }}
+                        </span>
+                    </div>
                 </div>
-            </div>
+            </a>
         @endforeach
-    @endif --}}
+    @endif
 
 </div>
 

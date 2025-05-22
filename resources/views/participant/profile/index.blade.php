@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto sm:p-6 space-y-6 text-gray-400 mb-16">
+<div class="max-w-4xl mx-auto p-4 sm:p-6 space-y-6 text-gray-400 mb-16">
 
     @if (Session::has('success'))
     <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-green-400 rounded-xl" role="alert">
@@ -23,7 +23,7 @@
     @endif
 
     <!-- Profile section -->
-    <div class="mb-8">
+    <div class="mb-8 w-full">
         <h2 class="text-2xl font-bold text-yellow-700 mb-5">Informations personnelles</h2>
 
         <form action="{{ route('participant.profile.update', ['id' => Auth::user()->id]) }}" method="post" enctype="multipart/form-data">
@@ -108,7 +108,7 @@
     </div>
 
     <!-- Security section -->
-    <div class="">
+    <div class="w-full">
         <h2 class="text-2xl font-bold text-yellow-700 mb-5">Sécurité</h2>
 
         <form action="{{ route('password.update') }}" method="post">
