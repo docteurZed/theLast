@@ -36,7 +36,7 @@
     </div>
     @endif
 
-    @if (Auth::user()->notifications->isNotEmpty())
+    {{-- @if (Auth::user()->notifications->isNotEmpty())
         @foreach (Auth::user()->notifications as $msg)
             @php
                 $type = $msg->data['type'] ?? 'default';
@@ -79,7 +79,7 @@
                 </div>
             </div>
         @endforeach
-    @endif
+    @endif --}}
 
 </div>
 
