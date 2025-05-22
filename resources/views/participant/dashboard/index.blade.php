@@ -23,20 +23,27 @@
         </div>
     @endif
 
-    @if ($slides->isNotEmpty())
+    {{-- @if ($slides->isNotEmpty())
     <div id="default-carousel" class="relative w-full" data-carousel="slide">
         <!-- Carousel wrapper -->
         <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
             @foreach ($slides as $slide)
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img src="{{ $slide->image }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                <img src="{{ asset('storage/public/' . basename($slide->image)) }}" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
             </div>
             @endforeach
         </div>
     </div>
-    @endif
+    @endif --}}
 
-    @if (Auth::user()->notifications->isNotEmpty())
+    <div class="relative w-full">
+        <!-- Carousel wrapper -->
+        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+            <img src="{{ asset('images/bg-1.jpg') }}" class="block w-full" alt="...">
+        </div>
+    </div>
+
+    {{-- @if (Auth::user()->notifications->isNotEmpty())
         @foreach (Auth::user()->notifications as $msg)
             @php
                 $type = $msg->data['type'] ?? 'default';
@@ -61,7 +68,7 @@
 
             <div id="section-{{ $msg->id }}"
                 class="flex items-center bg-gray-800 mb-4 rounded-xl shadow-xl p-5 cursor-pointer border-l-4 {{ $styles }}">
-                <div class="relative inline-block shrink-0 flex items-center justify-center">
+                <div class="relative inline-block shrink-0">
                     <span class="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full">
                         <svg class="w-4 h-4 text-gray-800" fill="currentColor" viewBox="0 0 24 24">
                             <path d="{{ $icons }}" />
@@ -79,7 +86,7 @@
                 </div>
             </div>
         @endforeach
-    @endif
+    @endif --}}
 
 </div>
 
