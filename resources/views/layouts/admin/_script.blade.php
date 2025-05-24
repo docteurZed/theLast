@@ -105,3 +105,11 @@
 
 <!-- Internal Select-2.js -->
 <script src="{{ asset('assets/js/select2.js') }}"></script>
+
+<script src="{{ asset('summernote/summernote.min.js') }}"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote();
+    });
+</script>

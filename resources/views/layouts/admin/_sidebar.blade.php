@@ -205,6 +205,13 @@
                 </li>
                 <!-- End::slide -->
 
+                <li class="slide">
+                    <a href="{{ route('admin.system.notification.index') }}" class="side-menu__item {{ request()->routeIs('admin.system.notification.*') ? 'active' : '' }}">
+                        <i class="bx bx-send side-menu__icon"></i>
+                        <span class="side-menu__label">Notifications Système</span>
+                    </a>
+                </li>
+
                 <!-- Start::slide -->
                 <li class="slide">
                     <a href="{{ route('admin.invitation.index') }}" class="side-menu__item {{ request()->routeIs('admin.invitation.*') ? 'active' : '' }}">

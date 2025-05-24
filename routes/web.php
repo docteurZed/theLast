@@ -43,6 +43,7 @@ use App\Http\Controllers\Participant\{
     PublicationController,
     VoteController
 };
+use App\Http\Controllers\SystemNotificationController;
 use App\Http\Controllers\VoteCategoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -323,6 +324,13 @@ Route::middleware('auth')->group(function () {
         Route::prefix('interaction')->name('interaction.')->group(function () {
 
             Route::get('/', [InteractionController::class, 'index'])->name('index');
+
+        });
+
+        Route::prefix('system-notification')->name('system.notification.')->group(function () {
+
+            Route::get('/', [SystemNotificationController::class, 'index'])->name('index');
+            Route::post('/store', [SystemNotificationController::class, 'store'])->name('store');
 
         });
 
