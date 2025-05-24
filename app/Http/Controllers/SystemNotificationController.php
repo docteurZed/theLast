@@ -20,7 +20,7 @@ class SystemNotificationController extends Controller
             'message' => 'required|string|max:1000',
         ]);
 
-        $users = User::orderBy('id', 'desc');
+        $users = User::orderBy('id', 'desc')->get();
 
         foreach ($users as $user) {
             $user->notify(new SystemNotification($request->subject, $request->message));
