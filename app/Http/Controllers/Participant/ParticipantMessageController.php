@@ -18,7 +18,18 @@ class ParticipantMessageController extends Controller
             abort(403);
         }
 
+        $request->validate([
+            'receiver_id' => 'required|exists:users,id',
+            'content' => 'required|string',
+            'is_anonymous' => 'nullable',
+        ], [
+            'receiver_id.required' => 'Le récepteur du message est obligatoire.',
+            'receiver_id.exists' => 'Le récepteur du message n\'existe pas dans notre base.',
+            'content.required' => 'Le contenu du message est obligatoire.',
+        ]);
+
         $message = $this->service->store($request);
+        $message->load('receiver');
 
         $message->receiver->notify(new UserActivityNotification(
             type: 'message',

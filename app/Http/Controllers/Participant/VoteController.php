@@ -71,8 +71,8 @@ class VoteController extends Controller
         ]);
 
         $vote = $this->voteService->vote(
-            (int) $validated['candidat_id'],
-            (int) $validated['vote_category_id']
+            $validated['candidat_id'],
+            $validated['vote_category_id']
         );
 
         $vote->candidate->notify(new UserActivityNotification(

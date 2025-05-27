@@ -19,11 +19,8 @@ class VoteService
         if ($vote) {
             // Met à jour le vote existant
             $vote->update(['candidat_id' => $candidatId]);
-
-            return [
-                'success' => true,
-                'message' => 'Ton vote a été mis à jour.',
-            ];
+            $vote->refresh();
+            return $vote;
         }
 
         // Crée un nouveau vote
