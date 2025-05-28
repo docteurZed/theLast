@@ -23,12 +23,12 @@ class PublicationController extends Controller
         $this->service = $service;
     }
 
-    // public function index(): View
-    // {
-    //     return view('publications.index', [
-    //         'publications' => $this->service->list(),
-    //     ]);
-    // }
+    public function index()
+    {
+        return view('participant.post.index', [
+            'publications' => $this->service->list(),
+        ]);
+    }
 
     public function store(PublicationRequest $request): RedirectResponse
     {
