@@ -145,7 +145,7 @@
                 @foreach ($events as $event)
                 <div class="dresscode-item cursor-pointer gap-4 rounded-xl p-4 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 card text-center"
                     data-type="event-{{ $event->id }}"
-                    data-primary-image="{{ $event->primary_image }}"
+                    data-primary-image="{{ $event->primary_image ?? '' }}"
                     data-secondary-image="{{ $event->secondary_image ?? '' }}">
                     <div class="mb-5">
                         <h4 class="text-white font-bold text-xl">{{ $event->name }}</h4>
