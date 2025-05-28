@@ -72,7 +72,7 @@
                 };
             @endphp
 
-            <a href="{{ $msg->data['url'] }}" class="block w-full cursor-pointer">
+            <a href="{{ $msg->data['url'] ?? '#' }}" class="block w-full cursor-pointer">
                 <div id="section-{{ $msg->id }}"
                     class="flex items-center bg-gray-800 mb-4 rounded-xl shadow-xl p-5 cursor-pointer border-l-4 {{ $styles }}">
                     <div class="relative inline-block shrink-0">
