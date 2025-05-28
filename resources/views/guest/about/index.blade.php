@@ -184,7 +184,7 @@
     </div>
 </section>
 
-@if ($guests->isNotEmpty())
+{{-- @if ($guests->isNotEmpty())
 <section class="{{ $guests->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 py-16 bg-gray-950">
     <div class="fade-section max-w-screen-xl mx-auto text-center">
         <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['guest']->name }}</p>
@@ -209,7 +209,7 @@
         </div>
     </div>
 </section>
-@endif
+@endif --}}
 
 @if ($sponsors->isNotEmpty())
 <section class="{{ $sponsors->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 text-center">
