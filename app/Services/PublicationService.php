@@ -82,10 +82,10 @@ class PublicationService
             return false;
         }
 
-        if ($post->image) {
-            $publicId = $this->cloudinary->extractPublicId($post->image);
-            $this->cloudinary->delete($publicId);
-        }
+        // if ($post->image) {
+        //     $publicId = $this->cloudinary->extractPublicId($post->image);
+        //     $this->cloudinary->delete($publicId);
+        // }
 
         $post->delete();
         return true;

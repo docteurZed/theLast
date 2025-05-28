@@ -93,10 +93,10 @@ class UserService
                 'profile_photo' => $uploadResult['secure_url'] ?? null,
             ]);
 
-            if ($oldImagePath) {
-                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
-                $this->cloudinary->delete($publicId);
-            }
+            // if ($oldImagePath) {
+            //     $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+            //     $this->cloudinary->delete($publicId);
+            // }
         }
 
         if($user->role != 'guest' && !$user->is_active) {
@@ -118,10 +118,10 @@ class UserService
     {
         $user = $this->show($id);
 
-        if ($user->profile_photo) {
-            $publicId = $this->cloudinary->extractPublicId($user->profile_photo);
-            $this->cloudinary->delete($publicId);
-        }
+        // if ($user->profile_photo) {
+        //     $publicId = $this->cloudinary->extractPublicId($user->profile_photo);
+        //     $this->cloudinary->delete($publicId);
+        // }
 
         if ($user->payments->isNotEmpty()) {
             foreach ($user->payments as $payment) {

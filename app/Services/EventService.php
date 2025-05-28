@@ -62,10 +62,10 @@ class EventService
         ]);
 
         if ($data->hasFile('primary_image') && $data->file('primary_image')->isValid()) {
-            if ($event->primary_image) {
-                $publicId = $this->cloudinary->extractPublicId($event->primary_image);
-                $this->cloudinary->delete($publicId);
-            }
+            // if ($event->primary_image) {
+            //     $publicId = $this->cloudinary->extractPublicId($event->primary_image);
+            //     $this->cloudinary->delete($publicId);
+            // }
             $filePath = $data->file('primary_image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
                 'folder' => 'images',
@@ -75,10 +75,10 @@ class EventService
         }
 
         if ($data->hasFile('secondary_image') && $data->file('secondary_image')->isValid()) {
-            if ($event->secondary_image) {
-                $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
-                $this->cloudinary->delete($publicId);
-            }
+            // if ($event->secondary_image) {
+            //     $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
+            //     $this->cloudinary->delete($publicId);
+            // }
             $filePath = $data->file('secondary_image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
                 'folder' => 'images',
@@ -95,14 +95,14 @@ class EventService
     public function delete(int $id): void
     {
         $event = Event::findOrFail($id);
-        if ($event->primary_image) {
-            $publicId = $this->cloudinary->extractPublicId($event->primary_image);
-            $this->cloudinary->delete($publicId);
-        }
-        if ($event->secondary_image) {
-            $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
-            $this->cloudinary->delete($publicId);
-        }
+        // if ($event->primary_image) {
+        //     $publicId = $this->cloudinary->extractPublicId($event->primary_image);
+        //     $this->cloudinary->delete($publicId);
+        // }
+        // if ($event->secondary_image) {
+        //     $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
+        //     $this->cloudinary->delete($publicId);
+        // }
         $event->delete();
     }
 }

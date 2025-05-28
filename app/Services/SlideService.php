@@ -41,10 +41,10 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            if ($slide->image) {
-                $publicId = $this->cloudinary->extractPublicId($slide->image);
-                $this->cloudinary->delete($publicId);
-            }
+            // if ($slide->image) {
+            //     $publicId = $this->cloudinary->extractPublicId($slide->image);
+            //     $this->cloudinary->delete($publicId);
+            // }
 
             $filePath = $data->file('image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
@@ -61,10 +61,10 @@ class SlideService
     public function delete(int $id): void
     {
         $slide = Slide::findOrFail($id);
-        if ($slide->image) {
-            $publicId = $this->cloudinary->extractPublicId($slide->image);
-            $this->cloudinary->delete($publicId);
-        }
+        // if ($slide->image) {
+        //     $publicId = $this->cloudinary->extractPublicId($slide->image);
+        //     $this->cloudinary->delete($publicId);
+        // }
         $slide->delete();
     }
 }
