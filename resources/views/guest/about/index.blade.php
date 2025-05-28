@@ -184,7 +184,7 @@
     </div>
 </section>
 
-{{-- @if ($guests->isNotEmpty())
+@if ($guests->isNotEmpty())
 <section class="{{ $guests->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 py-16 bg-gray-950">
     <div class="fade-section max-w-screen-xl mx-auto text-center">
         <p class="mb-2 text-sm font-semibold bg-gradient-to-r from-yellow-600 to-yellow-800 bg-clip-text text-transparent">{{ $sections['guest']->name }}</p>
@@ -194,13 +194,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
             @foreach ($guests as $guest)
             <div class="bg-gray-900 rounded-xl p-6 shadow hover:shadow-lg transition">
-                @if(Str::startsWith($guest->image, 'http'))
-                    <img src="{{ $guest->image }}" class="w-24 h-24 mx-auto rounded-full mb-4 object-cover">
-                @else
-                    <img src="{{ asset($guest->image) }}" class="w-24 h-24 mx-auto rounded-full mb-4 object-cover">
-                @endif
-
-                {{-- <img  src="{{ asset('images/user.png') }}" alt="Invité"> --}}
+                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ asset('images/user.png') }}" alt="Invité">
                 <h3 class="text-xl font-bold text-white">{{ ucfirst($guest->name) }}. {{ ucfirst($guest->name) }}</h3>
                 <p class="text-sm text-yellow-600 font-semibold mb-2">{{ ucfirst($guest->role) }} • {{ ucfirst($guest->domain) }}</p>
                 <p class="text-gray-400 text-sm">{{ ucfirst($guest->description) }}</p>
@@ -209,7 +203,7 @@
         </div>
     </div>
 </section>
-@endif --}}
+@endif
 
 @if ($sponsors->isNotEmpty())
 <section class="{{ $sponsors->isNotEmpty() ? 'section' : '' }} px-5 md:px-16 lg:px-24 text-center">
