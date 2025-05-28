@@ -126,7 +126,7 @@
         </div>
 
         <div x-show="showAllComments" x-transition class="comment-section mt-4 border-t border-gray-700 p-4 space-y-3" data-user-name="{{ ucfirst(Auth::user()->first_name) }} {{ ucfirst(Auth::user()->name) }}"
-            data-user-photo="{{ Auth::user()->profile_photo ?? : asset('images/user.png') }}">
+            data-user-photo="{{ Auth::user()->profile_photo ?? asset('images/user.png') }}">
 
            <div class="comment-list space-y-4">
                 @foreach($post->publication_comments as $comment)

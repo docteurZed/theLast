@@ -21,7 +21,7 @@
                         <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-700 cursor-pointer" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
                             @if (isset(Auth::user()->profile_photo))
-                            <img src="{{ asset('storage/public/' . basename(Auth::user()->profile_photo)) }}" alt="Photo de profil" class="w-8 h-8 rounded-full">
+                            <img src="{{ Auth::user()->profile_photo }}" alt="Photo de profil" class="w-8 h-8 rounded-full">
                             @else
                             <img src="{{ asset('images/user.png') }}" alt="Photo de profil" class="w-8 h-8 rounded-full">
                             @endif

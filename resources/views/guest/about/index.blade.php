@@ -145,8 +145,8 @@
                 @foreach ($events as $event)
                 <div class="dresscode-item cursor-pointer gap-4 rounded-xl p-4 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 card text-center"
                     data-type="event-{{ $event->id }}"
-                    data-primary-image="{{ asset('storage/public/' . basename($event->primary_image)) }}"
-                    data-secondary-image="{{ $event->secondary_image ? asset('storage/public/' . basename($event->secondary_image)) : '' }}">
+                    data-primary-image="{{ $event->primary_image }}"
+                    data-secondary-image="{{ $event->secondary_image ?? '' }}">
                     <div class="mb-5">
                         <h4 class="text-white font-bold text-xl">{{ $event->name }}</h4>
                         <hr class="border border-dashed border-gray-200 my-3">
@@ -194,7 +194,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center">
             @foreach ($guests as $guest)
             <div class="bg-gray-900 rounded-xl p-6 shadow hover:shadow-lg transition">
-                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ? asset('storage/public/' . basename($guest->image)) : asset('images/user.png') }}" alt="Invité">
+                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ?? asset('images/user.png') }}" alt="Invité">
                 <h3 class="text-xl font-bold text-white">{{ ucfirst($guest->name) }}. {{ ucfirst($guest->name) }}</h3>
                 <p class="text-sm text-yellow-600 font-semibold mb-2">{{ ucfirst($guest->role) }} • {{ ucfirst($guest->domain) }}</p>
                 <p class="text-gray-400 text-sm">{{ ucfirst($guest->description) }}</p>
@@ -215,7 +215,7 @@
 
             <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">
                 @foreach ($sponsors as $sponsor)
-                <img class="max-h-12 w-full object-contain" src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="sponsor" loading="lazy">
+                <img class="max-h-12 w-full object-contain" src="{{ $sponsor->logo }}" alt="sponsor" loading="lazy">
                 @endforeach
             </div>
         </div>

@@ -47,7 +47,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
             @foreach ($guests as $guest)
             <div class="card rounded-xl p-6 shadow hover:shadow-lg transition">
-                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ? asset('storage/public/' . basename($guest->image)) : asset('images/user.png') }}" alt="Invité 1">
+                <img class="w-24 h-24 mx-auto rounded-full mb-4 object-cover" src="{{ $guest->image ?? asset('images/user.png') }}" alt="Invité 1">
                 <h3 class="text-xl font-bold text-white">{{ ucfirst($guest->title) }}. {{ ucfirst($guest->name) }}</h3>
                 <p class="text-sm text-yellow-600 font-semibold mb-2">{{ ucfirst($guest->role) }} • {{ ucfirst($guest->domain) }}</p>
                 <p class="text-gray-400 text-sm">{{ ucfirst($guest->description) }}</p>
@@ -123,7 +123,7 @@
                             "{{ $testimony->testimony }}"
                         </p>
                         <div class="flex items-center justify-center space-x-4">
-                        <img src="{{ $testimony->image ? asset('storage/public/' . basename($testimony->image)) : asset('images/user.png') }}" class="w-12 h-12 rounded-full" alt="Etudiante 1">
+                        <img src="{{ $testimony->image ?? asset('images/user.png') }}" class="w-12 h-12 rounded-full" alt="Etudiante 1">
                         <span class="font-semibold text-white">{{ ucfirst($testimony->name) }}</span>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
             <p class="mt-3 mb-5 lg:mb-8 text-gray-400">{{ $sections['sponsor']->description }}</p>
             <div class="bg-gray-50 py-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-center text-center">
                 @foreach ($sponsors as $sponsor)
-                <img class="max-h-12 w-full object-contain" src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="sponsor" loading="lazy">
+                <img class="max-h-12 w-full object-contain" src="{{ $sponsor->logo }}" alt="sponsor" loading="lazy">
                 @endforeach
             </div>
         </div>
