@@ -50,9 +50,9 @@ return [
 
     'cloud' => env('CLOUDINARY_CLOUD_NAME'),
 
-    'key' => env('CLOUDINARY_API_KEY'),
+    'key' => env('CLOUDINARY_KEY'),
 
-    'secret' => env('CLOUDINARY_API_SECRET'),
+    'secret' => env('CLOUDINARY_SECRET'),
 
     'secure' => true,
 

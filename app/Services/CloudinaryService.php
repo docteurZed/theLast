@@ -2,45 +2,65 @@
 
 namespace App\Services;
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Http\UploadedFile;
 
 class CloudinaryService
 {
-    /**
-     * Upload a file to Cloudinary and return the secure URL
-     */
-    public function upload(UploadedFile $file, string $folder = 'uploads'): string
-    {
-        $uploadedFile = Cloudinary::upload($file->getRealPath(), [
-            'folder' => $folder
-        ]);
+    protected UploadApi $uploader;
 
-        return $uploadedFile->getSecurePath();
+    public function __construct()
+    {
+        $this->uploader = new UploadApi();
     }
 
     /**
-     * Delete a file from Cloudinary using its full URL
+     * Upload a file to Cloudinary using the UploadApi class
      */
-    public function deleteFromUrl(string $url): bool
+    public function upload(UploadedFile|string $file, string $publicId = null, string $folder = 'uploads'): string
     {
-        $publicId = $this->extractPublicId($url);
-        $result = Cloudinary::destroy($publicId);
+        $options = [
+            'use_filename' => true,
+            'overwrite' => true,
+            'folder' => $folder,
+        ];
+
+        if ($publicId) {
+            $options['public_id'] = $publicId;
+        }
+
+        $filePath = $file instanceof UploadedFile ? $file->getRealPath() : $file;
+
+        $response = $this->uploader->upload($filePath, $options);
+
+        return $response['secure_url'];
+    }
+
+    /**
+     * Delete a file from Cloudinary using its public ID
+     */
+    public function delete(string $publicId): bool
+    {
+        $result = $this->uploader->destroy($publicId);
         return $result['result'] === 'ok';
     }
 
     /**
-     * Extract the public_id from a Cloudinary URL
+     * Extract the public ID from a Cloudinary URL
      */
     public function extractPublicId(string $url): string
     {
-        // Supprimer tout avant `/upload/`
         $part = explode('/upload/', $url)[1] ?? '';
-
-        // Supprimer la version (ex: v1710000000/)
         $part = preg_replace('/^v\d+\//', '', $part);
-
-        // Supprimer l'extension (.jpg, .png, etc.)
         return pathinfo($part, PATHINFO_FILENAME);
+    }
+
+    /**
+     * Delete an asset from a Cloudinary URL
+     */
+    public function deleteFromUrl(string $url): bool
+    {
+        $publicId = $this->extractPublicId($url);
+        return $this->delete($publicId);
     }
 }
