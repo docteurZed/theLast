@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class TestimonyService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function list(): Collection
     {
         return Testimony::all();
@@ -20,7 +24,12 @@ class TestimonyService
         $payload = $data->only(['name', 'testimony']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $payload['image'] = $data->file('image')->store('public');
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return Testimony::create($payload);
@@ -32,11 +41,17 @@ class TestimonyService
         $payload = $data->only(['name', 'testimony']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $oldPath = $testimony->image;
-            $payload['image'] = $data->file('image')->store('public');
-            if ($oldPath && Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
+            if ($testimony->image) {
+                $publicId = $this->cloudinary->extractPublicId($testimony->image);
+                $this->cloudinary->delete($publicId);
             }
+
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         $testimony->update($payload);
@@ -46,9 +61,9 @@ class TestimonyService
     public function delete($id): void
     {
         $testimony = Testimony::findOrFail($id);
-        $oldPath = $testimony->image;
-        if ($oldPath && Storage::exists($oldPath)) {
-            Storage::delete($oldPath);
+        if ($testimony->image) {
+            $publicId = $this->cloudinary->extractPublicId($testimony->image);
+            $this->cloudinary->delete($publicId);
         }
         $testimony->delete();
     }

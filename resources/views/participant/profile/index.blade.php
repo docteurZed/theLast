@@ -31,7 +31,7 @@
             @method('PUT')
             <div class="flex items-center gap-2 sm:gap-6 mb-6">
                 @if (isset(Auth::user()->profile_photo))
-                <img src="{{ asset('storage/public/' . basename(Auth::user()->profile_photo)) }}" alt="Photo de profil" class="w-20 h-20 rounded-full object-cover">
+                <img src="{{ Auth::user()->profile_photo }}" alt="Photo de profil" class="w-20 h-20 rounded-full object-cover">
                 @else
                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil" class="w-20 h-20 rounded-full object-cover">
                 @endif

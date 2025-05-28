@@ -43,7 +43,7 @@
                                         <td>
                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                 @if (isset($testimony->image))
-                                                <img src="{{ asset('storage/public/' . basename($testimony->image)) }}" alt="Photo de profil">
+                                                <img src="{{ $testimony->image }}" alt="Photo de profil">
                                                 @else
                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                 @endif
@@ -82,7 +82,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($testimony->image))
-                                                                <img src="{{ asset('storage/public/' . basename($testimony->image)) }}" alt="Photo de profil">
+                                                                <img src="{{ $testimony->image }}" alt="Photo de profil">
                                                                 @else
                                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                                 @endif
@@ -122,7 +122,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($testimony->image))
-                                                                <img src="{{ asset('storage/public/' . basename($testimony->image)) }}" alt="Photo de profil">
+                                                                <img src="{{ $testimony->image }}" alt="Photo de profil">
                                                                 @else
                                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                                 @endif

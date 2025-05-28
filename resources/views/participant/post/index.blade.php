@@ -72,7 +72,7 @@
         <!-- En-tête -->
         <div class="flex items-center gap-4 p-5 border-b border-gray-700">
             @if (isset($post->user->profile_photo))
-            <img src="{{ asset('storage/public/' . basename($post->user->profile_photo)) }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
+            <img src="{{ $post->user->profile_photo }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
             @else
             <img src="{{ asset('images/user.png') }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
             @endif
@@ -93,7 +93,7 @@
         @endif
 
         @if($post->image)
-        <img src="{{ asset('storage/public/' . basename($post->image)) }}" class="w-full object-cover" alt="Image">
+        <img src="{{ $post->image }}" class="w-full object-cover" alt="Image">
         @endif
 
         <!-- Actions -->
@@ -117,7 +117,7 @@
             </form>
             @endif
             @if ($post->image)
-            <a href="{{ asset('storage/public/' . basename($post->image)) }}"
+            <a href="{{ $post->image }}"
                 download
                 class="text-sm font-semibold text-white hover:bg-gray-400 transition">
                 ⬇<span class="hidden sm:inline"> Télécharger l'image</span>
@@ -126,13 +126,13 @@
         </div>
 
         <div x-show="showAllComments" x-transition class="comment-section mt-4 border-t border-gray-700 p-4 space-y-3" data-user-name="{{ ucfirst(Auth::user()->first_name) }} {{ ucfirst(Auth::user()->name) }}"
-            data-user-photo="{{ Auth::user()->profile_photo ? asset('storage/public/' . basename(Auth::user()->profile_photo)) : asset('images/user.png') }}">
+            data-user-photo="{{ Auth::user()->profile_photo ?? : asset('images/user.png') }}">
 
            <div class="comment-list space-y-4">
                 @foreach($post->publication_comments as $comment)
                    <div class="flex items-center gap-3" data-created_at="{{ $comment->created_at->diffForHumans() }}" data-comment-id="{{ $comment->id }}">
                        @if (isset($comment->user->profile_photo))
-                           <img src="{{ asset('storage/public/' . basename($comment->user->profile_photo)) }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
+                           <img src="{{ $comment->user->profile_photo }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
                        @else
                            <img src="{{ asset('images/user.png') }}" class="w-12 h-12 rounded-full object-cover" alt="Avatar">
                        @endif

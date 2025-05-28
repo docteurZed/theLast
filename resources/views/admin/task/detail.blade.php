@@ -33,7 +33,7 @@
                 </h5>
                 @if ($task->image)
                 <div class="d-flex justify-content-center align-items-center mb-4">
-                    <img src="{{ asset(Str::replace('public', 'storage', $task->image)) }}" class="img-fluid rounded" alt="">
+                    <img src="{{ $task->image }}" class="img-fluid rounded" alt="">
                 </div>
                 @endif
                 <div class="text-muted task-description">
@@ -109,7 +109,7 @@
                             <div>
                                 <span class="avatar avatar-md avatar-rounded bg-primary-transparent fw-semibold">
                                     @if ($user->profile_photo)
-                                    <img src="{{ asset('storage/public/' . basename($user->profile_photo)) }}" alt="Photo de profil">
+                                    <img src="{{ $user->profile_photo }}" alt="Photo de profil">
                                     @else
                                     {{ substr(strtoupper($user->first_name), 0, 1) }}{{ substr(strtoupper($user->name), 0, 1) }}
                                     @endif

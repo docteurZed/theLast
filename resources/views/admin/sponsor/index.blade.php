@@ -43,7 +43,7 @@
                                         <td>
                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                 @if (isset($sponsor->logo))
-                                                <img src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="Photo de profil">
+                                                <img src="{{ $sponsor->logo }}" alt="Photo de profil">
                                                 @else
                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                 @endif
@@ -82,7 +82,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($sponsor->image))
-                                                                <img src="{{ asset('storage/public/' . basename($sponsor->image)) }}" alt="Photo de profil">
+                                                                <img src="{{ $sponsor->image }}" alt="Photo de profil">
                                                                 @else
                                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                                 @endif
@@ -122,7 +122,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($sponsor->logo))
-                                                                <img src="{{ asset('storage/public/' . basename($sponsor->logo)) }}" alt="Photo de profil">
+                                                                <img src="{{ $sponsor->logo }}" alt="Photo de profil">
                                                                 @else
                                                                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil">
                                                                 @endif

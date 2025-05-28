@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class EventService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function list(): Collection
     {
         return Event::all();
@@ -25,11 +29,21 @@ class EventService
         ]);
 
         if ($data->hasFile('primary_image') && $data->file('primary_image')->isValid()) {
-            $payload['primary_image'] = $data->file('primary_image')->store('public');
+            $filePath = $data->file('primary_image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['primary_image'] = $uploadResult['secure_url'] ?? null;
         }
 
         if ($data->hasFile('secondary_image') && $data->file('secondary_image')->isValid()) {
-            $payload['secondary_image'] = $data->file('secondary_image')->store('public');
+            $filePath = $data->file('secondary_image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['secondary_image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return Event::create($payload);
@@ -48,13 +62,29 @@ class EventService
         ]);
 
         if ($data->hasFile('primary_image') && $data->file('primary_image')->isValid()) {
-            $this->deleteFile($event->primary_image);
-            $payload['primary_image'] = $data->file('primary_image')->store('public');
+            if ($event->primary_image) {
+                $publicId = $this->cloudinary->extractPublicId($event->primary_image);
+                $this->cloudinary->delete($publicId);
+            }
+            $filePath = $data->file('primary_image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['primary_image'] = $uploadResult['secure_url'] ?? null;
         }
 
         if ($data->hasFile('secondary_image') && $data->file('secondary_image')->isValid()) {
-            $this->deleteFile($event->secondary_image);
-            $payload['secondary_image'] = $data->file('secondary_image')->store('public');
+            if ($event->secondary_image) {
+                $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
+                $this->cloudinary->delete($publicId);
+            }
+            $filePath = $data->file('secondary_image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['secondary_image'] = $uploadResult['secure_url'] ?? null;
         }
 
         $event->update($payload);
@@ -65,15 +95,14 @@ class EventService
     public function delete(int $id): void
     {
         $event = Event::findOrFail($id);
-        $this->deleteFile($event->primary_image);
-        $this->deleteFile($event->secondary_image);
-        $event->delete();
-    }
-
-    protected function deleteFile(?string $path): void
-    {
-        if ($path && Storage::exists($path)) {
-            Storage::delete($path);
+        if ($event->primary_image) {
+            $publicId = $this->cloudinary->extractPublicId($event->primary_image);
+            $this->cloudinary->delete($publicId);
         }
+        if ($event->secondary_image) {
+            $publicId = $this->cloudinary->extractPublicId($event->secondary_image);
+            $this->cloudinary->delete($publicId);
+        }
+        $event->delete();
     }
 }

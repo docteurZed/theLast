@@ -50,7 +50,7 @@
         <div class="user-card bg-gray-800 rounded-lg shadow space-y-3">
             <div class="flex flex-col items-center gap-4 text-center p-5">
                 @if (isset($user->profile_photo))
-                <img src="{{ asset('storage/public/' . basename($user->profile_photo)) }}" alt="Photo de profil"  class="w-20 h-20 mx-auto rounded-full object-cover">
+                <img src="{{ $user->profile_photo }}" alt="Photo de profil"  class="w-20 h-20 mx-auto rounded-full object-cover">
                 @else
                 <img src="{{ asset('images/user.png') }}" alt="Photo de profil"  class="w-20 h-20 mx-auto rounded-full object-cover">
                 @endif

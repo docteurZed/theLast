@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class SpecialGuestService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function list(): Collection
     {
         return SpecialGuest::all();
@@ -20,7 +24,12 @@ class SpecialGuestService
         $payload = $data->only(['title', 'name', 'domain', 'description', 'role']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $payload['image'] = $data->file('image')->store('public');
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return SpecialGuest::create($payload);
@@ -32,11 +41,17 @@ class SpecialGuestService
         $payload = $data->only(['title', 'name', 'domain', 'description', 'role']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $oldPath = $guest->image;
-            $payload['image'] = $data->file('image')->store('public');
-            if ($oldPath && Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
+            if ($guest->image) {
+                $publicId = $this->cloudinary->extractPublicId($guest->image);
+                $this->cloudinary->delete($publicId);
             }
+
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         $guest->update($payload);
@@ -46,9 +61,9 @@ class SpecialGuestService
     public function delete($id): void
     {
         $guest = SpecialGuest::findOrFail($id);
-        $oldPath = $guest->image;
-        if ($oldPath && Storage::exists($oldPath)) {
-            Storage::delete($oldPath);
+        if ($guest->image) {
+            $publicId = $this->cloudinary->extractPublicId($guest->image);
+            $this->cloudinary->delete($publicId);
         }
         $guest->delete();
     }

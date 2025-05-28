@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Storage;
 class UserService
 {
     protected $participation_fee;
+    protected $cloudinary;
 
-    public function __construct()
+    public function __construct(CloudinaryService $cloudinary)
     {
         $setting = Setting::where('singleton_key', 'main')->first();
         $this->participation_fee = $setting->participation_fee;
+        $this->cloudinary = $cloudinary;
     }
 
     public function showAll(string $role)
@@ -42,6 +44,18 @@ class UserService
             'is_active'     => $is_active,
         ]);
 
+        if (isset($data->profile_photo) && $data->profile_photo instanceof UploadedFile) {
+
+            $filePath = $data->file('profile_photo')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $user->update([
+                'profile_photo' => $uploadResult['secure_url'] ?? null,
+            ]);
+        }
+
         $user->update([
             'password' => Hash::make(strtolower($user->personal_code)),
         ]);
@@ -59,17 +73,6 @@ class UserService
     {
         $user = $this->show($id);
 
-        if (isset($data->profile_photo) && $data->profile_photo instanceof UploadedFile) {
-            $oldImagePath = $user->profile_photo;
-            $image = $data->profile_photo;
-            $imagePath = $image->store('public');
-            $user->profile_photo = $imagePath;
-
-            if ($oldImagePath && Storage::exists($oldImagePath)) {
-                Storage::delete($oldImagePath);
-            }
-        }
-
         $user->update([
             'name'       => $data->name ?? $user->name,
             'first_name' => $data->first_name ?? $user->first_name,
@@ -77,6 +80,24 @@ class UserService
             'bio'        => $data->bio ?? $user->bio,
             'role' => $data->role ?? $user->role,
         ]);
+
+        if (isset($data->profile_photo) && $data->profile_photo instanceof UploadedFile) {
+            $oldImagePath = $user->profile_photo;
+
+            $filePath = $data->file('profile_photo')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $user->update([
+                'profile_photo' => $uploadResult['secure_url'] ?? null,
+            ]);
+
+            if ($oldImagePath) {
+                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+                $this->cloudinary->delete($publicId);
+            }
+        }
 
         if($user->role != 'guest' && !$user->is_active) {
             $user->update([
@@ -97,8 +118,9 @@ class UserService
     {
         $user = $this->show($id);
 
-        if ($user->profile_photo && Storage::exists($user->profile_photo)) {
-            Storage::delete($user->profile_photo);
+        if ($user->profile_photo) {
+            $publicId = $this->cloudinary->extractPublicId($user->profile_photo);
+            $this->cloudinary->delete($publicId);
         }
 
         if ($user->payments->isNotEmpty()) {

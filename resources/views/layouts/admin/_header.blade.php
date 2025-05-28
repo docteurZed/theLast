@@ -44,7 +44,7 @@
                         <div class="me-sm-2 me-0">
                             <span class="avatar avatar-md avatar-rounded bg-primary-transparent fw-semibold">
                                 @if (Auth::user()->profile_photo)
-                                <img src="{{ asset('storage/public/' . basename(Auth::user()->profile_photo)) }}" alt="Photo de profil">
+                                <img src="{{ Auth::user()->profile_photo }}" alt="Photo de profil">
                                 @else
                                 {{ substr(strtoupper(Auth::user()->first_name), 0, 1) }}{{ substr(strtoupper(Auth::user()->name), 0, 1) }}
                                 @endif

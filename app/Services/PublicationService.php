@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Storage;
 
 class PublicationService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function list(): Collection
     {
         return Publication::orderBy('created_at', 'desc')->get();
@@ -22,7 +26,12 @@ class PublicationService
         $payload = $data->only(['content', 'user_id']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $payload['image'] = $data->file('image')->store('public');
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return Publication::create($payload);
@@ -73,9 +82,9 @@ class PublicationService
             return false;
         }
 
-        $oldPath = $post->image;
-        if ($oldPath && Storage::exists($oldPath)) {
-            Storage::delete($oldPath);
+        if ($post->image) {
+            $publicId = $this->cloudinary->extractPublicId($post->image);
+            $this->cloudinary->delete($publicId);
         }
 
         $post->delete();

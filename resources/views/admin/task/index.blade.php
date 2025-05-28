@@ -89,7 +89,7 @@
                                 <div class="kanban-content mt-2">
                                     @if ($task->image)
                                     <div class="task-image mt-2">
-                                        <img src="{{ asset('storage/public/' . basename($task->image)) }}" class="img-fluid rounded kanban-image" alt="">
+                                        <img src="{{ $task->image }}" class="img-fluid rounded kanban-image" alt="">
                                     </div>
                                     @endif
                                     <h6 class="fw-semibold mb-1 fs-15 mt-2">{{ $task->first_name . ' ' . $task->name }}</h6>
@@ -184,7 +184,7 @@
                                             <input type="file" class="form-control" id="image" name="image" placeholder="L'image de la tâche" accept=".jpg,.jpeg,.png">
                                             @if ($task->image)
                                             <div class="d-flex justify-content-center mt-3">
-                                                <img src="{{ asset('storage/public/' . basename($task->image)) }}" alt="Image">
+                                                <img src="{{ $task->image }}" alt="Image">
                                             </div>
                                             @endif
                                         </div>
@@ -280,7 +280,7 @@
                                 <div class="kanban-content mt-2">
                                     @if ($task->image)
                                     <div class="task-image mt-2">
-                                        <img src="{{ asset('storage/public/' . basename($task->image)) }}" class="img-fluid rounded kanban-image" alt="">
+                                        <img src="{{ $task->image }}" class="img-fluid rounded kanban-image" alt="">
                                     </div>
                                     @endif
                                     <h6 class="fw-semibold mb-1 fs-15 mt-2">{{ $task->first_name . ' ' . $task->name }}</h6>
@@ -375,7 +375,7 @@
                                             <input type="file" class="form-control" id="image" name="image" placeholder="L'image de la tâche" accept=".jpg,.jpeg,.png">
                                             @if ($task->image)
                                             <div class="d-flex justify-content-center mt-3">
-                                                <img src="{{ asset('storage/public/' . basename($task->image)) }}" alt="Image">
+                                                <img src="{{ $task->image }}" alt="Image">
                                             </div>
                                             @endif
                                         </div>
@@ -471,7 +471,7 @@
                                 <div class="kanban-content mt-2">
                                     @if ($task->image)
                                     <div class="task-image mt-2">
-                                        <img src="{{ asset('storage/public/' . basename($task->image)) }}" class="img-fluid rounded kanban-image" alt="">
+                                        <img src="{{ $task->image }}" class="img-fluid rounded kanban-image" alt="">
                                     </div>
                                     @endif
                                     <h6 class="fw-semibold mb-1 fs-15 mt-2">{{ $task->first_name . ' ' . $task->name }}</h6>
@@ -566,7 +566,7 @@
                                             <input type="file" class="form-control" id="image" name="image" placeholder="L'image de la tâche" accept=".jpg,.jpeg,.png">
                                             @if ($task->image)
                                             <div class="d-flex justify-content-center mt-3">
-                                                <img src="{{ asset('storage/public/' . basename($task->image)) }}" alt="Image">
+                                                <img src="{{ $task->image }}" alt="Image">
                                             </div>
                                             @endif
                                         </div>
@@ -662,7 +662,7 @@
                                 <div class="kanban-content mt-2">
                                     @if ($task->image)
                                     <div class="task-image mt-2">
-                                        <img src="{{ asset('storage/public/' . basename($task->image)) }}" class="img-fluid rounded kanban-image" alt="">
+                                        <img src="{{ $task->image }}" class="img-fluid rounded kanban-image" alt="">
                                     </div>
                                     @endif
                                     <h6 class="fw-semibold mb-1 fs-15 mt-2">{{ $task->first_name . ' ' . $task->name }}</h6>
@@ -757,7 +757,7 @@
                                             <input type="file" class="form-control" id="image" name="image" placeholder="L'image de la tâche" accept=".jpg,.jpeg,.png">
                                             @if ($task->image)
                                             <div class="d-flex justify-content-center mt-3">
-                                                <img src="{{ asset('storage/public/' . basename($task->image)) }}" alt="Image">
+                                                <img src="{{ $task->image }}" alt="Image">
                                             </div>
                                             @endif
                                         </div>

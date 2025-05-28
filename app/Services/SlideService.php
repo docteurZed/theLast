@@ -24,7 +24,12 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            $payload['image'] = $this->cloudinary->upload($data->file('image'), 'slides');
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return Slide::create($payload);
@@ -36,13 +41,17 @@ class SlideService
         $payload = $data->only(['name']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            // Supprimer l'ancienne image sur Cloudinary
             if ($slide->image) {
-                $this->cloudinary->deleteFromUrl($slide->image);
+                $publicId = $this->cloudinary->extractPublicId($slide->image);
+                $this->cloudinary->delete($publicId);
             }
 
-            // Upload de la nouvelle image
-            $payload['image'] = $this->cloudinary->upload($data->file('image'), 'slides');
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         $slide->update($payload);
@@ -53,7 +62,8 @@ class SlideService
     {
         $slide = Slide::findOrFail($id);
         if ($slide->image) {
-            $this->cloudinary->deleteFromUrl($slide->image);
+            $publicId = $this->cloudinary->extractPublicId($slide->image);
+            $this->cloudinary->delete($publicId);
         }
         $slide->delete();
     }

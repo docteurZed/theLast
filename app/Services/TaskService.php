@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Storage;
 
 class TaskService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function getTasksForUser($user)
     {
         return Task::orderBy('created_at', 'desc')
@@ -44,8 +48,13 @@ class TaskService
     {
         $task = Task::create($request->except('image'));
 
-        if ($request->hasFile('image')) {
-            $task->image = $request->file('image')->store('public');
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $filePath = $request->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $task->image = $uploadResult['secure_url'] ?? null;
             $task->save();
         }
 
@@ -63,11 +72,18 @@ class TaskService
 
         $task->update($request->except('image'));
 
-        if ($request->hasFile('image')) {
-            $task->image = $request->file('image')->store('public');
-            if ($oldImagePath && Storage::exists($oldImagePath)) {
-                Storage::delete($oldImagePath);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            if ($oldImagePath) {
+                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+                $this->cloudinary->delete($publicId);
             }
+
+            $filePath = $request->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $task->image = $uploadResult['secure_url'] ?? null;
             $task->save();
         }
 
@@ -83,6 +99,10 @@ class TaskService
     public function deleteTask($id)
     {
         $task = Task::findOrFail($id);
+        if ($task->image) {
+            $publicId = $this->cloudinary->extractPublicId($task->image);
+            $this->cloudinary->delete($publicId);
+        }
         $task->delete();
     }
 }

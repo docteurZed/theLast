@@ -169,7 +169,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($admin->profile_photo))
-                                                                <img src="{{ asset('storage/public/' . basename($admin->profile_photo)) }}" alt="Photo de profil">
+                                                                <img src="{{ $admin->profile_photo }}" alt="Photo de profil">
                                                                 @else
                                                                 {{ substr(strtoupper($admin->name), 0, 1) }}{{ substr(strtoupper($admin->first_name), 0, 1) }}
                                                                 @endif
@@ -229,7 +229,7 @@
                                                         <div class="col-xl-12 mb-3 text-center">
                                                             <span class="avatar avatar-xxl avatar-rounded bg-primary-transparent fw-semibold">
                                                                 @if (isset($admin->profile_photo))
-                                                                <img src="{{ asset('storage/public/' . basename($admin->profile_photo)) }}" alt="Photo de profil">
+                                                                <img src="{{ $admin->profile_photo }}" alt="Photo de profil">
                                                                 @else
                                                                 {{ substr(strtoupper($admin->name), 0, 1) }}{{ substr(strtoupper($admin->first_name), 0, 1) }}
                                                                 @endif

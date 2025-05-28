@@ -141,7 +141,7 @@
                                                         <div class="col-xl-12 mb-3">
                                                             <label for="primary_image" class="form-label">Image principale</label>
                                                             <div>
-                                                                <img src="{{ asset('storage/public/' . basename($event->primary_image)) }}" class="img-thumbnail mt-2" width="150">
+                                                                <img src="{{ $event->primary_image }}" class="img-thumbnail mt-2" width="150">
                                                             </div>
                                                         </div>
                                                         @endisset
@@ -149,7 +149,7 @@
                                                         <div class="col-xl-12 mb-3">
                                                             <label for="secondary_image" class="form-label">Image secondaire</label>
                                                             <div>
-                                                                <img src="{{ asset('storage/public/' . basename($event->secondary_image)) }}" class="img-thumbnail mt-2" width="150">
+                                                                <img src="{{ $event->secondary_image }}" class="img-thumbnail mt-2" width="150">
                                                             </div>
                                                         </div>
                                                         @endisset
@@ -231,7 +231,7 @@
                                                                     @if (!isset($event)) required @endif>
                                                                 @isset($event->primary_image)
                                                                     <div>
-                                                                        <img src="{{ asset('storage/public/' . basename($event->primary_image)) }}" class="img-thumbnail mt-2" width="150">
+                                                                        <img src="{{ $event->primary_image }}" class="img-thumbnail mt-2" width="150">
                                                                     </div>
                                                                 @endisset
                                                             </div>
@@ -240,7 +240,7 @@
                                                                 <input type="file" name="secondary_image" class="form-control" id="secondary_image">
                                                                 @isset($event->secondary_image)
                                                                     <div>
-                                                                        <img src="{{ asset('storage/public/' . basename($event->secondary_image)) }}" class="img-thumbnail mt-2" width="150">
+                                                                        <img src="{{ $event->secondary_image }}" class="img-thumbnail mt-2" width="150">
                                                                     </div>
                                                                 @endisset
                                                             </div>

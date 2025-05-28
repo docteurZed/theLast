@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 class SponsorService
 {
+    public function __construct(
+        protected CloudinaryService $cloudinary
+    ) {}
+
     public function list(): Collection
     {
         return Sponsor::all();
@@ -19,8 +23,13 @@ class SponsorService
     {
         $payload = $data->only(['name', 'description']);
 
-        if ($data->hasFile('logo') && $data->file('logo')->isValid()) {
-            $payload['logo'] = $data->file('logo')->store('public');
+        if ($data->hasFile('image') && $data->file('image')->isValid()) {
+            $filePath = $data->file('image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
         return Sponsor::create($payload);
@@ -32,11 +41,17 @@ class SponsorService
         $payload = $data->only(['name', 'description']);
 
         if ($data->hasFile('logo') && $data->file('logo')->isValid()) {
-            $oldPath = $sponsor->logo;
-            $payload['logo'] = $data->file('logo')->store('public');
-            if ($oldPath && Storage::exists($oldPath)) {
-                Storage::delete($oldPath);
+            if ($sponsor->logo) {
+                $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
+                $this->cloudinary->delete($publicId);
             }
+
+            $filePath = $data->file('logo')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $payload['logo'] = $uploadResult['secure_url'] ?? null;
         }
 
         $sponsor->update($payload);
@@ -46,9 +61,9 @@ class SponsorService
     public function delete($id): void
     {
         $sponsor = Sponsor::findOrFail($id);
-        $oldPath = $sponsor->logo;
-        if ($oldPath && Storage::exists($oldPath)) {
-            Storage::delete($oldPath);
+        if ($sponsor->logo) {
+            $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
+            $this->cloudinary->delete($publicId);
         }
         $sponsor->delete();
     }
