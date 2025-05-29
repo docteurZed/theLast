@@ -26,11 +26,11 @@
             </svg>
             <span class="text-sm font-semibold group-hover:text-yellow-600 {{ request()->routeIs('participant.vote.*') ? 'text-yellow-600' : 'text-gray-400' }}">Votes</span>
         </a>
-        <a href="{{ route('participant.profile.index') }}" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800 group {{ request()->routeIs('participant.profile.*') ? 'bg-gray-800' : '' }}">
-            <svg class="w-5 h-5 mb-2 {{ request()->routeIs('participant.profile.*') ? 'text-yellow-600' : 'text-gray-400' }} group-hover:text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+        <a href="{{ route('participant.notification.index') }}" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-800 group {{ request()->routeIs('participant.notification.*') ? 'bg-gray-800' : '' }}">
+            <svg class="w-5 h-5 mb-2 {{ request()->routeIs('participant.notification.*') ? 'text-yellow-600' : 'text-gray-400' }} group-hover:text-yellow-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
             </svg>
-            <span class="text-sm font-semibold group-hover:text-yellow-600 {{ request()->routeIs('participant.profile.*') ? 'text-yellow-600' : 'text-gray-400' }}">Profil</span>
+            <span class="text-sm font-semibold group-hover:text-yellow-600 {{ request()->routeIs('participant.notification.*') ? 'text-yellow-600' : 'text-gray-400' }}">Messages</span>
         </a>
     </div>
 </div>

@@ -10,14 +10,6 @@
             <div class="flex items-center">
                 <div class="flex items-center ms-3">
                     <div class="flex items-center space-x-4">
-                        <a href="{{ route('participant.notification.index') }}" class="relative flex text-sm text-white rounded-full focus:ring-4 focus:ring-gray-700 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6 transition duration-75" viewBox="0 0 16 16">
-                                <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
-                            </svg>
-                            @if ($unreadMessages->isNotEmpty())
-                            <span class="top-0 left-4 absolute  w-3 h-3 bg-red-400 border-2 border-white dark:border-gray-800 rounded-full"></span>
-                            @endif
-                        </a>
                         <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-700 cursor-pointer" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                             <span class="sr-only">Open user menu</span>
                             @if (isset(Auth::user()->profile_photo))
@@ -50,14 +42,6 @@
                                         <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
                                     </svg>
                                     <span class="ms-2">Profile</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('participant.notification.index') }}" class="flex items-center px-4 py-2 text-sm font-semibold text-gray-400 hover:bg-gray-600 group" role="menuitem">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 transition duration-75" viewBox="0 0 16 16">
-                                        <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
-                                    </svg>
-                                    <span class="ms-2">Messages</span>
                                 </a>
                             </li>
                             <li>

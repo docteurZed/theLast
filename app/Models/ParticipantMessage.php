@@ -11,8 +11,21 @@ class ParticipantMessage extends Model
         'receiver_id',
         'content',
         'is_anonymous',
-        'is_read'
+        'is_read',
+        'thread_key',
     ];
+
+    public static function generateThreadKey($userA, $userB, $isAAnonymous)
+    {
+        $userIds = [$userA, $userB];
+        sort($userIds);
+
+        $isFirstAnon = ($userIds[0] == $userA) ? $isAAnonymous : false;
+        $isSecondAnon = ($userIds[1] == $userA) ? $isAAnonymous : false;
+
+        return "user:{$userIds[0]}-anon:" . ($isFirstAnon ? 'true' : 'false') .
+            "|user:{$userIds[1]}-anon:" . ($isSecondAnon ? 'true' : 'false');
+    }
 
     public function sender ()
     {

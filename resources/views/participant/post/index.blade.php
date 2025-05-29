@@ -102,6 +102,10 @@
                 <button data-id="{{ $post->id }}"
                     class="like-button hover:text-yellow-600 cursor-pointer {{ $post->isLikedBy(auth()->user()) ? 'text-yellow-600' : 'text-gray-400' }}">
                     👍<span class="hidden sm:inline"> J'aime</span> (<span class="like-count">{{ $post->publication_likes->count() }}</span>)
+                    <svg class="spinner w-4 h-4 animate-spin hidden text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
                 </button>
                 <button @click="showAllComments = !showAllComments"
                     class="text-gray-500 hover:text-yellow-500 transition duration-150">
@@ -162,7 +166,11 @@
 
                 <button type="submit"
                     class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 text-sm font-medium rounded-r-md">
-                    Envoyer
+                    <span>Envoyer</span>
+                    <svg class="spinner w-4 h-4 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
                 </button>
             </div>
            </form>
@@ -204,6 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', function (e) {
             e.preventDefault();
             const postId = this.dataset.id;
+            const spinner = this.querySelector('.spinner');
+            spinner.classList.remove('hidden');
 
             axios.post(`/participant/publication/${postId}/like`)
                 .then(response => {
@@ -218,6 +228,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 .catch(error => {
                     console.error(error);
                     alert('Erreur lors du like.');
+                })
+                .finally(() => {
+                    spinner.classList.add('hidden');
                 });
         });
     });
@@ -230,6 +243,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const postId = this.querySelector('input[name="publication_id"]').value;
             const content = input.value.trim();
             if (!content) return;
+
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const spinner = submitBtn.querySelector('.spinner');
+            spinner.classList.remove('hidden');
 
             axios.post(`{{ route('participant.publication.comment') }}`, {
                 publication_id: postId,
@@ -272,6 +289,9 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => {
                 console.error(error);
                 alert("Erreur lors de l'ajout du commentaire.");
+            })
+            .finally(() => {
+                spinner.classList.add('hidden');
             });
         });
     });

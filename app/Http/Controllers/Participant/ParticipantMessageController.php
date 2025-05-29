@@ -12,9 +12,9 @@ class ParticipantMessageController extends Controller
 {
     public function __construct(protected ParticipantMessageService $service) {}
 
-    public function store (Request $request)
+    public function store(Request $request)
     {
-        if($request->receiver_id == Auth::user()->id) {
+        if ($request->receiver_id == Auth::user()->id) {
             abort(403);
         }
 
@@ -22,10 +22,6 @@ class ParticipantMessageController extends Controller
             'receiver_id' => 'required|exists:users,id',
             'content' => 'required|string',
             'is_anonymous' => 'nullable',
-        ], [
-            'receiver_id.required' => 'Le récepteur du message est obligatoire.',
-            'receiver_id.exists' => 'Le récepteur du message n\'existe pas dans notre base.',
-            'content.required' => 'Le contenu du message est obligatoire.',
         ]);
 
         $message = $this->service->store($request);
@@ -39,16 +35,14 @@ class ParticipantMessageController extends Controller
             emailIntro: "Vous avez reçu un message d'un de vos collègue."
         ));
 
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Message envoyé',
+                'data' => $message,
+            ]);
+        }
 
         return back()->with('success', 'Message envoyé avec succès.');
-    }
-
-    public function updateStatut($id)
-    {
-        try {
-            return response()->json($this->service->markAsRead($id));
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Erreur lors du changement de statut. ' . $e->getMessage()]);
-        }
     }
 }
