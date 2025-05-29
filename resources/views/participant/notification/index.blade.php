@@ -9,9 +9,12 @@
                 <div class="relative inline-block shrink-0">
                     @if ($disc->is_interlocutor_anonymous)
                         <img class="w-12 h-12 rounded-full" src="{{ asset('images/user.png') }}" alt="user"/>
+                    @elseif ($disc->is_sender)
+                        <img class="w-12 h-12 rounded-full" src="{{ $disc->self_profile_photo ?? asset('images/user.png') }}" alt="user"/>
                     @else
-                        <img class="w-12 h-12 rounded-full" src="{{ Auth::user()->profile_photo ?? asset('images/user.png') }}" alt="user"/>
+                        <img class="w-12 h-12 rounded-full" src="{{ $disc->interlocutor_profile_photo ?? asset('images/user.png') }}" alt="user"/>
                     @endif
+
                     @if (!$disc->all_read && $disc->unread_count > 0)
                         <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
                             {{ $disc->unread_count }}

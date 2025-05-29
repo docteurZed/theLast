@@ -59,6 +59,10 @@ class ParticipantMessageService
                                         ? $message->is_anonymous
                                         : false,
                 'is_interlocutor_anonymous' => $interlocutorWasAnonymous,
+                'is_sender' => $message->sender_id === $userId,
+                'self_profile_photo' => Auth::user()->profile_photo,
+                'interlocutor_profile_photo' => $interlocutorWasAnonymous ? null : $interlocutor->profile_photo,
+
             ];
         });
     }
@@ -103,6 +107,7 @@ class ParticipantMessageService
                     'sender_id' => $msg->sender_id,
                     'sender_name' => $senderName,
                     'is_sender' => $isSender,
+
                 ];
             }),
             'receiver_id' => $otherUserId,
