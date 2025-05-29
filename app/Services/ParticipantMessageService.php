@@ -58,6 +58,7 @@ class ParticipantMessageService
                 'is_self_anonymous' => $message->sender_id === $userId
                                         ? $message->is_anonymous
                                         : false,
+                'is_interlocutor_anonymous' => $interlocutorWasAnonymous,
             ];
         });
     }
