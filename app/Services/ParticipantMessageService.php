@@ -39,7 +39,7 @@ class ParticipantMessageService
 
             $interlocutorDisplayName = $interlocutorWasAnonymous
                 ? 'Anonyme - ' . substr(md5($interlocutor->id), 0, 6)
-                : $interlocutor->name;
+                : $interlocutor->first_name . ' ' . $interlocutor->name;
 
             // Calcul des messages non lus
             $unreadCount = ParticipantMessage::where('thread_key', $message->thread_key)
@@ -87,10 +87,11 @@ class ParticipantMessageService
                 $isSender = $msg->sender_id === $userId;
 
                 $senderName = $isSender
-                    ? optional($msg->sender)->name
-                    : ($interlocutorWasAnonymous
-                        ? 'Anonyme - ' . substr(md5($otherUserId), 0, 6)
-                        : optional($msg->sender)->name);
+                                ? trim(optional($msg->sender)->first_name . ' ' . optional($msg->sender)->name)
+                                : ($interlocutorWasAnonymous
+                                    ? 'Anonyme - ' . substr(md5($otherUserId), 0, 6)
+                                    : optional($msg->sender)->name);
+
 
                 return (object)[
                     'id' => $msg->id,

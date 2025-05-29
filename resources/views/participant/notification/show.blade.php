@@ -44,10 +44,6 @@
         <div class="flex {{ $message->is_sender ? 'justify-end' : 'justify-start' }} mb-4">
             <div class="flex items-start gap-2.5 max-w-[80%]">
 
-                @if (!$message->is_sender)
-                    <img class="w-8 h-8 rounded-full" src="{{ asset('images/user.png') }}" alt="Avatar">
-                @endif
-
                 <div class="rounded-xl p-4 shadow-md text-sm leading-relaxed
                     {{ $message->is_sender ? 'bg-yellow-600 text-white rounded-tr-none' : 'bg-gray-700 text-gray-200 rounded-tl-none' }}">
 
@@ -64,10 +60,6 @@
                         {{ $message->is_sender ? 'Envoyé' : ($message->is_read ? 'Lu' : 'Non lu') }}
                     </div>
                 </div>
-
-                @if ($message->is_sender)
-                    <img class="w-8 h-8 rounded-full" src="{{ asset('images/user.png') }}" alt="Avatar">
-                @endif
             </div>
         </div>
     @endforeach
