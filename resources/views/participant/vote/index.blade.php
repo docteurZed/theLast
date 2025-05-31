@@ -79,9 +79,12 @@
                     <input type="text" x-model="search" placeholder="Rechercher..." class="w-full p-2 bg-gray-700 text-white border-b border-gray-600 placeholder-gray-400">
                     <ul class="max-h-60 overflow-y-auto">
                         @foreach ($users as $p)
-                        @php $fullName = ucfirst($p->first_name) . ' ' . ucfirst($p->name); @endphp
-                        <li @click="selected = { id: {{ $p->id }}, nom: {!! json_encode($fullName) !!} }; open = false"
-                            x-show="'{{ json_encode(strtolower($fullName)) }}'.includes(search.toLowerCase())"
+                        @php
+                            $fullName = ucfirst($p->first_name) . ' ' . ucfirst($p->name);
+                            $escapedFullName = str_replace("'", "\\'", $fullName);
+                        @endphp
+                        <li @click="selected = { id: {{ $p->id }}, nom: '{{ $escapedFullName }}' }; open = false"
+                            x-show="'{{ strtolower($escapedFullName) }}'.includes(search.toLowerCase())"
                             class="px-4 py-2 hover:bg-yellow-600 font-semibold cursor-pointer text-sm text-white">
                             {{ $fullName }}
                         </li>
