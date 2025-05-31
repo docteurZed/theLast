@@ -58,12 +58,12 @@
             <input type="hidden" name="vote_category_id" value="{{ $category->id }}">
 
             <div class="relative p-5"
-                 x-data="{
-                     open: false,
-                     search: '',
-                     selected: {{ json_encode($defaultCandidate ? ['id' => $defaultCandidate->id, 'nom' => ucfirst($defaultCandidate->first_name) . ' ' . ucfirst($defaultCandidate->name)] : null) }}
-                 }"
-                 @click.away="open = false">
+                    x-data="{
+                        open: false,
+                        search: '',
+                        selected: {{ json_encode($defaultCandidate ? ['id' => $defaultCandidate->id, 'nom' => ucfirst($defaultCandidate->first_name) . ' ' . ucfirst($defaultCandidate->name)] : null) }}
+                    }"
+                    @click.away="open = false">
 
                 <label class="block font-semibold text-gray-400 mb-2">Choisir un participant :</label>
 
@@ -80,8 +80,8 @@
                     <ul class="max-h-60 overflow-y-auto">
                         @foreach ($users as $p)
                         @php $fullName = ucfirst($p->first_name) . ' ' . ucfirst($p->name); @endphp
-                        <li @click="selected = { id: {{ $p->id }}, nom: '{{ $fullName }}' }; open = false"
-                            x-show="'{{ strtolower($fullName) }}'.includes(search.toLowerCase())"
+                        <li @click="selected = { id: {{ $p->id }}, nom: {!! json_encode($fullName) !!} }; open = false"
+                            x-show="'{{ json_encode(strtolower($fullName)) }}'.includes(search.toLowerCase())"
                             class="px-4 py-2 hover:bg-yellow-600 font-semibold cursor-pointer text-sm text-white">
                             {{ $fullName }}
                         </li>
