@@ -86,7 +86,7 @@
 
         <button id="sendButton"
             type="submit"
-            class="text-sm px-4 py-2 rounded-lg transition font-semibold shadow">
+            class="text-sm px-6 py-3 rounded-lg transition font-semibold shadow">
             Envoyer
         </button>
 
@@ -106,11 +106,11 @@
             submitBtn.disabled = isEmpty;
 
             if (isEmpty) {
-                submitBtn.classList.remove('bg-yellow-600', 'hover:bg-yellow-700', 'text-white');
+                submitBtn.classList.remove('bg-gradient-to-r', 'from-yellow-500', 'via-yellow-600', 'to-yellow-800', 'text-white', 'hover:opacity-90');
                 submitBtn.classList.add('bg-gray-600', 'text-gray-300', 'cursor-not-allowed');
             } else {
                 submitBtn.classList.remove('bg-gray-600', 'text-gray-300', 'cursor-not-allowed');
-                submitBtn.classList.add('bg-yellow-600', 'hover:bg-yellow-700', 'text-white');
+                submitBtn.classList.add('bg-gradient-to-r', 'from-yellow-500', 'via-yellow-600', 'to-yellow-800', 'text-white', 'hover:opacity-90');
             }
         };
 

@@ -58,7 +58,6 @@ class VoteController extends Controller
         ]);
     }
 
-
     public function store(Request $request)
     {
         if (Auth::user()->id == $request->candidat_id) {
@@ -75,12 +74,14 @@ class VoteController extends Controller
             $validated['vote_category_id']
         );
 
+        $category = VoteCategory::findOrFail($validated['vote_category_id'])->name;
+
         $vote->candidate->notify(new UserActivityNotification(
             type: 'vote',
-            message: "Un collègue a voté pour vous dans une catégorie.",
+            message: "Un collègue a voté pour vous dans la catégorie : '" . $category . "'.",
             url: url(route('participant.vote.index')),
             emailSubject: 'Quelqu’un a voté pour vous.',
-            emailIntro: "Un collègue vient de voter pour vous."
+            emailIntro: "Un collègue vient de voter pour vous dans la catégorie : **" . $category . "**."
         ));
 
         return back()->with('success', 'Vote enrégistré');
@@ -105,13 +106,14 @@ class VoteController extends Controller
             );
 
             $user = User::findOrFail($validated['candidat_id']);
+            $category = VoteCategory::findOrFail($categoryId)->name;
 
             $user->notify(new UserActivityNotification(
                 type: 'vote',
-                message: "Un collègue a voté pour vous dans une catégorie.",
+                message: "Un collègue a voté pour vous dans la catégorie : '" . $category . "'.",
                 url: url(route('participant.vote.index')),
                 emailSubject: 'Quelqu’un a voté pour vous.',
-                emailIntro: "Un collègue vient de voter pour vous."
+                emailIntro: "Un collègue vient de voter pour vous dans la catégorie : **" . $category . "**.",
             ));
         }
 

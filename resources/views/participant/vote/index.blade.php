@@ -39,6 +39,64 @@
         @endforeach
     @endif
 
+    <div class="bg-gray-800 border border-gray-700 mb-5 p-5 flex justify-between items-center rounded-md">
+        <p class="text-xl font-semibold ms-3 text-yellow-600">
+            Mes votes
+        </p>
+        <button class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition text-center cursor-pointer" data-modal-target="my-vote-modal" data-modal-toggle="my-vote-modal">Découvrir</button>
+        <div id="my-vote-modal" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-full bg-gray-950 bg-opacity-50 mb-16">
+            <div class="relative w-full max-w-xl max-h-full">
+                <div class="relative bg-gray-800 rounded-lg shadow">
+                    <div class="p-5 flex items-center border-b border-gray-700 mb-4">
+                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 hover:text-white bg-transparent hover:bg-gray-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="my-vote-modal">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 01-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 01-1.414-1.414L8.586 10 3.636 5.05a1 1 0 011.414-1.414L10 8.586z" clip-rule="evenodd" /></svg>
+                        </button>
+                        <h3 class="text-xl font-semibold text-white">Découvrir vos votes</h3>
+                    </div>
+
+                    <div class="p-5 flex w-full justify-center items-center relative overflow-x-auto">
+                        <table class="w-full text-sm text-center text-gray-400">
+                            <thead class="bg-gray-700 text-white">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3">Catégorie</th>
+                                    <th scope="col" class="px-6 py-3">Nombre de votes</th>
+                                </tr>
+                            </thead>
+                            @php
+                                $userVotesByCategory = Auth::user()->votesReceived
+                                                        ->groupBy('vote_category_id')
+                                                        ->map(function ($votes) {
+                                                            return [
+                                                                'category' => $votes->first()->category->name,
+                                                                'count' => $votes->count(),
+                                                            ];
+                                                        });
+
+                                $userVotesByCategory = $userVotesByCategory ?? collect();
+                            @endphp
+                            <tbody>
+                                @forelse ($userVotesByCategory as $index => $data)
+                                <tr class="{{ !$loop->last ? 'border-b' : '' }} border-gray-700">
+                                    <td class="px-6 py-3 font-semibold">{{ $data['category'] }}</td>
+                                    <td class="px-6 py-3 font-bold text-yellow-600">{{ $data['count'] }}</td>
+                                </tr>
+                                @empty
+                                <tr class="border-gray-700">
+                                    <td colspan="2" class="px-6 py-3 italic">Aucun vote enrégistré</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="flex justify-end gap-2 p-5 border-t border-gray-700">
+                        <button type="button" data-modal-hide="my-vote-modal" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-500 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">Retour</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @forelse($categories as $category)
     <div class="bg-gray-800 space-y-4 rounded-md shadow-md mb-4">
         <div class="p-5 border-b border-gray-700 text-yellow-600 flex items-center">

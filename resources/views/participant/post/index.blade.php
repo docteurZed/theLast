@@ -58,7 +58,7 @@
             </label>
 
             <button type="submit"
-                class="bg-yellow-600 hover:bg-yellow-700 text-white font-medium px-4 py-2 rounded-md">
+                class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition text-center font-semibold rounded-md">
                 Publier
             </button>
         </div>
@@ -77,7 +77,7 @@
             <img src="{{ asset('images/user.png') }}" class="w-10 h-10 rounded-full object-cover" alt="Avatar">
             @endif
             <div>
-                <p class="font-semibold text-gray-900 dark:text-white">{{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}
+                <p class="font-semibold text-white">{{ ucfirst($post->user->first_name) }} {{ ucfirst($post->user->name) }}
                     @if ($post->user->role == "admin")
                         <span class="text-gray-400 mx-2">•</span>
                         <span class="text-yellow-600 italic text-sm">Admin</span>
@@ -165,7 +165,7 @@
                     class="flex-1 border border-gray-700 rounded-l-md px-4 py-2 text-white bg-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-600">
 
                 <button type="submit"
-                    class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 text-sm font-medium rounded-r-md">
+                    class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 font-semibold hover:opacity-90 transition text-center px-4 py-2 text-sm rounded-r-md">
                     <span>Envoyer</span>
                     <svg class="spinner w-4 h-4 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"></circle>
