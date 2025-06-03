@@ -30,6 +30,15 @@
             @include('layouts.participant._bottombar')
         </div>
 
+        <!-- Bouton "Installer l'application" -->
+        <div id="install-container" class="fixed bottom-4 mb-16 right-4 z-50">
+            <button id="install-button"
+                class="hidden px-6 py-3 bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 hover:opacity-90 text-white text-center rounded-xl shadow-lg transition duration-300">
+                Installer l'application
+            </button>
+        </div>
+
+
         @include('layouts.participant._script')
     </body>
 </html>

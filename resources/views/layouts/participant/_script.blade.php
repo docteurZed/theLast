@@ -1,10 +1,47 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 <script>
+    let deferredPrompt = null;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault(); // Empêche le prompt automatique
+        deferredPrompt = e;
+
+        const installButton = document.getElementById('install-button');
+        if (installButton) {
+            installButton.classList.remove('hidden');
+
+            installButton.addEventListener('click', () => {
+                installButton.disabled = true;
+                deferredPrompt.prompt();
+
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('L’utilisateur a accepté l’installation');
+                    } else {
+                        console.log('L’utilisateur a refusé l’installation');
+                    }
+                    deferredPrompt = null;
+                    installButton.classList.add('hidden');
+                });
+            });
+        }
+    });
+
+    // Masquer le bouton si l’app est déjà installée
+    window.addEventListener('appinstalled', () => {
+        console.log('PWA installée');
+        const installButton = document.getElementById('install-button');
+        if (installButton) {
+            installButton.classList.add('hidden');
+        }
+    });
+
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(registration => {
+                    console.log('test');
                     registration.onupdatefound = () => {
                         const newWorker = registration.installing;
 

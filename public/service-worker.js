@@ -1,7 +1,6 @@
 const CACHE_NAME = 'theLast-v1';
 
 const STATIC_ASSETS = [
-    '/participant/dashboard',
     '/login',
     '/offline.html',
     '/manifest.json',
@@ -24,6 +23,7 @@ self.addEventListener('install', event => {
             return cache.addAll(STATIC_ASSETS);
         })
     );
+    self.skipWaiting();
 });
 
 self.addEventListener('install', event => {
@@ -43,42 +43,49 @@ self.addEventListener('activate', event => {
     );
 });
 
-// ✅ FETCH : stratégie mixte
 self.addEventListener('fetch', event => {
-    const url = new URL(event.request.url);
+    const { request } = event;
+    const url = new URL(request.url);
 
-    // Pour les ressources statiques
-    if (STATIC_ASSETS.includes(url.href) || STATIC_ASSETS.includes(url.pathname)) {
+    // Gestion spéciale pour les requêtes de navigation
+    if (request.mode === 'navigate') {
+        if (url.pathname.startsWith('/participant')) {
+            // Cache dynamique des vues /participant/*
+            event.respondWith(
+                fetch(request)
+                    .then(response => {
+                        return caches.open(CACHE_NAME).then(cache => {
+                            cache.put(request, response.clone());
+                            return response;
+                        });
+                    })
+                    .catch(() => {
+                        return caches.match(request) || caches.match('/offline.html');
+                    })
+            );
+            return;
+        }
+
+        // Pour les autres navigations HTML
         event.respondWith(
-            caches.match(event.request).then(response => {
-                return response || fetch(event.request);
-            })
+            fetch(request).catch(() => caches.match('/offline.html'))
         );
         return;
     }
 
-    // Pour certaines routes dynamiques (dashboard par ex.)
-    if (url.pathname.startsWith('/participant/dashboard')) {
-        event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    return caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, response.clone());
-                        return response;
-                    });
-                })
-                .catch(() => caches.match(event.request))
-        );
-        return;
-    }
-
-    // Pour le reste, stratégie network-first avec fallback
+    // Pour les assets statiques : cache-first
     event.respondWith(
-        fetch(event.request).catch(() => {
-            return caches.match(event.request).then(response => {
-                return response || caches.match('/offline.html');
+        caches.match(request).then(cached => {
+            return cached || fetch(request).then(response => {
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(request, response.clone());
+                    return response;
+                });
+            }).catch(() => {
+                if (request.destination === 'image') {
+                    return caches.match('/images/bg.jpg');
+                }
             });
         })
     );
 });
-
