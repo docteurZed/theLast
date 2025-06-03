@@ -7,54 +7,20 @@
 <link rel="preconnect" href="https://fonts.bunny.net">
 <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
 
-<!-- Styles / Scripts -->
-{{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+<link rel="manifest" href="{{ asset('manifest.json') }}">
+<!-- Couleur de thème pour Chrome, Firefox OS et Opera -->
+<meta name="theme-color" content="#ca8a04" />
+
+<!-- Couleur de la barre d’adresse sous Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#ca8a04" />
+
+<!-- Couleur de la barre de statut pour iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="#ca8a04" />
+
+<!-- Mode standalone pour iOS -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- Icône pour iOS -->
+{{-- <link rel="apple-touch-icon" href="/icons/icon-192x192.png" /> --}}
+
 <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/> --}}
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-<style>
-    @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-
-    .animate-spin-slow {
-        animation: spin-slow 30s linear infinite;
-    }
-
-    .fade-section {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
-
-    .fade-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-    .fade-left {
-        opacity: 0;
-        transform: translateX(-50px); /* glisse depuis la gauche */
-        transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-    }
-
-    .fade-left.visible {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    .fade-right {
-        opacity: 0;
-        transform: translateX(50px); /* glisse depuis la gauche */
-        transition: opacity 1.2s ease-out, transform 1.2s ease-out;
-    }
-
-    .fade-right.visible {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-
-</style>

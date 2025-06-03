@@ -1,0 +1,9 @@
+{
+    "name": "theLast",
+    "short_name": "theLast",
+    "start_url": "/participant/dashboard",
+    "display": "standalone",
+    "background_color": "#111827",
+    "theme_color": "#ca8a04",
+    "orientation": "portrait"
+}

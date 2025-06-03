@@ -16,7 +16,19 @@
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     </head>
     <body class="bg-gray-950">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center p-8 md:p-16">
+        <div id="loading-screen" class="max-w-md m-auto flex justify-center items-center min-h-screen hidden">
+            <div class="text-center">
+                <a href="#" class="flex items-center justify-center">
+                    <span class="self-center text-3xl font-bold whitespace-nowrap text-white">
+                        the<span class="bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-500 bg-clip-text text-transparent">Last</span>
+                    </span>
+                </a>
+                <p class="my-8 text-gray-400 text-xl font-semibold">
+                    Loading...
+                </p>
+            </div>
+        </div>
+        <div id="page" class="min-h-screen flex flex-col sm:justify-center items-center p-8 md:p-16">
             <div class="text-center">
                 <a href="{{ route('home') }}" class="flex items-center justify-center">
                     <span class="self-center text-4xl font-bold whitespace-nowrap text-white">
@@ -54,6 +66,17 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const loadingScreen = document.getElementById('loading-screen');
+                const page = document.getElementById('page');
+
+                window.addEventListener('beforeunload', function () {
+                    loadingScreen.classList.remove('hidden');
+                    page.classList.add('hidden');
+                });
+            });
+        </script>
     </body>
 </html>
 
