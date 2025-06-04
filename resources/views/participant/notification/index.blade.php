@@ -38,7 +38,7 @@
         <p class="text-gray-400 text-sm text-center py-16">Aucune discussion en cours.</p>
     @endforelse
 
-    <div class="fixed end-6 bottom-6 group">
+    <div class="fixed end-6 bottom-12 group">
         <button type="button" data-tooltip-target="tooltip-message" data-tooltip-placement="left" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" class="flex justify-center items-center w-[52px] h-[52px] rounded-full shadow-xs hover:text-white text-gray-300 bg-yellow-700 hover:bg-yellow-600">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
@@ -52,8 +52,8 @@
     </div>
 
     <!-- drawer component -->
-    <div id="drawer-example" class="fixed top-0 left-0 z-60 h-screen p-4 overflow-y-auto transition-transform -translate-x-full w-full bg-gray-700" tabindex="-1" aria-labelledby="drawer-label">
-        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-300 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-yellow-600 hover:text-white" >
+    <div id="drawer-example" class="fixed top-0 left-0 z-60 h-screen p-4 overflow-y-auto transition-transform -translate-x-full w-full bg-gray-900" tabindex="-1" aria-labelledby="drawer-label">
+        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-yellow-700 hover:text-white mb-4" >
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
@@ -61,7 +61,7 @@
         </button>
 
         <div>
-            <div class="relative"
+            <div class="relative mb-4"
                     x-data="{
                         open: false,
                         search: '',
@@ -69,15 +69,15 @@
                     @click.away="open = false">
 
                 <div @click="open = !open"
-                     class="bg-gray-600 border border-gray-500 text-white rounded-md p-2 cursor-pointer flex justify-between items-center">
+                     class="bg-gray-800 border border-gray-700 text-white rounded-md p-2 cursor-pointer flex justify-between items-center">
                     <span class="text-gray-400" x-text="Choisir un destinataire"></span>
                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </div>
 
-                <div x-show="open" class="absolute z-10 w-7/8 bg-gray-600 border border-gray-500 rounded-md mt-1 shadow-lg overflow-hidden" x-transition>
-                    <input type="text" x-model="search" placeholder="Rechercher..." class="w-full p-2 bg-gray-700 text-white border-b border-gray-600 placeholder-gray-400">
+                <div x-show="open" class="absolute z-10 w-7/8 bg-gray-800 border border-gray-700 rounded-md mt-1 shadow-lg overflow-hidden" x-transition>
+                    <input type="text" x-model="search" placeholder="Rechercher..." class="w-full p-2 bg-gray-800 text-white border-b border-gray-700 placeholder-gray-400">
                     <ul class="max-h-60 overflow-y-auto">
                         @foreach ($users as $p)
                         @php
@@ -94,14 +94,14 @@
                 </div>
             </div>
 
-            <div>
-                <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre publication ici..." value="{{ old('content') }}" required></textarea>
+            <div class="mb-4">
+                <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre publication ici..." value="{{ old('content') }}" required></textarea>
             </div>
 
-            <div class="flex items-center justify-center w-full mb-6">
-                <label for="image" class="flex flex-col items-center justify-center w-full h-40 border rounded-lg cursor-pointer bg-gray-600 border-gray-500 hover:bg-gray-500">
+            <div class="flex items-center justify-center w-full mb-4">
+                <label for="image" class="flex flex-col items-center justify-center w-full min-h-sm border rounded-lg cursor-pointer bg-gray-800 border-gray-700 hover:bg-gray-700">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6" id="preview-default">
-                        <svg class="w-5 h-5 mb-4 text-gray-500 dark:text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <svg class="w-5 h-5 mb-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5
                                 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0
