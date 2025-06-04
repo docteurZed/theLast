@@ -2,10 +2,10 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto space-y-4 text-gray-400 mb-20">
+<div class="max-w-4xl mx-auto text-gray-400 mb-20">
     @forelse ($discussions as $disc)
         <a href="{{ route('participant.notification.show', ['threadKey' => $disc->thread_key]) }}">
-            <div class="flex items-center {{ !$disc->all_read ? 'bg-gray-700' : 'bg-gray-800' }} mb-1 shadow-md p-5 cursor-pointer">
+            <div class="flex items-center {{ !$disc->all_read ? 'bg-gray-700' : 'bg-gray-800' }} shadow-md p-5 cursor-pointer {{ !$loop->last ?? 'border border-gray-700' }}">
                 <div class="relative inline-block shrink-0">
                     @if ($disc->is_interlocutor_anonymous)
                         <img class="w-12 h-12 rounded-full" src="{{ asset('images/user.png') }}" alt="user"/>
@@ -38,7 +38,7 @@
         <p class="text-gray-400 text-sm text-center py-16">Aucune discussion en cours.</p>
     @endforelse
 
-    <div class="fixed end-6 bottom-12 group">
+    <div class="fixed end-10 bottom-20 group">
         <button type="button" data-tooltip-target="tooltip-message" data-tooltip-placement="left" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" class="flex justify-center items-center w-[52px] h-[52px] rounded-full shadow-xs hover:text-white text-gray-300 bg-yellow-700 hover:bg-yellow-600">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
@@ -53,15 +53,18 @@
 
     <!-- drawer component -->
     <div id="drawer-example" class="fixed top-0 left-0 z-60 h-screen p-4 overflow-y-auto transition-transform -translate-x-full w-full bg-gray-900" tabindex="-1" aria-labelledby="drawer-label">
-        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-yellow-700 hover:text-white mb-4" >
+        <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"><svg class="w-4 h-4 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+          </svg>Message</h5>
+        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-yellow-700 hover:text-white" >
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
             </svg>
             <span class="sr-only">Close menu</span>
         </button>
 
-        <div>
-            <div class="relative mb-4"
+        <div class="mt-5">
+            <div class="relative mb-5"
                     x-data="{
                         open: false,
                         search: '',
@@ -70,7 +73,7 @@
 
                 <div @click="open = !open"
                      class="bg-gray-800 border border-gray-700 text-white rounded-md p-2 cursor-pointer flex justify-between items-center">
-                    <span class="text-gray-400" x-text="Choisir un destinataire"></span>
+                    <span class="text-gray-400">Choisir un destinataire</span>
                     <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
@@ -94,11 +97,11 @@
                 </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-5">
                 <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre publication ici..." value="{{ old('content') }}" required></textarea>
             </div>
 
-            <div class="flex items-center justify-center w-full mb-4">
+            <div class="flex items-center justify-center w-full mb-5">
                 <label for="image" class="flex flex-col items-center justify-center w-full min-h-sm border rounded-lg cursor-pointer bg-gray-800 border-gray-700 hover:bg-gray-700">
                     <div class="flex flex-col items-center justify-center pt-5 pb-6" id="preview-default">
                         <svg class="w-5 h-5 mb-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
@@ -113,7 +116,7 @@
                         <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG ou JPEG</p>
                     </div>
                     <!-- Miniature de l'image sélectionnée -->
-                    <img id="image-preview" class="mt-2 w-full h-full object-cover rounded-lg hidden" alt="Prévisualisation">
+                    <img id="image-preview" class="w-full h-full object-cover rounded-lg hidden" alt="Prévisualisation">
                     <input name="image" id="image" type="file" class="hidden" accept=".jpg,.png,.jpeg" />
                 </label>
             </div>
