@@ -38,8 +38,8 @@
         <p class="text-gray-400 text-sm text-center py-16">Aucune discussion en cours.</p>
     @endforelse
 
-    <div class="fixed end-6 sm:end-28 bottom-28 sm:bottom-56 group">
-        <button type="button" data-tooltip-target="tooltip-message" data-tooltip-placement="left" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" class="flex justify-center items-center w-[52px] h-[52px] rounded-full shadow-xs hover:text-white text-gray-300 bg-yellow-700 hover:bg-yellow-600">
+    <div class="fixed end-6 sm:end-24 bottom-28 sm:bottom-48 group">
+        <button type="button" data-tooltip-target="tooltip-message" data-tooltip-placement="left" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" class="flex justify-center items-center w-[52px] h-[52px] rounded-full shadow-xs hover:text-white text-gray-400 bg-yellow-700 hover:bg-yellow-600">
             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4.414a1 1 0 0 0-.707.293L.854 15.146A.5.5 0 0 1 0 14.793zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
             </svg>
@@ -56,7 +56,7 @@
         <span id="drawer-label" class="inline-flex items-center mb-4 text-base text-sm font-semibold text-gray-400">
             Nouveau message
         </span>
-        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 start-2.5 flex items-center justify-center hover:bg-yellow-700 hover:text-white" >
+        <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-yellow-700 hover:text-white" >
             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
             </svg>
