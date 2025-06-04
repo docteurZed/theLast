@@ -95,6 +95,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/', [NotificationController::class, 'index'])->name('index');
             Route::get('/{threadKey}/show', [NotificationController::class, 'show'])->name('show');
+            Route::post('/store-fcm-token', [NotificationController::class, 'storeToken']);
 
         });
 

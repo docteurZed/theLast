@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Participant;
 
 use App\Http\Controllers\Controller;
+use App\Models\FcmToken;
 use App\Services\ParticipantMessageService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class NotificationController extends Controller
 {
@@ -32,5 +35,39 @@ class NotificationController extends Controller
             'receiverId' => $data['receiver_id'],
             'thread_key' => $data['thread_key'],
         ]);
+    }
+
+    public function storeToken(Request $request)
+    {
+        $request->validate(['token' => 'required|string']);
+
+        FcmToken::updateOrCreate(
+            ['user_id' => Auth::user()->id, 'token' => $request->token],
+            ['updated_at' => now()]
+        );
+
+        return response()->json(['message' => 'Token enregistré.']);
+    }
+
+    public function sendNotification(Request $request)
+    {
+        $user = Auth::user(); // ou tout autre utilisateur cible
+        $token = $user->fcm_token;
+
+        if (!$token) {
+            return response()->json(['message' => 'Aucun token FCM disponible.'], 400);
+        }
+
+        $response = Http::withToken(env('FCM_SERVER_KEY'))->post('https://fcm.googleapis.com/fcm/send', [
+            'to' => $token,
+            'notification' => [
+                'title' => 'Nouveau message',
+                'body' => 'Vous avez un nouveau message.',
+                'icon' => '/icons/icon-192x192.png'
+            ],
+            'priority' => 'high'
+        ]);
+
+        return response()->json(['fcm_response' => $response->json()]);
     }
 }

@@ -71,3 +71,37 @@
     });
 </script>
 
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyAbv6K8xUZaaaPzoe3B0jezJJBQJshumbg",
+        authDomain: "thelast-78c11.firebaseapp.com",
+        projectId: "thelast-78c11",
+        storageBucket: "thelast-78c11.firebasestorage.app",
+        messagingSenderId: "1035734482610",
+        appId: "1:1035734482610:web:29298cff5a0f69b91353ab",
+        measurementId: "G-60F96PFSE9"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+</script>
+
+<script type="module">
+    import { initFirebaseMessagingRegistration } from '/js/firebase-messaging.js';
+    window.addEventListener('load', () => {
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/firebase-messaging-sw.js').then(() => {
+                initFirebaseMessagingRegistration();
+            });
+        }
+    });
+</script>

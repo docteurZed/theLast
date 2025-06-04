@@ -50,7 +50,7 @@ class ParticipantMessageService
             return (object)[
                 'thread_key'     => $message->thread_key,
                 'interlocutor'   => $interlocutorDisplayName,
-                'last_message'   => Str::limit($message->content, 40),
+                'last_message'   => Str::limit($message->content, 28),
                 'elapsed'        => Carbon::parse($message->created_at)->diffForHumans(),
                 'is_read'        => $message->is_read,
                 'unread_count'   => $unreadCount,
