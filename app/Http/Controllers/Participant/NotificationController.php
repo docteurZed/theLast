@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Participant;
 
 use App\Http\Controllers\Controller;
 use App\Models\FcmToken;
+use App\Models\User;
 use App\Services\ParticipantMessageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +18,7 @@ class NotificationController extends Controller
     {
         return view('participant.notification.index', [
             'discussions' => $this->service->listDiscussion(),
+            'users' => User::where('role', '!=', 'admin')->orderBy('name')->get(),
         ]);
     }
 
