@@ -98,7 +98,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <p class="block mb-2 text-lg font-semibold">Ajouter une image</p>
+                    <p class="block mb-2 text-lg font-semibold">Ajouter une image <span class="text-sm italic">(facultatif)</span></p>
                     <div class="flex items-center justify-center w-full mb-5">
                         <label for="image" class="flex flex-col items-center justify-center w-full min-h-sm border rounded-lg cursor-pointer bg-gray-800 border-gray-700 hover:bg-gray-700">
                             <div class="flex flex-col items-center justify-center pt-5 pb-6" id="preview-default">

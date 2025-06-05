@@ -120,7 +120,7 @@
                     }"
                     @click.away="open = false">
 
-                    <label for="receiver_id" class="block mb-2 text-lg font-semibold">Destinataire</label>
+                    <label for="receiver_id" class="block mb-2 text-lg font-semibold">Destinataire <span class="text-red-500">*</span></label>
 
                     <div @click="open = !open"
                         class="bg-gray-800 border border-gray-700 text-white rounded-md p-2 cursor-pointer flex justify-between items-center">
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <label for="content" class="block mb-2 text-lg font-semibold">Message</label>
+                    <label for="content" class="block mb-2 text-lg font-semibold">Message <span class="text-red-500">*</span></label>
                     <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre message..." required>{{ old('content') }}</textarea>
                 </div>
 
