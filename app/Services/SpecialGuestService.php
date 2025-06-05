@@ -41,10 +41,10 @@ class SpecialGuestService
         $payload = $data->only(['title', 'name', 'domain', 'description', 'role']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            // if ($guest->image) {
-            //     $publicId = $this->cloudinary->extractPublicId($guest->image);
-            //     $this->cloudinary->delete($publicId);
-            // }
+            if ($guest->image) {
+                $publicId = $this->cloudinary->extractPublicId($guest->image);
+                $this->cloudinary->delete($publicId);
+            }
 
             $filePath = $data->file('image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
@@ -61,10 +61,10 @@ class SpecialGuestService
     public function delete($id): void
     {
         $guest = SpecialGuest::findOrFail($id);
-        // if ($guest->image) {
-        //     $publicId = $this->cloudinary->extractPublicId($guest->image);
-        //     $this->cloudinary->delete($publicId);
-        // }
+        if ($guest->image) {
+            $publicId = $this->cloudinary->extractPublicId($guest->image);
+            $this->cloudinary->delete($publicId);
+        }
         $guest->delete();
     }
 }

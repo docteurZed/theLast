@@ -41,10 +41,10 @@ class TestimonyService
         $payload = $data->only(['name', 'testimony']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
-            // if ($testimony->image) {
-            //     $publicId = $this->cloudinary->extractPublicId($testimony->image);
-            //     $this->cloudinary->delete($publicId);
-            // }
+            if ($testimony->image) {
+                $publicId = $this->cloudinary->extractPublicId($testimony->image);
+                $this->cloudinary->delete($publicId);
+            }
 
             $filePath = $data->file('image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
@@ -61,10 +61,10 @@ class TestimonyService
     public function delete($id): void
     {
         $testimony = Testimony::findOrFail($id);
-        // if ($testimony->image) {
-        //     $publicId = $this->cloudinary->extractPublicId($testimony->image);
-        //     $this->cloudinary->delete($publicId);
-        // }
+        if ($testimony->image) {
+            $publicId = $this->cloudinary->extractPublicId($testimony->image);
+            $this->cloudinary->delete($publicId);
+        }
         $testimony->delete();
     }
 }

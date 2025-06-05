@@ -73,10 +73,10 @@ class TaskService
         $task->update($request->except('image'));
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
-            // if ($oldImagePath) {
-            //     $publicId = $this->cloudinary->extractPublicId($oldImagePath);
-            //     $this->cloudinary->delete($publicId);
-            // }
+            if ($oldImagePath) {
+                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+                $this->cloudinary->delete($publicId);
+            }
 
             $filePath = $request->file('image')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
@@ -99,10 +99,10 @@ class TaskService
     public function deleteTask($id)
     {
         $task = Task::findOrFail($id);
-        // if ($task->image) {
-        //     $publicId = $this->cloudinary->extractPublicId($task->image);
-        //     $this->cloudinary->delete($publicId);
-        // }
+        if ($task->image) {
+            $publicId = $this->cloudinary->extractPublicId($task->image);
+            $this->cloudinary->delete($publicId);
+        }
         $task->delete();
     }
 }

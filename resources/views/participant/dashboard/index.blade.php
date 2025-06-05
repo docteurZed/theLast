@@ -61,7 +61,7 @@
                     <div class="mb-6 p-6 border border-gray-700 rounded-2xl bg-gray-800 text-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center md:text-start">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                             <div class="w-full md:w-3/4">
-                                <h3 class="text-2xl font-extrabold text-white mb-5 flex gap-3 items-center">
+                                <h3 class="text-2xl font-extrabold text-white mb-5 flex gap-3 items-center justify-center md:justify-start">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 16 16">
                                         <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
                                     </svg>
@@ -110,11 +110,11 @@
                             <div class="w-full md:w-1/4 flex gap-3 md:items-center justify-center mt-4 md:mt-0">
                                 <a href="{{ route('participant.event.detail', ['id' => $evenement->id]) }}"
                                 class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
-                                    Détails
+                                    Détail
                                 </a>
                                 <a href="#"
                                 class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-600 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
-                                    Galerie
+                                    Album
                                 </a>
                             </div>
                         </div>

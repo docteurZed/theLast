@@ -41,10 +41,10 @@ class SponsorService
         $payload = $data->only(['name', 'description']);
 
         if ($data->hasFile('logo') && $data->file('logo')->isValid()) {
-            // if ($sponsor->logo) {
-            //     $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
-            //     $this->cloudinary->delete($publicId);
-            // }
+            if ($sponsor->logo) {
+                $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
+                $this->cloudinary->delete($publicId);
+            }
 
             $filePath = $data->file('logo')->getRealPath();
             $uploadResult = $this->cloudinary->upload($filePath, [
@@ -61,10 +61,10 @@ class SponsorService
     public function delete($id): void
     {
         $sponsor = Sponsor::findOrFail($id);
-        // if ($sponsor->logo) {
-        //     $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
-        //     $this->cloudinary->delete($publicId);
-        // }
+        if ($sponsor->logo) {
+            $publicId = $this->cloudinary->extractPublicId($sponsor->logo);
+            $this->cloudinary->delete($publicId);
+        }
         $sponsor->delete();
     }
 }
