@@ -20,6 +20,7 @@ class NotificationController extends Controller
             'discussions' => $this->service->listDiscussion(),
             'users' => User::where('role', '!=', 'admin')
                             ->where('id', '!=', Auth::user()->id)
+                            ->where('is_active', true)
                             ->orderBy('name')
                             ->get(),
         ]);

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto sm:p-6 space-y-6 text-gray-400 mb-20">
+<div class="max-w-4xl mx-auto text-gray-400 mb-16">
 
     @php
         $notifications = Auth::user()->notifications->filter(function ($notification) {
@@ -37,7 +37,7 @@
 
             <a href="{{ $msg->data['url'] ?? '#' }}" class="block w-full cursor-pointer {{ !$loop->last ? 'border-b border-gray-800' : '' }}">
                 <div id="section-{{ $msg->id }}"
-                    class="w-full flex items-center mb-4 p-5 cursor-pointer border-l-4 {{ $styles }}">
+                    class="w-full flex items-center p-5 cursor-pointer border-l-4 {{ $styles }}">
                     <div class="relative inline-block shrink-0">
                         <span class="inline-flex items-center justify-center w-8 h-8 bg-white rounded-full">
                             <svg class="w-4 h-4 text-gray-800" fill="currentColor" viewBox="0 0 24 24">

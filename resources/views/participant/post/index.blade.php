@@ -93,7 +93,7 @@
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
 
                 <div class="mb-5">
-                    <label for="content" class="block mb-2 text-lg font-semibold">Message</label>
+                    <label for="content" class="block mb-2 text-lg font-semibold">Message <span class="text-red-500">*</span></label>
                     <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre publication ici...">{{ old('content') }}</textarea>
                 </div>
 

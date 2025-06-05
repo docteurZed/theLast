@@ -64,6 +64,12 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
 
+        Route::prefix('event')->name('event.')->group(function () {
+
+            Route::get('/{id}/detail', [ParticipantDashboardController::class, 'detail'])->name('detail');
+
+        });
+
         Route::prefix('profile')->name('profile.')->group(function () {
 
             Route::get('/', [ProfileController::class, 'index'])->name('index');

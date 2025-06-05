@@ -30,6 +30,7 @@ class PublicationController extends Controller
             'publications' => $this->service->list(),
             'users' => User::where('role', '!=', 'admin')
                             ->where('id', '!=', Auth::user()->id)
+                            ->where('is_active', true)
                             ->get(['id', 'first_name', 'name'])
         ]);
     }
@@ -37,7 +38,10 @@ class PublicationController extends Controller
     public function store(PublicationRequest $request): RedirectResponse
     {
         $publication = $this->service->create($request);
-        $users = User::where('id', '!=', Auth::user()->id)->get();
+        $users = User::where('id', '!=', Auth::user()->id)
+                                ->where('role', '!=', 'admin')
+                                ->where('is_active', true)
+                                ->get();
         foreach ($users as $user) {
             $user->notify(new PublicationNotification(
                 type: 'publication',
