@@ -22,6 +22,10 @@ class ParticipantMessageController extends Controller
             'receiver_id' => 'required|exists:users,id',
             'content' => 'required|string',
             'is_anonymous' => 'nullable',
+        ], [
+            'receiver_id.required' => 'Le destinataire est obligatoire.',
+            'receiver_id.exists' => 'Le destinataire n\'est pas enrégistré.',
+            'content.required' => 'Le message est obligatoire.',
         ]);
 
         $message = $this->service->store($request);

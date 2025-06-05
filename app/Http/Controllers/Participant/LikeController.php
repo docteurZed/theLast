@@ -42,7 +42,7 @@ class LikeController extends Controller
                     message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a aimé votre profil.",
                     url: url(route('participant.galery.index')),
                     emailSubject: 'Quelqu’un a aimé votre profil.',
-                    emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre profil."
+                    emailIntro: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " vient de liker votre profil."
                 ));
             }
 
@@ -54,7 +54,5 @@ class LikeController extends Controller
                 'message' => 'Erreur serveur : ' . $e->getMessage()
             ]);
         }
-
     }
-
 }

@@ -39,7 +39,18 @@
         @endforeach
     @endif
 
-    <!-- Formulaire de création -->
+    <div class="flex items-center justify-between w-full p-5  mb-5 border border-gray-700 bg-gray-800 rounded-xl">
+        <p class="text-yellow-600 font-semibold">
+            Quoi de neuf ?
+        </p>
+        <div>
+            <button type="button" data-drawer-target="drawer-example" data-drawer-show="drawer-example" aria-controls="drawer-example" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
+                Faire une publication
+            </button>
+        </div>
+    </div>
+
+    {{-- <!-- Formulaire de création -->
     <form method="POST" action="{{ route('participant.publication.store') }}" enctype="multipart/form-data"
         class="bg-gray-800 p-5 rounded-lg shadow space-y-4">
         @csrf
@@ -62,12 +73,100 @@
                 Publier
             </button>
         </div>
-    </form>
+    </form> --}}
+
+    <div id="drawer-example" class="fixed top-0 left-0 z-60 h-screen p-5 overflow-y-auto transition-transform -translate-x-full w-full sm:max-w-xl bg-gray-900 sm:border-r border-gray-800" tabindex="-1" aria-labelledby="drawer-label">
+        <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-400">
+            Nouvelle publication
+        </h5>
+       <button type="button" data-drawer-hide="drawer-example" aria-controls="drawer-example" class="text-gray-400 hover:text-white bg-transparent rounded-lg text-sm w-8 h-8 absolute top-2.5 end-2.5 flex items-center justify-center hover:bg-gray-700" >
+          <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+          </svg>
+          <span class="sr-only">Close menu</span>
+       </button>
+
+        <div class="mt-5">
+
+            <form action="{{ route('participant.publication.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+
+                <div class="mb-5">
+                    <label for="content" class="block mb-2 text-lg font-semibold">Message</label>
+                    <textarea id="content" name="content" class="border rounded-lg block w-full p-2.5 bg-gray-800 border-gray-700 placeholder-gray-400 text-white focus:ring-yellow-600 focus:border-yellow-600 focus:outline-none @error('content') border-red-600 @enderror" placeholder="Votre publication ici...">{{ old('content') }}</textarea>
+                </div>
+
+                <div class="mb-5">
+                    <p class="block mb-2 text-lg font-semibold">Ajouter une image</p>
+                    <div class="flex items-center justify-center w-full mb-5">
+                        <label for="image" class="flex flex-col items-center justify-center w-full min-h-sm border rounded-lg cursor-pointer bg-gray-800 border-gray-700 hover:bg-gray-700">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6" id="preview-default">
+                                <svg class="w-5 h-5 mb-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5
+                                        5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0
+                                        0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                                    <span class="font-semibold">Cliquer pour téléverser</span>
+                                </p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG ou JPEG</p>
+                            </div>
+                            <!-- Miniature de l'image sélectionnée -->
+                            <img id="image-preview" class="w-full h-full object-cover rounded-lg hidden" alt="Prévisualisation">
+                            <input name="image" id="image" type="file" class="hidden" accept=".jpg,.png,.jpeg" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="relative mb-5"
+                        x-data="{
+                            open: false,
+                            search: '',
+                        }">
+
+                    <p class="flex items-center justify-between mb-2 text-lg font-semibold">
+                        <span>Taguer des amis ?</span>
+                        <span>
+                            <input type="checkbox" class="rounded border-gray-700 text-yellow-600 shadow-sm focus:ring-yellow-600 ring-offset-yellow-800 focus:ring-2 bg-gray-700  checked:bg-yellow-600 checked:border-yellow-600" @click="open = !open">
+                        </span>
+                    </p>
+
+                    <div x-show="open" class="w-full bg-gray-800 border border-gray-700 rounded-md mt-1 overflow-hidden" x-transition>
+                        <input type="text" x-model="search" placeholder="Rechercher..." class="w-full p-2 bg-gray-900 text-white placeholder-gray-400">
+                        <ul class="max-h-64 overflow-y-auto">
+                            @foreach ($users as $p)
+                            @php
+                                $fullName = ucfirst($p->first_name) . ' ' . ucfirst($p->name);
+                                $escapedFullName = str_replace("'", "\\'", $fullName);
+                            @endphp
+                            <li x-show="'{{ strtolower($escapedFullName) }}'.includes(search.toLowerCase())"
+                                class="px-4 py-2 hover:bg-gray-700 font-semibold cursor-pointer text-white flex items-center justify-between">
+                                <span>{{ $fullName }}</span>
+                                <span>
+                                    <input id="is_anonymous" type="checkbox" class="rounded border-gray-700 text-yellow-600 shadow-sm focus:ring-yellow-600 ring-offset-yellow-800 focus:ring-2 bg-gray-700  checked:bg-yellow-600 checked:border-yellow-600" name="tagIds[]" value="{{ $p->id }}">
+                                </span>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <button type="submit" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
+                        Publier
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
     <!-- Liste des publications -->
     @forelse($publications as $post)
     <div x-data="{ showAllComments: false }"
-        class="bg-gray-800 rounded-lg shadow space-y-4 mb-5">
+        class="bg-gray-800 rounded-md shadow space-y-2 mb-5">
 
         <!-- En-tête -->
         <div class="flex items-center gap-4 p-5 border-b border-gray-700">
@@ -84,6 +183,13 @@
                     @endif
                 </p>
                 <span class="text-sm text-yellow-700">{{ $post->created_at->diffForHumans() }}</span>
+                @if ($post->users->count() != 0)
+                <p class="text-gray-400 text-sm font-semibold italic mt-2">
+                    @foreach ($post->users as $user)
+                        <span>@</span><span class="{{ $user->id == Auth::user()->id ? 'text-red-500' : '' }}">{{ $user->first_name }} {{ $user->name }}</span>{{ !$loop->last ? ', ' : '' }}
+                    @endforeach
+                </p>
+                @endif
             </div>
         </div>
 
@@ -186,9 +292,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- Alpine.js v3 (CDN officiel) -->
-<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+{{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js" ></script>
 <script>
     dayjs.locale('fr');
     dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -196,14 +304,24 @@
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.getElementById('imageInput').addEventListener('change', function (e) {
-        const file = e.target.files[0];
-        const fileNameSpan = document.getElementById('fileName');
+    const input = document.getElementById('image');
+    const previewImage = document.getElementById('image-preview')
+    const defaultPreview = document.getElementById('preview-default');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
 
         if (file) {
-            fileNameSpan.textContent = file.name;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.setAttribute('src', e.target.result);
+                previewImage.classList.remove('hidden');
+                defaultPreview.classList.add('hidden'); // cacher l'icône et le texte par défaut
+            };
+            reader.readAsDataURL(file);
         } else {
-            fileNameSpan.textContent = '';
+            previewImage.classList.add('hidden');
+            defaultPreview.classList.remove('hidden');
         }
     });
 
@@ -320,3 +438,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 @endsection
+

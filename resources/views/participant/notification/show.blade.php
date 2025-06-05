@@ -1,63 +1,91 @@
-@extends('layouts.participant.app')
+@extends('layouts.participant.app', [
+    'noSidebar' => true,
+    'noBottombar' => true,
+    'noPadding' => true,
+    'noMargin' => true,
+])
 
 @section('content')
 
-<div class="max-w-4xl mx-auto py-6 px-4 sm:px-6 text-gray-300 space-y-6 relative mb-16">
-    @if (Session::has('success'))
-    <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-green-400 rounded-xl" role="alert">
-        <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <span class="sr-only">Info</span>
-        <div class="ms-3 text-sm font-semibold">
-            {{ Session::get('success') }}
-        </div>
-        <button type="button" class="ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 inline-flex items-center justify-center h-8 w-8 bg-gray-800 text-green-400 hover:bg-green-700" data-dismiss-target="#alert-1" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-        </button>
-    </div>
-    @elseif ($errors->any())
-        @foreach ($errors->all() as $error)
-        <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-red-400 rounded-xl" role="alert">
-            <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="ms-3 text-sm font-semibold">
-                {{ $error }}
+<nav class="fixed top-0 left-0 z-50 w-full border-b bg-gray-900 border-gray-800">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+        <div class="flex items-center justify-between mr-3">
+            <div class="flex items-center gap-3">
+                <div class="text-white">
+                    <a href="{{ route('participant.notification.index') }}" class="">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-10 h-10 rounded-full hover:bg-gray-800 focus:ring-4 p-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                        </svg>
+                    </a>
+                </div>
+                @php
+
+                @endphp
+                <div class="inline-flex items-center">
+                    @if (isset($sender['profile_photo']))
+                    <img src="{{ $sender['profile_photo'] }}" alt="Photo de profil" class="w-8 h-8 rounded-full">
+                    @else
+                    <img src="{{ asset('images/user.png') }}" alt="Photo de profil" class="w-8 h-8 rounded-full">
+                    @endif
+                    <span class="text-white font-semibold ms-3">{{ $sender['first_name'] . ' ' . $sender['name'] }}</span>
+                </div>
             </div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 inline-flex items-center justify-center h-8 w-8 bg-gray-800 text-red-400 hover:bg-red-700" data-dismiss-target="#alert-1" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
+            <div class="flex items-center ms-3">
+                <div class="flex items-center space-x-4">
+                    <button type="button" class="flex text-sm rounded-full focus:ring-4 focus:ring-gray-700 cursor-pointer text-white" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 16 16">
+                            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="z-50 hidden my-4 text-base list-none divide-y rounded-sm shadow-sm bg-gray-800 divide-gray-700" id="dropdown-user">
+                    <ul class="py-1" role="none">
+                        <li>
+                            <button type="button" class="flex items-center px-4 py-2 text-sm font-semibold text-gray-400 hover:bg-gray-700 group w-full" role="menuitem" data-modal-target="delete-modal" data-modal-toggle="delete-modal">
+                                Supprimer
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="delete-modal" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-80 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-full bg-gray-950 bg-opacity-50">
+                    <div class="relative w-full max-w-xl max-h-full">
+                        <div class="relative bg-gray-800 rounded-lg shadow">
+                            <div class="p-5 flex items-center border-b border-gray-700 mb-4">
+                                <button type="button" class="absolute top-3 right-2.5 text-gray-400 hover:text-white bg-transparent hover:bg-gray-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="delete-modal">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 01-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 01-1.414-1.414L8.586 10 3.636 5.05a1 1 0 011.414-1.414L10 8.586z" clip-rule="evenodd" /></svg>
+                                </button>
+                                <h3 class="text-xl font-semibold text-white">Suppression</h3>
+                            </div>
+
+                            <div class="space-y-4 p-5">
+                                <p class="text-center text-white font-semibold text-xl">Au lieu de profiter de cette expérience, c'est supprimer la discussion qui t'intéresse toi... 😔</p>
+                            </div>
+
+                            <div class="flex justify-end gap-2 p-5 border-t border-gray-700">
+                                <button type="button" data-modal-hide="delete-modal" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-500 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        @endforeach
-    @endif
+    </div>
+</nav>
+
+<div class="max-w-4xl mx-auto py-6 px-4 text-gray-300 relative my-16">
 
     <div id="messagesContainer">
     @foreach ($messages as $message)
         <div class="flex {{ $message->is_sender ? 'justify-end' : 'justify-start' }} mb-4">
             <div class="flex items-start gap-2.5 max-w-[80%]">
-
-                <div class="rounded-xl p-4 shadow-md text-sm leading-relaxed
+                <div class="rounded-xl min-w-40 p-4 shadow-md text-sm leading-relaxed
                     {{ $message->is_sender ? 'bg-yellow-600 text-white rounded-tr-none' : 'bg-gray-700 text-gray-200 rounded-tl-none' }}">
-
-                    <div class="flex items-center justify-between mb-1">
-                        <span class="font-semibold text-xs">
-                            {{ $message->is_sender ? 'Vous' : ($message->is_anonymous ? 'Anonyme - ' . substr(md5($message->sender_id), 0, 6) : $message->sender_name) }}
-                        </span>
-                        <span class="text-xs text-gray-300 ml-4">{{ $message->created_at->format('H:i') }}</span>
-                    </div>
 
                     <p class="mb-2 whitespace-pre-wrap">{{ $message->content }}</p>
 
-                    <div class="text-[0.7rem] text-gray-300 italic">
-                        {{ $message->is_sender ? 'Envoyé' : ($message->is_read ? 'Lu' : 'Non lu') }}
+                    <div class="flex items-center justify-between mb-1">
+                        <p class="italic text-gray-400">{{ !$message->is_sender ? '' : ($message->is_read ? 'Lu' : 'Non lu') }}</p>
+                        <p class="text-xs text-gray-300">{{ $message->created_at->format('H:i') }}</p>
                     </div>
                 </div>
             </div>
@@ -65,7 +93,7 @@
     @endforeach
     </div>
 
-    <form id="messageForm" method="POST" action="{{ route('participant.message.store') }}" class="sm:left-64 inset-x-0 border-t border-gray-700 px-4 py-4 space-y-3">
+    <form id="messageForm" method="POST" action="{{ route('participant.message.store') }}" class="fixed bottom-0 left-0 z-50 w-full h-20 border-t bg-gray-900 border-gray-800 p-4">
         @csrf
         <input type="hidden" name="receiver_id" value="{{ $receiverId }}">
         <input type="hidden" name="thread_key" value="{{ $thread_key }}">
@@ -73,23 +101,18 @@
         <div class="flex items-center gap-2">
             <textarea
                 name="content"
-                rows="2"
-                class="flex-1 resize-none rounded-md border border-gray-600 bg-gray-800 text-gray-200 text-sm px-3 py-2 focus:ring-2 focus:ring-yellow-600 focus:outline-none"
-                placeholder="Écrire un message...">{{ old('content') }}</textarea>
+                rows="1"
+                class="rounded-md border border-gray-600 bg-gray-800 text-gray-200 text-sm focus:ring-2 focus:ring-yellow-600 focus:outline-none w-7/8 h-12"
+                placeholder="Votre message...">{{ old('content') }}</textarea>
+
+            <button id="sendButton"
+                type="submit"
+                class="text-sm rounded-md transition font-semibold shadow flex items-center justify-center h-12 w-1/8 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                </svg>
+            </button>
         </div>
-
-        <div class="flex items-center gap-2 text-sm text-gray-400">
-            <input type="checkbox" id="is_anonymous" name="is_anonymous" class="form-checkbox text-yellow-600 rounded"
-                {{ old('is_anonymous') ? 'checked' : '' }}>
-            <label for="is_anonymous">Envoyer anonymement</label>
-        </div>
-
-        <button id="sendButton"
-            type="submit"
-            class="text-sm px-6 py-3 rounded-lg transition font-semibold shadow">
-            Envoyer
-        </button>
-
     </form>
 </div>
 
@@ -132,7 +155,7 @@
                         stroke="currentColor" stroke-width="4" fill="none"></circle>
                 <path class="opacity-75" fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-            </svg> Envoi...`;
+            </svg>`;
 
             try {
                 const response = await fetch(form.action, {
@@ -160,15 +183,14 @@
                 const messageHTML = `
                 <div class="flex justify-end mb-4">
                     <div class="flex items-start gap-2.5 max-w-[80%]">
-                        <div class="rounded-xl p-4 shadow-md text-sm leading-relaxed bg-yellow-600 text-white rounded-tr-none">
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-semibold text-xs">${senderName}</span>
-                                <span class="text-xs text-gray-300 ml-4">${heureFormatee}</span>
-                            </div>
+                        <div class="rounded-xl min-w-40 p-4 shadow-md text-sm leading-relaxed bg-yellow-600 text-white rounded-tr-none">
                             <p class="mb-2 whitespace-pre-wrap">${formData.get('content')}</p>
-                            <div class="text-[0.7rem] text-gray-300 italic">Envoyé</div>
+
+                            <div class="flex items-center justify-between mb-1">
+                                <p class="italic text-gray-400">Non lu</p>
+                                <p class="text-xs text-gray-300">${heureFormatee}</p>
+                            </div>
                         </div>
-                        <img class="w-8 h-8 rounded-full" src="{{ asset('images/user.png') }}" alt="Avatar">
                     </div>
                 </div>`;
 

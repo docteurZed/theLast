@@ -147,4 +147,9 @@ class User extends Authenticatable
     public function publication_comments() {
         return $this->hasMany(PublicationComment::class);
     }
+
+    public function publication_tags()
+    {
+        return $this->belongsToMany(Publication::class, 'publication_tags');
+    }
 }

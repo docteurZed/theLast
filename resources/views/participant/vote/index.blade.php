@@ -39,8 +39,8 @@
         @endforeach
     @endif
 
-    <div class="bg-gray-800 border border-gray-700 mb-5 p-5 flex justify-between items-center rounded-md">
-        <p class="text-xl font-semibold ms-3 text-yellow-600">
+    <div class="bg-gray-800 border border-gray-700 mb-5 p-5 flex justify-between items-center rounded-xl">
+        <p class="font-semibold text-yellow-600">
             Mes votes
         </p>
         <button class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition text-center cursor-pointer" data-modal-target="my-vote-modal" data-modal-toggle="my-vote-modal">Découvrir</button>

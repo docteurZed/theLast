@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\ParticipantMessage;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,7 @@ class ParticipantMessageService
             return (object)[
                 'thread_key'     => $message->thread_key,
                 'interlocutor'   => $interlocutorDisplayName,
-                'last_message'   => Str::limit($message->content, 28),
+                'last_message'   => Str::limit($message->content, 32),
                 'elapsed'        => Carbon::parse($message->created_at)->diffForHumans(),
                 'is_read'        => $message->is_read,
                 'unread_count'   => $unreadCount,
@@ -87,31 +88,32 @@ class ParticipantMessageService
             ->where('is_anonymous', true)
             ->exists();
 
+        $sender = $interlocutorWasAnonymous
+            ? [
+                'first_name' => 'Anonyme',
+                'name' => '- ' . substr(md5($otherUserId), 0, 6),
+                'profile_photo' => null,
+            ]
+            : User::findOrFail($otherUserId)->only(['first_name', 'name', 'profile_photo']);
+
+
         return [
-            'messages' => $messages->map(function ($msg) use ($userId, $interlocutorWasAnonymous, $otherUserId) {
+            'messages' => $messages->map(function ($msg) use ($userId) {
                 $isSender = $msg->sender_id === $userId;
-
-                $senderName = $isSender
-                                ? trim(optional($msg->sender)->first_name . ' ' . optional($msg->sender)->name)
-                                : ($interlocutorWasAnonymous
-                                    ? 'Anonyme - ' . substr(md5($otherUserId), 0, 6)
-                                    : optional($msg->sender)->name);
-
 
                 return (object)[
                     'id' => $msg->id,
                     'content' => $msg->content,
                     'created_at' => $msg->created_at,
                     'is_read' => $msg->is_read,
-                    'is_anonymous' => $msg->is_anonymous,
                     'sender_id' => $msg->sender_id,
-                    'sender_name' => $senderName,
                     'is_sender' => $isSender,
 
                 ];
             }),
             'receiver_id' => $otherUserId,
-            'thread_key' => $threadKey
+            'thread_key' => $threadKey,
+            'sender' => $sender
         ];
     }
 

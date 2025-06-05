@@ -25,6 +25,8 @@ class PublicationRequest extends FormRequest
             'user_id' => 'required|exists:users,id',
             'content' => 'nullable|string|required_without:image',
             'image' => 'nullable|image|mimes:png,jpg,jpeg|required_without:content',
+            'tagIds' => ['nullable', 'array'],
+            'tagIds.*' => ['exists:users,id']
         ];
     }
 

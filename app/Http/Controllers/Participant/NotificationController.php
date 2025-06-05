@@ -18,7 +18,10 @@ class NotificationController extends Controller
     {
         return view('participant.notification.index', [
             'discussions' => $this->service->listDiscussion(),
-            'users' => User::where('role', '!=', 'admin')->orderBy('name')->get(),
+            'users' => User::where('role', '!=', 'admin')
+                            ->where('id', '!=', Auth::user()->id)
+                            ->orderBy('name')
+                            ->get(),
         ]);
     }
 
@@ -32,11 +35,18 @@ class NotificationController extends Controller
             }
         }
 
+
         return view('participant.notification.show', [
             'messages' => $data['messages'],
             'receiverId' => $data['receiver_id'],
             'thread_key' => $data['thread_key'],
+            'sender' => $data['sender']
         ]);
+    }
+
+    public function notifPage()
+    {
+        return view('participant.notification.notif');
     }
 
     public function storeToken(Request $request)

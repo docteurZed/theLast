@@ -15,19 +15,23 @@
                     </span>
                 </a>
                 <p class="my-8 text-gray-400 text-xl font-semibold">
-                    Loading...
+                    Chargement...
                 </p>
             </div>
         </div>
 
         <div id="page">
-            @include('layouts.participant._sidebar')
-
-            <div class="p-4 sm:ml-64 mt-16">
+            @if (!isset($noSidebar))
+                @include('layouts.participant._sidebar')
+            @endif
+            <div class="{{ !isset($noPadding) ? 'p-4' : '' }} {{ !isset($noSidebar) ? 'sm:ml-64' : '' }} {{ !isset($noMargin) ? 'mt-16' : '' }}">
                 @yield('content')
             </div>
 
-            @include('layouts.participant._bottombar')
+            @if (!isset($noBottombar))
+                @include('layouts.participant._bottombar')
+            @endif
+
         </div>
 
         <!-- Bouton "Installer l'application" -->

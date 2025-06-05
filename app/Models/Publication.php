@@ -30,4 +30,8 @@ class Publication extends Model
     public function publication_comments() {
         return $this->hasMany(PublicationComment::class);
     }
+
+    public function users() {
+        return $this->belongsToMany(User::class, 'publication_tags');
+    }
 }

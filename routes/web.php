@@ -94,6 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('notification')->name('notification.')->group(function () {
 
             Route::get('/', [NotificationController::class, 'index'])->name('index');
+            Route::get('/notif', [NotificationController::class, 'notifPage'])->name('notif');
             Route::get('/{threadKey}/show', [NotificationController::class, 'show'])->name('show');
             Route::post('/store-fcm-token', [NotificationController::class, 'storeToken']);
 

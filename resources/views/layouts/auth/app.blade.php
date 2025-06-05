@@ -24,7 +24,7 @@
                     </span>
                 </a>
                 <p class="my-8 text-gray-400 text-xl font-semibold">
-                    Loading...
+                    Chargement...
                 </p>
             </div>
         </div>

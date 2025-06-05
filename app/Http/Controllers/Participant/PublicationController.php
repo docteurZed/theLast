@@ -8,11 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreCommentRequest;
 use App\Models\Publication;
 use App\Models\PublicationComment;
+use App\Models\User;
+use App\Notifications\PublicationNotification;
 use App\Notifications\UserActivityNotification;
 use App\Services\PublicationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 
 class PublicationController extends Controller
 {
@@ -27,12 +28,36 @@ class PublicationController extends Controller
     {
         return view('participant.post.index', [
             'publications' => $this->service->list(),
+            'users' => User::where('role', '!=', 'admin')
+                            ->where('id', '!=', Auth::user()->id)
+                            ->get(['id', 'first_name', 'name'])
         ]);
     }
 
     public function store(PublicationRequest $request): RedirectResponse
     {
-        $this->service->create($request);
+        $publication = $this->service->create($request);
+        $users = User::where('id', '!=', Auth::user()->id)->get();
+        foreach ($users as $user) {
+            $user->notify(new PublicationNotification(
+                type: 'publication',
+                message: ucfirst($publication->user->first_name) . ' ' . ucfirst($publication->user->name) . " a fait une publication.",
+                url: url(route('participant.publication.index')),
+                emailSubject: 'Quelqu’un a fait une publication.',
+                emailIntro: ucfirst($publication->user->first_name) . ' ' . ucfirst($publication->user->name) . " vient de faire une publication."
+            ));
+        }
+        if ($publication->users->count() != 0) {
+            foreach ($publication->users as $user) {
+                $user->notify(new UserActivityNotification(
+                    type: 'publication',
+                    message: ucfirst($publication->user->first_name) . ' ' . ucfirst($publication->user->name) . " vous a mentionné dans une publication.",
+                    url: url(route('participant.publication.index')),
+                    emailSubject: 'Quelqu’un a vous a mentionné dans une publication.',
+                    emailIntro: ucfirst($publication->user->first_name) . ' ' . ucfirst($publication->user->name) . " vient de vous mentionner dans une publication."
+                ));
+            }
+        }
         return back()->with('success', 'Publication créée avec succès.');
     }
 
@@ -48,7 +73,7 @@ class PublicationController extends Controller
                 message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a aimé votre publication.",
                 url: url(route('participant.publication.index')),
                 emailSubject: 'Quelqu’un a aimé votre publication.',
-                emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " vient de liker votre publication."
+                emailIntro: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " vient de liker votre publication."
             ));
         }
 
@@ -78,7 +103,7 @@ class PublicationController extends Controller
                 message: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a commenté votre publication.",
                 url: url(route('participant.publication.index')),
                 emailSubject: 'Nouveau commentaire',
-                emailIntro: ucfirst($user->first_name) . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
+                emailIntro: ucfirst($user->first_name) . ' ' . ucfirst($user->name) . " a laissé un commentaire sur votre publication."
             ));
         }
 
@@ -99,13 +124,10 @@ class PublicationController extends Controller
     public function destroyComment($id)
     {
         $comment = PublicationComment::findOrFail($id);
-
         if ($comment->user_id !== Auth::user()->id) {
             return response()->json(['error' => 'Non autorisé'], 403);
         }
-
         $comment->delete();
-
         return response()->json(['success' => true]);
     }
 

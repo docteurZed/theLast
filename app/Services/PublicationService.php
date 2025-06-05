@@ -23,7 +23,7 @@ class PublicationService
 
     public function create(Request $data): Publication
     {
-        $payload = $data->only(['content', 'user_id']);
+        $payload = $data->only(['content', 'user_id', 'tagIds']);
 
         if ($data->hasFile('image') && $data->file('image')->isValid()) {
             $filePath = $data->file('image')->getRealPath();
@@ -34,7 +34,13 @@ class PublicationService
             $payload['image'] = $uploadResult['secure_url'] ?? null;
         }
 
-        return Publication::create($payload);
+        $publication = Publication::create($payload);
+
+        if (!empty($payload['tagIds'])) {
+            $publication->users()->attach($payload['tagIds']);
+        }
+
+        return $publication;
     }
 
     public function toggleLike(int $publicationId): array
