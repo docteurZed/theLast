@@ -14,12 +14,14 @@ class UserService
 {
     protected $participation_fee;
     protected $cloudinary;
+    protected $score;
 
-    public function __construct(CloudinaryService $cloudinary)
+    public function __construct(CloudinaryService $cloudinary, ProfileScoreService $score)
     {
         $setting = Setting::where('singleton_key', 'main')->first();
         $this->participation_fee = $setting->participation_fee;
         $this->cloudinary = $cloudinary;
+        $this->score = $score;
     }
 
     public function showAll(string $role)
@@ -66,6 +68,8 @@ class UserService
             $user->save();
         }
 
+        $this->score->store($user);
+
         return $user;
     }
 
@@ -111,6 +115,8 @@ class UserService
             $user->save();
         }
 
+        $this->score->store($user);
+
         return $user;
     }
 
@@ -132,21 +138,56 @@ class UserService
         return $user->delete();
     }
 
-    public function updateProfilePhoto(int $id, UploadedFile $file)
+    public function updateProfilePhoto(int $id, Request $data)
     {
         $user = $this->show($id);
 
-        if ($file->isValid()) {
+        if (isset($data->profile_photo) && $data->profile_photo instanceof UploadedFile) {
             $oldImagePath = $user->profile_photo;
-            $imagePath = $file->store('public');
-            $user->profile_photo = $imagePath;
 
-            if ($oldImagePath && Storage::exists($oldImagePath)) {
-                Storage::delete($oldImagePath);
+            $filePath = $data->file('profile_photo')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $user->update([
+                'profile_photo' => $uploadResult['secure_url'] ?? null,
+            ]);
+
+            if ($oldImagePath) {
+                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+                $this->cloudinary->delete($publicId);
             }
-
-            $user->save();
         }
+
+        $this->score->store($user);
+
+        return $user;
+    }
+
+    public function updateBannerImage(int $id, Request $data)
+    {
+        $user = $this->show($id);
+
+        if (isset($data->banner_image) && $data->banner_image instanceof UploadedFile) {
+            $oldImagePath = $user->banner_image;
+
+            $filePath = $data->file('banner_image')->getRealPath();
+            $uploadResult = $this->cloudinary->upload($filePath, [
+                'folder' => 'images',
+            ]);
+
+            $user->update([
+                'banner_image' => $uploadResult['secure_url'] ?? null,
+            ]);
+
+            if ($oldImagePath) {
+                $publicId = $this->cloudinary->extractPublicId($oldImagePath);
+                $this->cloudinary->delete($publicId);
+            }
+        }
+
+        $this->score->store($user);
 
         return $user;
     }

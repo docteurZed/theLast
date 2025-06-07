@@ -31,7 +31,8 @@ class User extends Authenticatable
         'total_amount',
         'email',
         'password',
-        'personal_code'
+        'personal_code',
+        'banner_image',
     ];
 
     /**
@@ -151,5 +152,45 @@ class User extends Authenticatable
     public function publication_tags()
     {
         return $this->belongsToMany(Publication::class, 'publication_tags');
+    }
+
+    public function social_links()
+    {
+        return $this->hasMany(SocialLink::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(Experience::class);
+    }
+
+    public function skills()
+    {
+        return $this->hasMany(Skill::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(Education::class);
+    }
+
+    public function achievements()
+    {
+        return $this->hasMany(Achievment::class);
+    }
+
+    public function score()
+    {
+        return $this->hasOne(ProfileScore::class);
+    }
+
+    public function recommended()
+    {
+        return $this->hasOne(RecommendedProfile::class);
+    }
+
+    public function pushSubscriptions()
+    {
+        return $this->hasMany(PushSubscription::class);
     }
 }

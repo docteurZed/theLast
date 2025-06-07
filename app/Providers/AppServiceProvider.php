@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Notifications\ChannelManager;
+use App\Notifications\Channels\CustomPushChannel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,11 +27,17 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
+        $this->app->make(ChannelManager::class)->extend('customPush', function ($app) {
+            return new CustomPushChannel();
+        });
+
         View::composer('participant.*', function ($view) {
-            $unreadMessages = ParticipantMessage::where('receiver_id', Auth::user()->id)->where('is_read', false)->get();
+            $messageCount = ParticipantMessage::where('receiver_id', Auth::user()->id)->where('is_read', false)->count();
+            $notifCount = Auth::user()->unreadNotifications->count();
 
             $view->with([
-                'unreadMessages' => $unreadMessages,
+                'messageCount' => $messageCount,
+                'notifCount' => $notifCount
             ]);
         });
     }

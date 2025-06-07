@@ -4,13 +4,7 @@
 
 @section('content')
 
-<div class="max-w-4xl mx-auto text-gray-400 mb-16">
-
-    @php
-        $notifications = Auth::user()->notifications->filter(function ($notification) {
-            return $notification->created_at > \Carbon\Carbon::create(2025, 6, 1, 0, 0, 0);
-        })->sortByDesc('created_at');
-    @endphp
+<div class="w-full text-gray-400 mb-16">
 
     @if ($notifications->isNotEmpty())
         @forelse ($notifications as $msg)

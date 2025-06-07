@@ -49,7 +49,12 @@
         <div id="accordion-collapse" data-accordion="collapse">
             <h2 id="accordion-collapse-heading-1">
                 <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right border rounded-t-xl focus:ring-4 focus:ring-gray-800 border-gray-700 text-gray-400 hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-1" aria-expanded="true" aria-controls="accordion-collapse-body-1">
-                    <span class="font-bold text-xl">Nos fururs événements</span>
+                    <span class="font-bold text-xl flex items-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 16 16">
+                            <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
+                        </svg>
+                        Nos futurs événements
+                    </span>
                     <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                     </svg>
@@ -61,14 +66,11 @@
                     <div class="mb-6 p-6 border border-gray-700 rounded-2xl bg-gray-800 text-gray-200 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center md:text-start">
                         <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
                             <div class="w-full md:w-3/4">
-                                <h3 class="text-2xl font-extrabold text-white mb-5 flex gap-3 items-center justify-center md:justify-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-6 h-6" viewBox="0 0 16 16">
-                                        <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-3.5-7h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"/>
-                                    </svg>
+                                <h3 class="text-2xl font-extrabold text-white mb-5 text-center md:text-start">
                                     {{ $evenement->name }}
                                 </h3>
 
-                                <div class="grid grid-cols-3 items-start justify-center md:justify-start gap-4 text-sm text-gray-400 mb-4">
+                                <div class="grid grid-cols-3 items-start justify-center md:justify-start gap-4 text-sm text-gray-400 mb-4 mt-3">
                                     <div class="flex flex-col md:flex-row items-center gap-2">
                                         <span class="flex items-center justify-center p-2 bg-yellow-500 rounded-full text-white">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">

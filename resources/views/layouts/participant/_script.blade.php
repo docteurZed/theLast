@@ -1,61 +1,14 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 <script>
-    let deferredPrompt = null;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault(); // Empêche le prompt automatique
-        deferredPrompt = e;
-
-        const installButton = document.getElementById('install-button');
-        if (installButton) {
-            installButton.classList.remove('hidden');
-
-            installButton.addEventListener('click', () => {
-                installButton.disabled = true;
-                deferredPrompt.prompt();
-
-                deferredPrompt.userChoice.then((choiceResult) => {
-                    if (choiceResult.outcome === 'accepted') {
-                        console.log('L’utilisateur a accepté l’installation');
-                    } else {
-                        console.log('L’utilisateur a refusé l’installation');
-                    }
-                    deferredPrompt = null;
-                    installButton.classList.add('hidden');
-                });
-            });
-        }
-    });
-
-    // Masquer le bouton si l’app est déjà installée
-    window.addEventListener('appinstalled', () => {
-        console.log('PWA installée');
-        const installButton = document.getElementById('install-button');
-        if (installButton) {
-            installButton.classList.add('hidden');
-        }
-    });
-
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(registration => {
-                    console.log('test');
-                    registration.onupdatefound = () => {
-                        const newWorker = registration.installing;
-
-                        newWorker.onstatechange = () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                console.log('Nouvelle version installée, rechargement...');
-                                // Recharge la page pour activer le nouveau SW
-                                window.location.reload();
-                            }
-                        };
-                    };
+                    console.log('✅ Service Worker enregistré avec succès:', registration.scope);
                 })
                 .catch(error => {
-                    console.error('Échec de l’enregistrement du ServiceWorker:', error);
+                    console.error('❌ Échec de l’enregistrement du Service Worker:', error);
                 });
         });
     }
@@ -71,37 +24,87 @@
     });
 </script>
 
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyAbv6K8xUZaaaPzoe3B0jezJJBQJshumbg",
-        authDomain: "thelast-78c11.firebaseapp.com",
-        projectId: "thelast-78c11",
-        storageBucket: "thelast-78c11.firebasestorage.app",
-        messagingSenderId: "1035734482610",
-        appId: "1:1035734482610:web:29298cff5a0f69b91353ab",
-        measurementId: "G-60F96PFSE9"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-</script>
-
-<script type="module">
-    import { initFirebaseMessagingRegistration } from '/js/firebase-messaging.js';
+<script>
+if ('serviceWorker' in navigator && 'PushManager' in window) {
     window.addEventListener('load', () => {
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/firebase-messaging-sw.js').then(() => {
-                initFirebaseMessagingRegistration();
+        // Enregistre le service worker
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('Service Worker enregistré', registration);
+
+            // Demande la permission de notification
+            return Notification.requestPermission().then(permission => {
+                if (permission !== 'granted') {
+                    console.log('Permission de notification refusée');
+                    return;
+                }
+
+                // S'abonner au push
+                subscribeUserToPush(registration);
             });
-        }
+        }).catch(err => {
+            console.error('Erreur enregistrement service worker:', err);
+        });
     });
+}
+
+async function subscribeUserToPush(registration) {
+    try {
+        // Récupère la clé publique VAPID depuis une variable Blade
+        const vapidPublicKey = "{{ config('services.vapid.public_key') }}";
+
+        // Convertit la clé VAPID de base64 en Uint8Array
+        const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
+
+        // S'abonne via PushManager
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: convertedVapidKey,
+        });
+
+        // Envoie l'abonnement au serveur Laravel
+        await sendSubscriptionToServer(subscription);
+
+        console.log('Abonnement push réussi:', subscription);
+    } catch (error) {
+        console.error('Erreur lors de l\'abonnement push:', error);
+    }
+}
+
+// Fonction utilitaire pour convertir la clé VAPID
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+        .replace(/\-/g, '+')
+        .replace(/_/g, '/');
+
+    const rawData = atob(base64);
+    return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
+}
+
+// Envoie les données d'abonnement au backend via fetch
+async function sendSubscriptionToServer(subscription) {
+    // Récupère le token CSRF
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    const response = await fetch("{{ route('push.subscribe') }}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken,
+        },
+        body: JSON.stringify({
+            endpoint: subscription.endpoint,
+            publicKey: subscription.getKey('p256dh') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('p256dh'))) ) : null,
+            authToken: subscription.getKey('auth') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('auth'))) ) : null,
+        }),
+        credentials: 'same-origin',
+    });
+
+    if (!response.ok) {
+        throw new Error('Erreur lors de l\'enregistrement de l\'abonnement push');
+    }
+
+    return response.json();
+}
+
 </script>

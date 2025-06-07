@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\FcmToken;
 use App\Models\User;
 use App\Services\ParticipantMessageService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -47,7 +48,14 @@ class NotificationController extends Controller
 
     public function notifPage()
     {
-        return view('participant.notification.notif');
+        $notifications = Auth::user()->notifications;
+
+        foreach ($notifications->where('read_at', null) as $notif) {
+            $notif->read_at = Carbon::now();
+            $notif->save();
+        }
+
+        return view('participant.notification.notif', ['notifications' => $notifications]);
     }
 
     public function storeToken(Request $request)

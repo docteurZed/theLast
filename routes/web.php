@@ -33,7 +33,10 @@ use App\Http\Controllers\Guest\{
     HomeController
 };
 use App\Http\Controllers\Participant\{
+    AchievementController,
     DashboardController as ParticipantDashboardController,
+    EducationController,
+    ExperienceController,
     GaleryController,
     LikeController,
     NotificationController,
@@ -41,8 +44,11 @@ use App\Http\Controllers\Participant\{
     PostController,
     ProfileController,
     PublicationController,
+    SkillController,
+    SocialMediaController,
     VoteController
 };
+use App\Http\Controllers\PushSubscriptionController;
 use App\Http\Controllers\SystemNotificationController;
 use App\Http\Controllers\VoteCategoryController;
 use Illuminate\Support\Facades\Route;
@@ -60,6 +66,8 @@ Route::post('/confirmation/store', [ConfirmationController::class, 'store'])->na
 
 Route::middleware('auth')->group(function () {
 
+    Route::post('/push-subscribe', [PushSubscriptionController::class, 'store'])->name('push.subscribe');
+
     Route::prefix('participant')->name('participant.')->group(function () {
 
         Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
@@ -74,6 +82,9 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/', [ProfileController::class, 'index'])->name('index');
             Route::put('/{id}/update', [ProfileController::class, 'update'])->name('update');
+            Route::put('/{id}/update-profile', [ProfileController::class, 'updateProfilePhoto'])->name('update.profile_photo');
+            Route::put('/{id}/update-banner', [ProfileController::class, 'updateBannerImage'])->name('update.banner');
+            Route::put('/social-media', [SocialMediaController::class, 'store'])->name('media.store');
 
         });
 
@@ -83,9 +94,43 @@ Route::middleware('auth')->group(function () {
 
         });
 
+        Route::prefix('education')->name('education.')->group(function () {
+
+            Route::post('/store', [EducationController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [EducationController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [EducationController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('experience')->name('experience.')->group(function () {
+
+            Route::post('/store', [ExperienceController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [ExperienceController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [ExperienceController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('achievement')->name('achievement.')->group(function () {
+
+            Route::post('/store', [AchievementController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [AchievementController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [AchievementController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('skill')->name('skill.')->group(function () {
+
+            Route::post('/store', [SkillController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [SkillController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [SkillController::class, 'destroy'])->name('destroy');
+
+        });
+
         Route::prefix('galery')->name('galery.')->group(function () {
 
             Route::get('/', [GaleryController::class, 'index'])->name('index');
+            Route::get('/list', [GaleryController::class, 'list'])->name('list');
+            Route::get('/{id}/show', [GaleryController::class, 'show'])->name('show');
 
         });
 

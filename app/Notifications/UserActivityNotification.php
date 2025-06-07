@@ -29,7 +29,7 @@ class UserActivityNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail', 'database'];
+        return ['mail', 'database', 'customPush'];
     }
 
     /**
@@ -67,6 +67,15 @@ class UserActivityNotification extends Notification
         return [
             'type' => $this->type,
             'message' => $this->message,
+            'url' => $this->url,
+        ];
+    }
+
+    public function toCustomPush($notifiable)
+    {
+        return [
+            'title' => $this->emailSubject,
+            'body' => $this->message,
             'url' => $this->url,
         ];
     }

@@ -50,31 +50,6 @@
         </div>
     </div>
 
-    {{-- <!-- Formulaire de création -->
-    <form method="POST" action="{{ route('participant.publication.store') }}" enctype="multipart/form-data"
-        class="bg-gray-800 p-5 rounded-lg shadow space-y-4">
-        @csrf
-        <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-
-        <h2 class="text-xl font-semibold text-white">Créer une publication</h2>
-
-        <textarea name="content" rows="3" class="w-full border rounded-md p-3 bg-gray-900 text-white"
-            placeholder="Exprimez-vous...">{{ old('content') }}</textarea>
-
-        <div class="flex items-center justify-between">
-            <label class="cursor-pointer text-sm font-semibold">
-                <input type="file" name="image" class="hidden" accept="image/*" id="imageInput">
-                📎 Ajouter une image
-                <span id="fileName" class="text-xs block sm:inline text-gray-400 ml-2"></span>
-            </label>
-
-            <button type="submit"
-                class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition text-center font-semibold rounded-md">
-                Publier
-            </button>
-        </div>
-    </form> --}}
-
     <div id="drawer-example" class="fixed top-0 left-0 z-60 h-screen p-5 overflow-y-auto transition-transform -translate-x-full w-full sm:max-w-xl bg-gray-900 sm:border-r border-gray-800" tabindex="-1" aria-labelledby="drawer-label">
         <h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-400">
             Nouvelle publication
@@ -186,7 +161,7 @@
                 @if ($post->users->count() != 0)
                 <p class="text-gray-400 text-sm font-semibold italic mt-2">
                     @foreach ($post->users as $user)
-                        <span>@</span><span class="{{ $user->id == Auth::user()->id ? 'text-red-500' : '' }}">{{ $user->first_name }} {{ $user->name }}</span>{{ !$loop->last ? ', ' : '' }}
+                        <span>@</span><span class="{{ $user->id == Auth::user()->id ? 'text-red-500' : '' }}"><a href="{{ route('participant.galery.show', ['id' => $user->id]) }}" class="hover:underline">{{ $user->first_name }} {{ $user->name }}</a></span>{{ !$loop->last ? ', ' : '' }}
                     @endforeach
                 </p>
                 @endif

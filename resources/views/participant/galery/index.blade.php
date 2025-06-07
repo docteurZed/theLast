@@ -4,86 +4,159 @@
 
 <div class="max-w-4xl mx-auto sm:p-6 space-y-6 text-gray-400 mb-16">
 
-    @if (Session::has('success'))
-    <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-green-400 rounded-xl" role="alert">
-        <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <span class="sr-only">Info</span>
-        <div class="ms-3 text-sm font-semibold">
-            {{ Session::get('success') }}
-        </div>
-        <button type="button" class="ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 inline-flex items-center justify-center h-8 w-8 bg-gray-800 text-green-400 hover:bg-green-700" data-dismiss-target="#alert-1" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-        </button>
-    </div>
-    @elseif ($errors->any())
-        @foreach ($errors->all() as $error)
-        <div id="alert-1" class="flex items-center p-4 mb-4 bg-gray-800 text-red-400 rounded-xl" role="alert">
-            <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-            </svg>
-            <span class="sr-only">Info</span>
-            <div class="ms-3 text-sm font-semibold">
-                {{ $error }}
-            </div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 inline-flex items-center justify-center h-8 w-8 bg-gray-800 text-red-400 hover:bg-red-700" data-dismiss-target="#alert-1" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
-        </div>
-        @endforeach
-    @endif
+    <div class="my-4 p-4 bg-gray-800 rounded-xl shadow flex items-center space-x-4 border border-gray-700 w-full"
+     role="alert">
 
+        <div class="relative flex-shrink-0 w-16 h-16">
+            <svg class="transform -rotate-90 w-16 h-16" viewBox="0 0 36 36">
+            @php
+                $percentage = Auth::user()->score->score ?? 20;
+                $strokeColor = $percentage > 75 ? 'text-green-500' : ($percentage > 40 ? 'text-yellow-500' : 'text-red-500');
+                $strokeDasharray = 100;
+                $strokeDashoffset = 100 - $percentage;
+            @endphp
+            <circle
+                class="text-gray-300"
+                stroke-width="4"
+                stroke="currentColor"
+                fill="none"
+                cx="18"
+                cy="18"
+                r="15.9155"
+            />
+            <circle
+                class="{{ $strokeColor }}"
+                stroke-width="4"
+                stroke-linecap="round"
+                stroke="currentColor"
+                fill="none"
+                cx="18"
+                cy="18"
+                r="15.9155"
+                stroke-dasharray="{{ $strokeDasharray }}"
+                stroke-dashoffset="{{ $strokeDashoffset }}"
+            />
+            </svg>
+            <div class="absolute inset-0 flex items-center justify-center font-semibold text-lg text-white">
+            {{ $percentage }}%
+            </div>
+        </div>
+
+        <div class="flex-1">
+            @if ($percentage < 80)
+            <p class="text-gray-400 font-semibold">
+                Votre profil est rempli à {{ $percentage }}%. Complétez-le pour améliorer votre visibilité !
+            </p>
+            @else
+            <p class="text-gray-400 font-semibold">
+                Votre profil est rempli à {{ $percentage }}%. Très intéressant ! Toutes nos félicitations.
+            </p>
+            @endif
+        </div>
+
+        <a href="{{ route('participant.profile.index') }}"
+            class="inline-flex bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition">
+            {{ $percentage == 100 ? 'Voir' : 'Compléter' }}
+        </a>
+    </div>
+
+
+    @if($recommendedUsers->isNotEmpty())
     <div class="w-full">
         <input type="text" id="user-search" placeholder="Rechercher un nom ou une bio..."
             class="w-full p-3 rounded-md bg-gray-800 border border-gray-600 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-600">
     </div>
+    @endif
 
-    <div id="user-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        @foreach ($users as $user)
-        <div class="user-card bg-gray-800 rounded-lg shadow space-y-3">
-            <div class="flex flex-col items-center gap-4 text-center p-5">
-                @if (isset($user->profile_photo))
-                <img src="{{ $user->profile_photo }}" alt="Photo de profil"  class="w-20 h-20 mx-auto rounded-full object-cover">
-                @else
-                <img src="{{ asset('images/user.png') }}" alt="Photo de profil"  class="w-20 h-20 mx-auto rounded-full object-cover">
-                @endif
-                <h3 class="text-lg font-semibold text-white">{{ ucfirst($user->first_name) }} {{ ucfirst($user->name) }}</h3>
-                <p class="text-sm text-gray-400">{{ $user->bio }}</p>
+    <div id="user-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-6">
+        <div class="md:col-span-2 lg:col-span-3 flex items-center gap-2 text-yellow-600">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                <path d="M7.657 6.247c.11-.33.576-.33.686 0l.645 1.937a2.89 2.89 0 0 0 1.829 1.828l1.936.645c.33.11.33.576 0 .686l-1.937.645a2.89 2.89 0 0 0-1.828 1.829l-.645 1.936a.361.361 0 0 1-.686 0l-.645-1.937a2.89 2.89 0 0 0-1.828-1.828l-1.937-.645a.361.361 0 0 1 0-.686l1.937-.645a2.89 2.89 0 0 0 1.828-1.828zM3.794 1.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387A1.73 1.73 0 0 0 4.593 5.69l-.387 1.162a.217.217 0 0 1-.412 0L3.407 5.69A1.73 1.73 0 0 0 2.31 4.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387A1.73 1.73 0 0 0 3.407 2.31zM10.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732L9.1 2.137a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/>
+            </svg>
+            <h3 class="text-2xl font-bold">Recommandations</h3>
+        </div>
+        @forelse ($recommendedUsers as $profile)
+        <div class="w-full border rounded-lg shadow-sm bg-gray-800 border-gray-700 overflow-hidden relative">
+
+            <div class="h-32 w-full bg-cover bg-center" style="background-image: url('{{ $profile->user->banner_image ?? asset('images/banner-default.jpg') }}');">
             </div>
-            <div class="grid grid-cols-3 gap-3 text-sm border-t border-gray-700">
-                <button id="like-btn-{{ $user->id }}" class="hover:bg-gray-700 transition py-4 px-3 text-center flex flex-col gap-2 items-center {{ Auth::user()->hasLiked($user) ? 'text-yellow-600' : '' }} rounded-bl-lg" onclick="sendLike({{ $user->id }})">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
-                        <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2 2 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a10 10 0 0 0-.443.05 9.4 9.4 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a9 9 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.2 2.2 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.9.9 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
-                    </svg>
-                    <span class="text-xs font-semibold">J’aime</span>
-                </button>
-                <button class="hover:bg-gray-700 transition py-4 px-3 text-white text-center flex flex-col gap-2 items-center" data-modal-target="message-modal-{{ $user->id }}" data-modal-toggle="message-modal-{{ $user->id }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
-                        <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/>
-                    </svg>
-                    <span class="text-xs font-semibold">Message</span>
-                </button>
-                <button class="hover:bg-gray-700 transition py-4 px-3 text-white text-center flex flex-col gap-2 items-center" data-modal-target="vote-modal-{{ $user->id }}" data-modal-toggle="vote-modal-{{ $user->id }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
-                        <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/>
-                    </svg>
-                    <span class="text-xs font-semibold">Vote</span>
-                </button>
+
+            <div class="flex flex-col items-center pb-8 pt-12 relative z-10">
+
+                <div class="absolute -top-12">
+                    <img src="{{ $profile->user->profile_photo ?? asset('images/profile->user.png') }}" alt="Photo de profil" class="w-24 h-24 rounded-full border-4 border-gray-800 shadow-lg object-cover">
+                </div>
+
+                <h5 class="mt-4 text-xl font-bold text-white text-center">{{ ucfirst($profile->user->first_name) }} {{ ucfirst($profile->user->name) }}</h5>
+                <p class="text-sm text-gray-400 text-center px-4 mt-1">{{ $profile->user->bio }}</p>
+
+                @if ($profile->user->social_links->isNotEmpty())
+                <div class="w-full flex justify-center gap-4 mt-4 text-gray-400">
+                    @foreach ($profile->user->social_links as $link)
+                        @switch($link->platform)
+                            @case('facebook')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-blue-500 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/>
+                                    </svg>
+                                </a>
+                                @break
+                            @case('x')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-blue-400 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/>
+                                    </svg>
+                                </a>
+                                @break
+                            @case('linkedin')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-blue-300 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/>
+                                    </svg>
+                                </a>
+                                @break
+                            @case('instagram')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-pink-500 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/>
+                                    </svg>
+                                </a>
+                                @break
+                            @case('whatsapp')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-green-500 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/>
+                                    </svg>
+                                </a>
+                                @break
+                            @case('tiktok')
+                                <a href="{{ $link->url }}" target="_blank" class="hover:text-gray-950 transition">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M9 0h1.98c.144.715.54 1.617 1.235 2.512C12.895 3.389 13.797 4 15 4v2c-1.753 0-3.07-.814-4-1.829V11a5 5 0 1 1-5-5v2a3 3 0 1 0 3 3z"/>
+                                    </svg>
+                                </a>
+                                @break
+                        @endswitch
+                    @endforeach
+                </div>
+                @endif
+
+                <div class="grid grid-cols-2 gap-2 mt-6 px-4 w-full">
+                    <a href="{{ route('participant.galery.show', ['id' => $profile->user->id]) }}" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full px-5 py-2.5 text-center">
+                        Voir
+                    </a>
+                    <a href="#" data-modal-target="message-modal-{{ $profile->user->id }}" data-modal-toggle="message-modal-{{ $profile->user->id }}" class="hover:bg-gray-700 border border-gray-700 text-white rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full px-5 py-2.5 text-center">
+                        Message
+                    </a>
+                </div>
             </div>
         </div>
 
-        <div id="message-modal-{{ $user->id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-full bg-gray-950 bg-opacity-50">
+        <div id="message-modal-{{ $profile->user->id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-full bg-gray-950 bg-opacity-50">
             <div class="relative w-full max-w-xl max-h-full">
                 <div class="relative bg-gray-800 rounded-lg shadow">
                     <div class="p-5 flex items-center border-b border-gray-700 mb-4">
-                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 hover:text-white bg-transparent hover:bg-gray-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal-{{ $user->id }}">
+                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 hover:text-white bg-transparent hover:bg-gray-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="message-modal-{{ $profile->user->id }}">
                             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 01-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 01-1.414-1.414L8.586 10 3.636 5.05a1 1 0 011.414-1.414L10 8.586z" clip-rule="evenodd" /></svg>
                         </button>
                         <h3 class="text-xl font-semibold text-white">Votre message</h3>
@@ -94,17 +167,17 @@
 
                         <div class="space-y-4 p-5">
 
-                                <input type="hidden" name="receiver_id" value="{{ $user->id }}">
+                                <input type="hidden" name="receiver_id" value="{{ $profile->user->id }}">
                                 <div class="flex items-center space-x-2">
-                                    <input type="checkbox" id="anonyme-{{ $user->id }}" name="is_anonymous" class="form-checkbox text-yellow-600 bg-gray-800 border-gray-600">
-                                    <label for="anonyme-{{ $user->id }}" class="text-gray-400 font-semibold">Envoyer anonymement</label>
+                                    <input type="checkbox" id="anonyme-{{ $profile->user->id }}" name="is_anonymous" class="form-checkbox text-yellow-600 bg-gray-800 border-gray-600 shadow-sm focus:ring-yellow-600 ring-offset-yellow-800 focus:ring-2 bg-gray-700  checked:bg-yellow-600 checked:border-yellow-600">
+                                    <label for="anonyme-{{ $profile->user->id }}" class="text-gray-400 font-semibold">Envoyer anonymement</label>
                                 </div>
 
-                                <textarea rows="4" class="w-full rounded-md bg-gray-700 border border-gray-600 p-3 text-sm text-white resize-none" name="content" placeholder="Votre message..."></textarea>
+                                <textarea rows="4" class="w-full rounded-md bg-gray-700 border border-gray-600 p-3 text-sm text-white resize-none focus:outline-none focus:ring-2 focus:ring-yellow-600" name="content" placeholder="Votre message..."></textarea>
                         </div>
 
                         <div class="flex justify-end gap-2 p-5 border-t border-gray-700">
-                            <button type="button" data-modal-hide="message-modal-{{ $user->id }}" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-500 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">Annuler</button>
+                            <button type="button" data-modal-hide="message-modal-{{ $profile->user->id }}" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-500 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">Annuler</button>
                         <button type="submit" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
                             Envoyer
                         </button>
@@ -113,47 +186,20 @@
                 </div>
             </div>
         </div>
-
-        <div id="vote-modal-{{ $user->id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-center w-full p-4 overflow-x-hidden overflow-y-auto h-full bg-gray-950 bg-opacity-50">
-            <div class="relative w-full max-w-xl max-h-full">
-                <div class="relative bg-gray-800 rounded-lg shadow">
-                    <div class="p-5 flex items-center border-b border-gray-700 mb-4">
-                        <button type="button" class="absolute top-3 right-2.5 text-gray-400 hover:text-white bg-transparent hover:bg-gray-700 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" data-modal-hide="vote-modal-{{ $user->id }}">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 8.586l4.95-4.95a1 1 0 111.414 1.414L11.414 10l4.95 4.95a1 1 0 01-1.414 1.414L10 11.414l-4.95 4.95a1 1 0 01-1.414-1.414L8.586 10 3.636 5.05a1 1 0 011.414-1.414L10 8.586z" clip-rule="evenodd" /></svg>
-                        </button>
-                        <h3 class="text-xl font-semibold text-white">Votre vote</h3>
-                    </div>
-
-                    <form action="{{ route('participant.vote.multipleStore') }}" method="post">
-                        @csrf
-                    <div class="space-y-4 p-5">
-                        <p class="text-gray-400 font-semibold">Choisissez une ou plusieurs catégories :</p>
-
-                        <input type="hidden" name="candidat_id" value="{{ $user->id }}">
-
-                        <div class="space-y-2">
-                            @forelse ($categories as $category)
-                            <label class="flex items-center gap-2 text-gray-400">
-                                <input type="checkbox" class="form-checkbox text-yellow-600 bg-gray-800 border-gray-600" name="categories[]" value="{{ $category->id }}">
-                                {{ $category->name }}
-                            </label>
-                            @empty
-                            <p class="text-gray-400">Aucune catégorie enrégistrée</p>
-                            @endforelse
-                        </div>
-                    </div>
-                    <div class="flex justify-end gap-2 p-5 border-t border-gray-700">
-                        <button type="button" data-modal-hide="vote-modal-{{ $user->id }}" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-500 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">Annuler</button>
-                        <button type="submit" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
-                            Envoyer
-                        </button>
-                    </div>
-                    </form>
-                </div>
-            </div>
+        @empty
+        <div class="text-gray-400 text-sm italic font-semibold p-4 underline">
+            Aucune recommandation de profil pour l'instant
         </div>
-        @endforeach
+        @endforelse
     </div>
+
+
+    <div>
+        <a href="{{ route('participant.galery.list') }}" class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer block">
+            Tous les profils
+        </a>
+    </div>
+
 </div>
 
 <script>
@@ -175,31 +221,6 @@
             });
         });
     });
-
-    function sendLike(userId) {
-        const baseUrl = "{{ route('participant.like.send', ['id' => 0]) }}";
-        const url = baseUrl.replace('/0', `/${userId}`);
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            const btn = document.getElementById(`like-btn-${userId}`);
-            if (data.success) {
-                btn.classList.toggle('text-yellow-600');
-            } else {
-                console.log(data.message)
-            }
-        })
-        .catch(error => {
-            console.error('Erreur AJAX :', error);
-        });
-    }
 </script>
 
 @endsection

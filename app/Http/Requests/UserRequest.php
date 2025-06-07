@@ -27,6 +27,7 @@ class UserRequest extends FormRequest
             'phone'         => 'required|string|max:16',
             'password'      => 'nullable|string|min:8',
             'profile_photo' => 'nullable|image|mimes:jpeg,png,jpg',
+            'banner_image' => 'nullable|image|mimes:jpeg,png,jpg',
             'bio'           => 'nullable|string|max:500',
         ];
     }
@@ -39,6 +40,7 @@ class UserRequest extends FormRequest
             'phone'         => 'Le numéro de téléphone',
             'password'      => 'Le mot de passe',
             'profile_photo' => 'La photo de profil',
+            'banner_image' => 'La bannière',
             'bio'           => 'La biographie',
         ];
     }

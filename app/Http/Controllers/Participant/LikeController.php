@@ -15,6 +15,7 @@ class LikeController extends Controller
     {
         try {
             $likerId = Auth::id();
+            $likeStatut = null;
 
             if ($likerId == $id) {
                 return response()->json(['success' => false, 'message' => 'Tu ne peux pas te liker toi-même.']);
@@ -26,7 +27,8 @@ class LikeController extends Controller
 
             if ($alreadyLiked) {
                 $alreadyLiked->delete();
-                return response()->json(['success' => true, 'message' => 'Like retiré.']);
+                $likeStatut = 'cancelled';
+                return response()->json(['success' => true, 'message' => 'Like retiré.', 'likeStatut' => $likeStatut]);
             }
 
             $like = Like::create([
@@ -46,7 +48,9 @@ class LikeController extends Controller
                 ));
             }
 
-            return response()->json(['success' => true, 'message' => 'Like envoyé avec succès.']);
+            $likeStatut = 'added';
+
+            return response()->json(['success' => true, 'message' => 'Like envoyé avec succès.', 'likeStatut' => $likeStatut]);
 
         } catch (\Throwable $e) {
             return response()->json([

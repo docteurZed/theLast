@@ -24,7 +24,7 @@
             @if (!isset($noSidebar))
                 @include('layouts.participant._sidebar')
             @endif
-            <div class="{{ !isset($noPadding) ? 'p-4' : '' }} {{ !isset($noSidebar) ? 'sm:ml-64' : '' }} {{ !isset($noMargin) ? 'mt-16' : '' }}">
+            <div class="{{ !isset($noPadding) ? 'p-4' : '' }} {{ !isset($noSidebar) ? 'sm:ml-64' : '' }} {{ !isset($noMargin) ? 'mt-15' : '' }}">
                 @yield('content')
             </div>
 
