@@ -50,7 +50,7 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 async function subscribeUserToPush(registration) {
     try {
         // Récupère la clé publique VAPID depuis une variable Blade
-        const vapidPublicKey = "{{ config('services.vapid.public_key') }}";
+        const vapidPublicKey = "{{ config('webpush.vapid.public_key') }}";
 
         // Convertit la clé VAPID de base64 en Uint8Array
         const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
