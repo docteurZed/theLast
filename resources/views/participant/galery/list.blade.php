@@ -47,7 +47,7 @@
 
     <div id="user-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center gap-6">
         @foreach ($users as $user)
-        <div class="w-full border rounded-lg shadow-sm bg-gray-800 border-gray-700 overflow-hidden relative">
+        <div class="w-full border rounded-lg shadow-sm bg-gray-800 border-gray-700 overflow-hidden relative user-card">
 
             <div class="h-32 w-full bg-cover bg-center" style="background-image: url('{{ $user->banner_image ?? asset('images/banner-default.jpg') }}');">
             </div>

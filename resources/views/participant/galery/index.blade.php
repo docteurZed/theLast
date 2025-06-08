@@ -76,7 +76,7 @@
             <h3 class="text-2xl font-bold">Recommandations</h3>
         </div>
         @forelse ($recommendedUsers as $profile)
-        <div class="w-full border rounded-lg shadow-sm bg-gray-800 border-gray-700 overflow-hidden relative">
+        <div class="w-full border rounded-lg shadow-sm bg-gray-800 border-gray-700 overflow-hidden relative user-card">
 
             <div class="h-32 w-full bg-cover bg-center" style="background-image: url('{{ $profile->user->banner_image ?? asset('images/banner-default.jpg') }}');">
             </div>

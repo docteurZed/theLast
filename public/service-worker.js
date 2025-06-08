@@ -1,4 +1,4 @@
-const CACHE_NAME = 'thelast-v1';
+const CACHE_NAME = 'thelast-doctor-v1';
 
 const OFFLINE_PAGE = '/offline.html';
 const INSTALLATION_FILES = [

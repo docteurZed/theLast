@@ -79,12 +79,12 @@
         <div class="flex {{ $message->is_sender ? 'justify-end' : 'justify-start' }} mb-4">
             <div class="flex items-start gap-2.5 max-w-[80%]">
                 <div class="rounded-xl min-w-40 p-4 shadow-md text-sm leading-relaxed
-                    {{ $message->is_sender ? 'bg-yellow-600 text-white rounded-tr-none' : 'bg-gray-700 text-gray-200 rounded-tl-none' }}">
+                    {{ $message->is_sender ? 'bg-yellow-500 text-white rounded-tr-none' : 'bg-gray-700 text-gray-200 rounded-tl-none' }}">
 
                     <p class="mb-2 whitespace-pre-wrap">{{ $message->content }}</p>
 
                     <div class="flex items-center justify-between mb-1">
-                        <p class="italic text-gray-400">{{ !$message->is_sender ? '' : ($message->is_read ? 'Lu' : 'Non lu') }}</p>
+                        <p class="italic text-gray-300">{{ !$message->is_sender ? '' : ($message->is_read ? 'Lu' : 'Non lu') }}</p>
                         <p class="text-xs text-gray-300">{{ $message->created_at->format('H:i') }}</p>
                     </div>
                 </div>
