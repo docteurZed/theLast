@@ -247,7 +247,11 @@
 
                 <button type="submit"
                     class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 font-semibold hover:opacity-90 transition text-center px-4 py-2 text-sm rounded-r-md">
-                    <span>Envoyer</span>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-4 h-4" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5"/>
+                        </svg>
+                    </span>
                     <svg class="spinner w-4 h-4 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="white" stroke-width="4"></circle>
                         <path class="opacity-75" fill="white" d="M4 12a8 8 0 018-8v8z"></path>

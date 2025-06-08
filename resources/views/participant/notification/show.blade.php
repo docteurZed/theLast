@@ -84,8 +84,8 @@
                     <p class="mb-2 whitespace-pre-wrap">{{ $message->content }}</p>
 
                     <div class="flex items-center justify-between mb-1">
-                        <p class="italic text-gray-300">{{ !$message->is_sender ? '' : ($message->is_read ? 'Lu' : 'Non lu') }}</p>
-                        <p class="text-xs text-gray-300">{{ $message->created_at->format('H:i') }}</p>
+                        <p class="italic text-gray-200">{{ !$message->is_sender ? '' : ($message->is_read ? 'Lu' : 'Non lu') }}</p>
+                        <p class="text-xs text-gray-200">{{ $message->created_at->format('H:i') }}</p>
                     </div>
                 </div>
             </div>

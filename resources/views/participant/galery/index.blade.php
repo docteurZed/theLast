@@ -44,11 +44,11 @@
 
         <div class="flex-1">
             @if ($percentage < 80)
-            <p class="text-gray-400 font-semibold">
+            <p class="text-gray-400 font-semibold text-sm">
                 Votre profil est rempli à {{ $percentage }}%. Complétez-le pour améliorer votre visibilité !
             </p>
             @else
-            <p class="text-gray-400 font-semibold">
+            <p class="text-gray-400 font-semibold text-sm">
                 Votre profil est rempli à {{ $percentage }}%. Très intéressant ! Toutes nos félicitations.
             </p>
             @endif
