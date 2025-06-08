@@ -60,6 +60,9 @@
                                                 <a href="{{ route('admin.event.program.index', ['eventId' => $event->id]) }}" class="btn btn-icon btn-wave waves-effect waves-light btn-sm btn-primary-light">
                                                     <i class="ri-file-list-line"></i>
                                                 </a>
+                                                <a href="{{ route('admin.event.image.index', ['eventId' => $event->id]) }}" class="btn btn-icon btn-wave waves-effect waves-light btn-sm btn-primary-light">
+                                                    <i class="ri-file-image-line"></i>
+                                                </a>
                                                 <a href="javascript:void(0);" class="btn btn-icon btn-wave waves-effect waves-light btn-sm btn-info-light" data-bs-toggle="modal" data-bs-target="#show-event-{{ $event->id }}">
                                                     <i class="ri-eye-line"></i>
                                                 </a>

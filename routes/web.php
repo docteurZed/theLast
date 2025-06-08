@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\{
     AdminController,
     DashboardController,
     EventController,
+    EventImageController,
     EventProgramController,
     ExpenseController,
     GuestController,
@@ -75,6 +76,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('event')->name('event.')->group(function () {
 
             Route::get('/{id}/detail', [ParticipantDashboardController::class, 'detail'])->name('detail');
+            Route::get('/{id}/galery', [ParticipantDashboardController::class, 'galery'])->name('galery');
 
         });
 
@@ -324,6 +326,15 @@ Route::middleware('auth')->group(function () {
             Route::post('/store', [EventProgramController::class, 'store'])->name('store');
             Route::put('/{id}/update', [EventProgramController::class, 'update'])->name('update');
             Route::delete('/{id}/destroy', [EventProgramController::class, 'destroy'])->name('destroy');
+
+        });
+
+        Route::prefix('event/image')->name('event.image.')->group(function () {
+
+            Route::get('/{eventId}/list', [EventImageController::class, 'index'])->name('index');
+            Route::post('/store', [EventImageController::class, 'store'])->name('store');
+            Route::put('/{id}/update', [EventImageController::class, 'update'])->name('update');
+            Route::delete('/{id}/destroy', [EventImageController::class, 'destroy'])->name('destroy');
 
         });
 

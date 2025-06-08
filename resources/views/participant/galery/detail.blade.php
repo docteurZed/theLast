@@ -57,7 +57,7 @@
         <p class="text-sm text-gray-400 mt-2 md:mt-4 text-gray-200 mx-4 md:mx-8">{{ $user->bio }}</p>
 
         <div class="flex justify-center space-x-4 mt-4">
-            @if ($user->social_links->isNotEmpty())
+            @if ($user->social_links->isNotEmpty() && $user->id !== Auth::user()->id)
                 <div class="w-full flex justify-center items-center gap-4 mt-4">
                     @foreach ($user->social_links as $link)
                         @switch($link->platform)

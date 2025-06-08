@@ -22,4 +22,11 @@ class DashboardController extends Controller
             'event' => Event::findOrFail($id),
         ]);
     }
+
+    public function galery ($id)
+    {
+        return view('participant.dashboard.gallery', [
+            'images' => Event::findOrFail($id)->images,
+        ]);
+    }
 }

@@ -170,7 +170,7 @@
             const search = this.value.trim().toLowerCase();
 
             userCards.forEach(card => {
-                const name = card.querySelector('h3').textContent.toLowerCase();
+                const name = card.querySelector('h5').textContent.toLowerCase();
 
                 if (name.includes(search)) {
                     card.style.display = 'block';

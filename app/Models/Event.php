@@ -26,6 +26,11 @@ class Event extends Model
         return $this->hasMany(EventProgram::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(EventImage::class);
+    }
+
     public function invitations()
     {
         return $this->hasMany(Invitation::class);

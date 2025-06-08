@@ -114,7 +114,7 @@
                                 class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
                                     Détail
                                 </a>
-                                <a href="#"
+                                <a href="{{ route('participant.event.galery', ['id' => $evenement->id]) }}"
                                 class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:bg-gray-600 transition w-full sm:w-auto px-5 py-2.5 text-center cursor-pointer">
                                     Album
                                 </a>
