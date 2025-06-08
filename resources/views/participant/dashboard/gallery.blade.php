@@ -11,7 +11,7 @@
             <span class="text-sm text-center text-white">{{ $image->description }}</span>
         </div>
         @empty
-        <p class="text-gray-400 italic text-center w-full">Aucune image enrégistrée pour cet événement</p>
+        <p class="text-gray-400 italic text-center w-full p-4 mt-5">Aucune image enrégistrée pour cet événement</p>
         @endforelse
     </div>
 

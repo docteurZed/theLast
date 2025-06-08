@@ -49,19 +49,15 @@ if ('serviceWorker' in navigator && 'PushManager' in window) {
 
 async function subscribeUserToPush(registration) {
     try {
-        // Récupère la clé publique VAPID depuis une variable Blade
         const vapidPublicKey = "{{ config('webpush.vapid.public_key') }}";
 
-        // Convertit la clé VAPID de base64 en Uint8Array
         const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey);
 
-        // S'abonne via PushManager
         const subscription = await registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: convertedVapidKey,
         });
 
-        // Envoie l'abonnement au serveur Laravel
         await sendSubscriptionToServer(subscription);
 
         console.log('Abonnement push réussi:', subscription);
@@ -70,7 +66,6 @@ async function subscribeUserToPush(registration) {
     }
 }
 
-// Fonction utilitaire pour convertir la clé VAPID
 function urlBase64ToUint8Array(base64String) {
     const padding = '='.repeat((4 - base64String.length % 4) % 4);
     const base64 = (base64String + padding)
@@ -81,9 +76,7 @@ function urlBase64ToUint8Array(base64String) {
     return Uint8Array.from([...rawData].map(char => char.charCodeAt(0)));
 }
 
-// Envoie les données d'abonnement au backend via fetch
 async function sendSubscriptionToServer(subscription) {
-    // Récupère le token CSRF
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
     const response = await fetch("{{ route('push.subscribe') }}", {
@@ -97,7 +90,7 @@ async function sendSubscriptionToServer(subscription) {
             publicKey: subscription.getKey('p256dh') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('p256dh'))) ) : null,
             authToken: subscription.getKey('auth') ? btoa(String.fromCharCode(...new Uint8Array(subscription.getKey('auth'))) ) : null,
         }),
-        credentials: 'same-origin',
+        credentials: 'include',
     });
 
     if (!response.ok) {
