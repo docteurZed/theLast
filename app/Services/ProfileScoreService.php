@@ -21,7 +21,7 @@ class ProfileScoreService
             'score' => $score
         ]);
 
-        if($profileScore->score > 75) {
+        if($profileScore->score > 50) {
             if(!RecommendedProfile::where('user_id', $userId)->exists ()) {
                 RecommendedProfile::create(['user_id' => $userId]);
 

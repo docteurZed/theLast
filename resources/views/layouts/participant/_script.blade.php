@@ -13,15 +13,15 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const loadingScreen = document.getElementById('loading-screen');
-        const page = document.getElementById('page');
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     const loadingScreen = document.getElementById('loading-screen');
+    //     const page = document.getElementById('page');
 
-        window.addEventListener('beforeunload', function () {
-            loadingScreen.classList.remove('hidden');
-            page.classList.add('hidden');
-        });
-    });
+    //     window.addEventListener('beforeunload', function () {
+    //         loadingScreen.classList.remove('hidden');
+    //         page.classList.add('hidden');
+    //     });
+    // });
 </script>
 
 <script>

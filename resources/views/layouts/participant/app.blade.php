@@ -7,7 +7,7 @@
     </head>
     <body class="bg-gray-900">
 
-        <div id="loading-screen" class="max-w-md m-auto flex justify-center items-center min-h-screen hidden">
+        {{-- <div id="loading-screen" class="max-w-md m-auto flex justify-center items-center min-h-screen hidden">
             <div class="text-center">
                 <a href="#" class="flex items-center justify-center">
                     <span class="self-center text-3xl font-bold whitespace-nowrap text-white">
@@ -18,7 +18,7 @@
                     Chargement...
                 </p>
             </div>
-        </div>
+        </div> --}}
 
         <div id="page">
             @if (!isset($noSidebar))

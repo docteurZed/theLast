@@ -7,7 +7,7 @@
     @php
         $user = Auth::user();
     @endphp
-    <div class="relative h-24 sm:h-40 h-56 w-full">
+    <div class="relative h-24 sm:h-40 h-64 w-full">
         <img src="{{ $user->banner_image ?? asset('images/banner-default.jpg') }}" class="w-full h-full object-cover" alt="Bannière">
         <form action="{{ route('participant.profile.update.banner', ['id' => $user->id]) }}" method="POST" enctype="multipart/form-data" class="absolute top-4 right-4">
             @csrf

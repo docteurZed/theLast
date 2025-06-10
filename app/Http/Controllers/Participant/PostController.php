@@ -23,6 +23,7 @@ class PostController extends Controller
             'publications' => $this->service->list(),
             'users' => User::where('role', '!=', 'admin')
                             ->where('id', '!=', Auth::user()->id)
+                            ->orderBy('name')
                             ->get(['first_name', 'name', 'id']),
         ]);
     }

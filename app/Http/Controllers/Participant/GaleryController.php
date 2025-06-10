@@ -17,6 +17,7 @@ class GaleryController extends Controller
             'recommendedUsers' => RecommendedProfile::where('user_id', '!=', Auth::user()->id)
                                                 ->latest()
                                                 ->take(10)
+                                                ->orderByDesc('created_at')
                                                 ->get()
         ]);
     }

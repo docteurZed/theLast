@@ -5,7 +5,7 @@
 @section('content')
 <div class="text-gray-400 mb-20">
     <!-- Bannière -->
-    <div class="relative h-24 sm:h-40 h-56 w-full">
+    <div class="relative h-24 sm:h-40 h-64 w-full">
         <img src="{{ $user->banner_image ?? asset('images/banner-default.jpg') }}" class="w-full h-full object-cover" alt="Bannière">
 
         <!-- Photo de profil superposée -->
