@@ -51,7 +51,7 @@ self.addEventListener('push', function (event) {
             body: data.body || '',
             icon: '/icons/icon-192.png', // adapte selon tes fichiers
             data: {
-                url: data.url || '/',
+                url: data.url || '/participant/dashboard',
             }
         };
 
