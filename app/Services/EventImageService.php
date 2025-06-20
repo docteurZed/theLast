@@ -14,7 +14,7 @@ class EventImageService
 
     public function list(int $eventId): Collection
     {
-        return EventImage::where('event_id', $eventId)->orderBy('starts_at')->get();
+        return EventImage::where('event_id', $eventId)->orderBy('created_at', 'desc')->get();
     }
 
     public function create(Request $data): EventImage
