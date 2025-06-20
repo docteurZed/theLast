@@ -1,5 +1,34 @@
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
+<script type="module">
+    import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+
+    const now = new Date();
+    const start = new Date('2025-06-20T16:30:00');
+    const end = new Date('2025-06-21T00:00:00');
+
+    if (now >= start && now <= end) {
+        setInterval(() => {
+            confetti({
+                particleCount: 500,
+                angle: Math.random() * 360,
+                spread: 150,
+                origin: {
+                x: Math.random(),
+                y: Math.random() * 0.5
+                }
+            });
+        }, 1500);
+    }
+
+    // let specialSection = document.getElementById('special-section');
+    // let button = document.getElementById('special-message-button');
+
+    // button.addEventListener('click', () => {
+    //     specialSection.classList.add('hidden');
+    // })
+</script>
+
 <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -23,7 +52,7 @@
         });
     });
 </script>
-{{-- 
+{{--
 <script>
 if ('serviceWorker' in navigator && 'PushManager' in window) {
     window.addEventListener('load', () => {
