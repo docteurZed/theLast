@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Publication;
 use App\Models\PublicationComment;
 use App\Models\PublicationLike;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,9 @@ class PublicationService
 
     public function list(): Collection
     {
-        return Publication::orderBy('created_at', 'desc')->get();
+        return Publication::where('created_at', '>=', Carbon::now()->subWeeks(2))
+                ->orderBy('created_at', 'desc')
+                ->get();
     }
 
     public function create(Request $data): Publication
