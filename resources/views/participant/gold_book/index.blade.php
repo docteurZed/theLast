@@ -18,7 +18,7 @@
             <span class="font-bold text-white text-sm">{{ $message->user->first_name }} {{ $message->user->name }}</span>
             </div>
         @empty
-            <p class="text-gray-400 italic">Aucun message enrégistré</p>
+            <p class="text-gray-400 text-center italic font-semibold">Aucun message enrégistré</p>
         @endforelse
     </div>
 </div>
