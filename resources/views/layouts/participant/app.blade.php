@@ -42,7 +42,7 @@
             </button>
         </div>
 
-        @if (Auth::user()->goldBooks->isEmpty())
+        @if (Auth::user()->goldBooks->isEmpty() || !request()->routeIs('participant.goldBook.create'))
         <section id="special-section" class="fixed inset-0 z-50 bg-gradient-to-r from-gray-950 via-gray-700 to-gray-800 flex items-center justify-center p-4">
             <div
                 class="bg-gray-900 border border-gray-800 rounded-2xl shadow-xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto text-center animate-fade-in relative"
