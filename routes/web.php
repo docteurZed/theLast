@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\Pages\{
     ContactController as PagesContactController,
     HomeController as PagesHomeController
 };
+use App\Http\Controllers\GoldBookController;
 use App\Http\Controllers\Guest\{
     AboutController,
     ConfirmationController,
@@ -65,6 +66,8 @@ Route::get('/invitation/{code}-{token}', [InvitationController::class, 'show'])-
 Route::post('/contact/store', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/confirmation/store', [ConfirmationController::class, 'store'])->name('confirmation.store');
 
+Route::get('/gold-book', [GoldBookController::class, 'index'])->name('goldBook.index');
+
 Route::middleware('auth')->group(function () {
 
     Route::post('/push-subscribe', [PushSubscriptionController::class, 'store'])->name('push.subscribe');
@@ -72,6 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::prefix('participant')->name('participant.')->group(function () {
 
         Route::get('/dashboard', [ParticipantDashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/gold-book/create', [GoldBookController::class, 'create'])->name('goldBook.create');
+        Route::post('/gold-book/store', [GoldBookController::class, 'store'])->name('goldBook.store');
 
         Route::prefix('event')->name('event.')->group(function () {
 

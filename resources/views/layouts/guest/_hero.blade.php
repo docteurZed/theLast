@@ -1,9 +1,10 @@
 <section class="text-center px-5 md:px-16 lg:px-24 mx-auto max-w-screen-xl py-24 lg:py-36">
     <div class="fade-section">
         <div class="mt-8 md:mt-0 flex flex-col justify-center">
-            <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-white md:text-3xl">
+            <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none {{ isset($noBreadcrumb) ? 'bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-500 bg-clip-text text-transparent' : 'text-white' }} md:text-3xl">
                 {{ $header }}
             </h1>
+            @if (!isset($noBreadcrumb))
             <nav class="flex mx-auto" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                     <li class="inline-flex items-center">
@@ -23,6 +24,7 @@
                     </li>
                 </ol>
             </nav>
+            @endif
         </div>
     </div>
 </section>

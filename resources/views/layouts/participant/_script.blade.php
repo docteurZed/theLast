@@ -21,12 +21,12 @@
         }, 1500);
     }
 
-    // let specialSection = document.getElementById('special-section');
-    // let button = document.getElementById('special-message-button');
+    let specialSection = document.getElementById('special-section');
+    let button = document.getElementById('special-message-button');
 
-    // button.addEventListener('click', () => {
-    //     specialSection.classList.add('hidden');
-    // })
+    button.addEventListener('click', () => {
+        specialSection.classList.add('hidden');
+    })
 </script>
 
 <script>

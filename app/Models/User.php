@@ -193,4 +193,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PushSubscription::class);
     }
+
+    public function goldBooks()
+    {
+        return $this->hasMany(GoldBook::class);
+    }
 }

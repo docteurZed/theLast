@@ -42,9 +42,10 @@
             </button>
         </div>
 
-        {{-- <section id="special-section" class="fixed inset-0 z-50 bg-gray-950 bg-opacity-70 flex items-center justify-center p-4">
+        @if (Auth::user()->goldBooks->isEmpty())
+        <section id="special-section" class="fixed inset-0 z-50 bg-gradient-to-r from-gray-950 via-gray-700 to-gray-800 flex items-center justify-center p-4">
             <div
-                class="bg-gray-900 rounded-2xl shadow-xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto text-center animate-fade-in relative"
+                class="bg-gray-900 border border-gray-800 rounded-2xl shadow-xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto text-center animate-fade-in relative"
             >
                 <!-- Bouton dismiss -->
                 <button
@@ -59,28 +60,23 @@
                 </button>
 
                 <div class="text-gray-400 text-sm mb-4">
-                    <div class="text-yellow-600 text-xl sm:text-2xl font-bold mb-4 capitalize">🎓 ça y est c'est la fin !!!</div>
+                    <div class="text-yellow-600 text-xl sm:text-2xl font-bold mb-4 capitalize">🎓 Wesh la famille 🎓</div>
                     <p class="text-base leading-relaxed">
-                        Wesh la famille... <br><br>
+                        C'est la fin de cette belle aventure... <br><br>
 
-                        La fin d’un chapitre n’est en réalité que le commencement d’une nouvelle aventure pleine de promesses et de défis. ✨ <br><br>
+                        Félicitations ! ✨ <br><br>
 
-                        Nous avons su, ensemble, écrire une page unique de notre histoire collective, faite de défis relevés, d’efforts partagés et de succès mérités. 💪✨<br><br>
-
-                        Ce moment est à nous, pour célébrer tout ce que nous avons accompli, la force de votre cohésion et la fierté d’appartenir à cette promotion exceptionnelle. 🌟🔥<br><br>
-
-                        Nous vous invitons maintenant à laisser une trace indélébile de votre passage : un mot sincère pour votre promotion et un message d’encouragement pour celles et ceux qui suivront vos pas. 💬🌟 <br><br>
-
-                        OEDEN...
+                        Nous vous invitons maintenant à laisser un message à vos cadets. 💬🌟
                     </p>
                 </div>
 
-                <a href=""
+                <a href="{{ route('participant.goldBook.create') }}"
                     class="bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 text-white px-6 py-3 rounded-lg font-semibold shadow-md hover:opacity-90 transition inline-block mt-4">
-                    ✍️ Écrire un mot à la promotion
+                    ✍️ Écrire aux cadets
                 </a>
             </div>
-        </section> --}}
+        </section>
+        @endif
 
         @include('layouts.participant._script')
     </body>

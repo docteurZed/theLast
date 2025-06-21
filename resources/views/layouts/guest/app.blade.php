@@ -16,9 +16,11 @@
                         </span>
                     </a>
                     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                        @if (!isset($noBreadcrumb))
                         <a href="{{ route('participant.dashboard') }}" type="button" class="text-white focus:ring-2 focus:outline-none focus:ring-yellow-500 font-semibold rounded-lg text-sm px-5 py-3 text-center bg-gradient-to-r from-yellow-500 via-yellow-600 to-yellow-800 hover:opacity-90 transition">
                             Connexion
                         </a>
+                        @endif
                         <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm rounded-lg md:hidden focus:outline-none focus:ring-2 text-gray-400 hover:bg-gray-700 focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
                             <span class="sr-only">Open main menu</span>
                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
