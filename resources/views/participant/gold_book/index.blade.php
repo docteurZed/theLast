@@ -1,5 +1,5 @@
 @extends('layouts.guest.app', [
-    'header' => 'Message de la promo DS1 - DS2 2025 aux cadets',
+    'header' => 'Messages de la promotion DS1 - DS2 2025 aux cadets',
     'noBreadcrumb' => true
 ])
 

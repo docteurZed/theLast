@@ -11,7 +11,7 @@ class GoldBookController extends Controller
     public function index()
     {
         return view('participant.gold_book.index', [
-            'messages' => GoldBook::all()
+            'messages' => GoldBook::orderBy('created_at', 'desc')->get()
         ]);
     }
 
